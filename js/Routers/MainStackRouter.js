@@ -3,8 +3,9 @@ import { Header, Left, Button, Icon, Body, Title, Right } from 'native-base';
 import Login from '../components/login/';
 import BlankPage from '../components/blankPage';
 import HomeTabRouter from './HomeTabRouter';
+import ProfileScreen from '../components/me/profile';
 
-export default (new StackNavigator({
+export default (StackNavigator({
   HomeTabRouter: {
     screen: HomeTabRouter,
     navigationOptions: {
@@ -13,4 +14,10 @@ export default (new StackNavigator({
   },
   BlankPage: { screen: BlankPage },
   Login: { screen: Login },
+  Profile: {
+    screen: ProfileScreen,
+    navigationOptions: {
+      title: '个人信息',
+    },
+  },
 }));
