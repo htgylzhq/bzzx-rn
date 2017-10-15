@@ -1,4 +1,4 @@
-package com.nativestarterkit;
+package com.bzzx;
 
 import android.app.Application;
 
