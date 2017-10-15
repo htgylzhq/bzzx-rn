@@ -1,5 +1,5 @@
 import type { Action } from '../actions/types';
-import { LOGIN } from '../actions/auth';
+import { LOGIN, LOGOUT } from '../actions/auth';
 
 export type State = {
   loggedIn: boolean,
@@ -15,12 +15,20 @@ const initialState = {
 
 export default function (state:State = initialState, action:Action): State {
   if (action.type === LOGIN) {
-    console.log('action', action);
     return {
       ...state,
       loggedIn: true,
       user: action.user,
     };
   }
+
+  if (action.type === LOGOUT) {
+    return {
+      ...state,
+      loggedIn: false,
+      user: null,
+    };
+  }
+
   return state;
 }
