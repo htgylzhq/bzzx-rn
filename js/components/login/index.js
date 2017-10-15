@@ -121,7 +121,7 @@ class Login extends Component {
                   style={styles.btn}
                   onPress={() => this._login()}
                 >
-                  <Text>Login</Text>
+                  <Text>登录</Text>
                 </Button>
               </View>
             </Image>
