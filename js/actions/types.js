@@ -1,3 +1,4 @@
+import User from '../models/User';
 
 export type Action =
   { type: 'PUSH_NEW_ROUTE', route: string }
@@ -9,6 +10,7 @@ export type Action =
     | { type: 'CLOSE_DRAWER'}
     | { type: 'SET_USER', name: string}
     | { type: 'SET_LIST', list: string}
+    | { type: 'LOGIN', user: User };
 
 export type Dispatch = (action:Action | Array<Action>) => any;
 export type GetState = () => Object;

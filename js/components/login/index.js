@@ -1,6 +1,5 @@
-import React, { Component } from "react";
-import { Image } from "react-native";
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import { Image } from 'react-native';
 import {
   Container,
   Content,
@@ -9,83 +8,106 @@ import {
   Button,
   Icon,
   View,
-  Text
-} from "native-base";
-import { Field, reduxForm } from "redux-form";
-import { setUser } from "../../actions/user";
-import styles from "./styles";
+  Text,
+} from 'native-base';
+import { connect } from 'react-redux';
+import { Field, reduxForm } from 'redux-form';
+import PropTypes from 'prop-types';
+import styles from './styles';
+import http from '../../commons/http';
+import { login } from '../../actions/auth';
+import User from '../../models/User';
 
-const background = require("../../../images/shadow.png");
+const background = require('../../../images/shadow.png');
 
-const validate = values => {
+const validate = (values) => {
   const error = {};
-  error.email = "";
-  error.password = "";
-  var ema = values.email;
-  var pw = values.password;
-  if (values.email === undefined) {
-    ema = "";
+  error.loginname = '';
+  error.password = '';
+  let ema = values.loginname;
+  let pw = values.password;
+  if (values.loginname === undefined) {
+    ema = '';
   }
   if (values.password === undefined) {
-    pw = "";
+    pw = '';
   }
-  if (ema.length < 8 && ema !== "") {
-    error.email = "too short";
-  }
-  if (!ema.includes("@") && ema !== "") {
-    error.email = "@ not included";
+  if (ema.length < 8 && ema !== '') {
+    error.loginname = 'too short';
   }
   if (pw.length > 12) {
-    error.password = "max 11 characters";
+    error.password = 'max 11 characters';
   }
   if (pw.length < 5 && pw.length > 0) {
-    error.password = "Weak";
+    error.password = 'Weak';
   }
   return error;
 };
 
 class Login extends Component {
   static propTypes = {
-    setUser: React.PropTypes.func
+    loginname: PropTypes.string,
+    password: PropTypes.string,
+    onLogin: PropTypes.func,
   };
+
   constructor(props) {
     super(props);
     this.state = {
-      name: ""
+      name: '',
     };
     this.renderInput = this.renderInput.bind(this);
   }
 
-  setUser(name) {
-    this.props.setUser(name);
-  }
-  renderInput({
-    input,
-    label,
-    type,
-    meta: { touched, error, warning },
-    inputProps
-  }) {
-    var hasError = false;
-    if (error !== undefined) {
+  _login = () => {
+    const loginname = this.props.loginname;
+    const password = this.props.password;
+
+    http.post('/platform/login/doLogin', {
+      username: loginname,
+      password,
+    }).then((response) => {
+      console.log('response', response);
+      if (response.data.code === 0) {
+        const user = new User(response.data.data);
+        this.props.onLogin(user);
+      } else {
+        // 登录失败
+        // Todo Alert("用户名或密码错误！");
+      }
+    })
+      .catch((error) => {
+        console.log('error', error);
+      });
+    // this.props.navigation.navigate('Home');
+  };
+
+  renderInput = ({
+                   input,
+                   meta: { error, pristine },
+                 }) => {
+    let hasError = false;
+    if (!pristine && error !== undefined) {
       hasError = true;
     }
     return (
       <Item error={hasError}>
-        <Icon active name={input.name === "email" ? "person" : "unlock"} />
+        <Icon active name={input.name === 'loginname' ? 'person' : 'unlock'} />
         <Input
-          placeholder={input.name === "email" ? "EMAIL" : "PASSWORD"}
+          placeholder={input.name === 'loginname' ? '登录名' : '密码'}
+          secureTextEntry={input.name === 'password'}
           {...input}
         />
         {hasError
-          ? <Item style={{ borderColor: "transparent" }}>
-              <Icon active style={{ color: "red", marginTop: 5 }} name="bug" />
-              <Text style={{ fontSize: 15, color: "red" }}>{error}</Text>
-            </Item>
+          ? <Item style={{ borderColor: 'transparent' }}>
+            <Icon active style={{ color: 'red', marginTop: 5 }} name={'bug'} />
+            <Text style={{ fontSize: 15, color: 'red' }}>{error}</Text>
+          </Item>
           : <Text />}
       </Item>
     );
-  }
+  };
+
   render() {
     return (
       <Container>
@@ -93,11 +115,11 @@ class Login extends Component {
           <Content>
             <Image source={background} style={styles.shadow}>
               <View style={styles.bg}>
-                <Field name="email" component={this.renderInput} />
-                <Field name="password" component={this.renderInput} />
+                <Field name={'loginname'} component={this.renderInput} />
+                <Field name={'password'} component={this.renderInput} />
                 <Button
                   style={styles.btn}
-                  onPress={() => this.props.navigation.navigate("Home")}
+                  onPress={() => this._login()}
                 >
                   <Text>Login</Text>
                 </Button>
@@ -109,18 +131,25 @@ class Login extends Component {
     );
   }
 }
-const LoginSwag = reduxForm(
-  {
-    form: "test",
-    validate
-  },
-  function bindActions(dispatch) {
-    return {
-      setUser: name => dispatch(setUser(name))
-    };
-  }
-)(Login);
-LoginSwag.navigationOptions = {
-  header: null
+
+const mapStateToProps = state => (state && state.form && state.form.login && state.form.login.values) || {
+  loginname: '',
+  password: '',
 };
-export default LoginSwag;
+
+const mapDispatchToProps = dispatch => ({
+  onLogin: (user) => {
+    dispatch(login(user));
+  },
+});
+
+const LoginForm = reduxForm(
+  {
+    form: 'login',
+    validate,
+  },
+)(Login);
+LoginForm.navigationOptions = {
+  header: null,
+};
+export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);

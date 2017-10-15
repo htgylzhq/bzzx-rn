@@ -1,9 +1,8 @@
-import React, { Component } from "react";
-import { TouchableOpacity } from "react-native";
-import { connect } from "react-redux";
-import BlankPage2 from "../blankPage2";
-import DrawBar from "../DrawBar";
-import { DrawerNavigator, NavigationActions } from "react-navigation";
+import React, { Component } from 'react';
+import { TouchableOpacity } from 'react-native';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { DrawerNavigator, NavigationActions } from 'react-navigation';
 import {
   Container,
   Header,
@@ -14,23 +13,24 @@ import {
   Icon,
   Left,
   Body,
-  Right
-} from "native-base";
-import { Grid, Row } from "react-native-easy-grid";
-
-import { setIndex } from "../../actions/list";
-import { openDrawer } from "../../actions/drawer";
-import styles from "./styles";
+  Right,
+} from 'native-base';
+import { Grid, Row } from 'react-native-easy-grid';
+import BlankPage2 from '../blankPage2';
+import DrawBar from '../DrawBar';
+import { setIndex } from '../../actions/list';
+import { openDrawer } from '../../actions/drawer';
+import styles from './styles';
 
 class Home extends Component {
   static navigationOptions = {
-    header: null
+    header: null,
   };
   static propTypes = {
-    name: React.PropTypes.string,
-    setIndex: React.PropTypes.func,
-    list: React.PropTypes.arrayOf(React.PropTypes.string),
-    openDrawer: React.PropTypes.func
+    name: PropTypes.string,
+    setIndex: PropTypes.func,
+    list: PropTypes.arrayOf(PropTypes.string),
+    openDrawer: PropTypes.func,
   };
 
   newPage(index) {
@@ -39,7 +39,7 @@ class Home extends Component {
   }
 
   render() {
-    console.log(DrawNav, "786785786");
+    console.log(DrawNav, '786785786');
     return (
       <Container style={styles.container}>
         <Header>
@@ -51,7 +51,7 @@ class Home extends Component {
                 DrawerNav.dispatch(
                   NavigationActions.reset({
                     index: 0,
-                    actions: [NavigationActions.navigate({ routeName: "Home" })]
+                    actions: [NavigationActions.navigate({ routeName: 'Home' })],
                   })
                 );
                 DrawerNav.goBack();
@@ -68,7 +68,7 @@ class Home extends Component {
           <Right>
             <Button
               transparent
-              onPress={() => DrawerNav.navigate("DrawerOpen")}
+              onPress={() => DrawerNav.navigate('DrawerOpen')}
             >
               <Icon active name="menu" />
             </Button>
@@ -81,8 +81,8 @@ class Home extends Component {
                 <TouchableOpacity
                   style={styles.row}
                   onPress={() =>
-                    this.props.navigation.navigate("BlankPage", {
-                      name: { item }
+                    this.props.navigation.navigate('BlankPage', {
+                      name: { item },
                     })}
                 >
                   <Text style={styles.text}>{item}</Text>
@@ -99,29 +99,29 @@ class Home extends Component {
 function bindAction(dispatch) {
   return {
     setIndex: index => dispatch(setIndex(index)),
-    openDrawer: () => dispatch(openDrawer())
+    openDrawer: () => dispatch(openDrawer()),
   };
 }
 const mapStateToProps = state => ({
   name: state.user.name,
-  list: state.list.list
+  list: state.list.list,
 });
 
 const HomeSwagger = connect(mapStateToProps, bindAction)(Home);
 const DrawNav = DrawerNavigator(
   {
     Home: { screen: HomeSwagger },
-    BlankPage2: { screen: BlankPage2 }
+    BlankPage2: { screen: BlankPage2 },
   },
   {
-    contentComponent: props => <DrawBar {...props} />
+    contentComponent: props => <DrawBar {...props} />,
   }
 );
 const DrawerNav = null;
 DrawNav.navigationOptions = ({ navigation }) => {
   DrawerNav = navigation;
   return {
-    header: null
+    header: null,
   };
 };
 export default DrawNav;

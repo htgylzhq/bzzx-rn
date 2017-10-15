@@ -1,43 +1,48 @@
-import React, { Component } from "react";
-import { StyleSheet } from "react-native";
-import CodePush from "react-native-code-push";
-
-import { Container, Content, Text, View } from "native-base";
-import Modal from "react-native-modalbox";
-import MainStackRouter from "./Routers/MainStackRouter";
-import ProgressBar from "./components/loaders/ProgressBar";
-
-import theme from "./themes/base-theme";
+import React, { Component } from 'react';
+import { StyleSheet } from 'react-native';
+import PropTypes from 'prop-types';
+import CodePush from 'react-native-code-push';
+import { connect } from 'react-redux';
+import { Container, Content, Text, View } from 'native-base';
+import Modal from 'react-native-modalbox';
+import MainStackRouter from './Routers/MainStackRouter';
+import ProgressBar from './components/loaders/ProgressBar';
+import theme from './themes/base-theme';
+import Login from './components/login';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: null,
-    height: null
+    height: null,
   },
   modal: {
-    justifyContent: "center",
-    alignItems: "center"
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   modal1: {
-    height: 300
-  }
+    height: 300,
+  },
 });
 
 class App extends Component {
+  static propTypes = {
+    loggedIn: PropTypes.bool,
+  };
+
   constructor(props) {
     super(props);
     this.state = {
       showDownloadingModal: false,
       showInstalling: false,
-      downloadProgress: 0
+      downloadProgress: 0,
     };
   }
 
   componentDidMount() {
     CodePush.sync(
       { updateDialog: true, installMode: CodePush.InstallMode.IMMEDIATE },
-      status => {
+      (status) => {
         switch (status) {
           case CodePush.SyncStatus.DOWNLOADING_PACKAGE:
             this.setState({ showDownloadingModal: true });
@@ -55,12 +60,13 @@ class App extends Component {
         }
       },
       ({ receivedBytes, totalBytes }) => {
-        this.setState({ downloadProgress: receivedBytes / totalBytes * 100 });
+        this.setState({ downloadProgress: (receivedBytes / totalBytes) * 100 });
       }
     );
   }
 
   render() {
+    console.log('App Rendered')
     if (this.state.showDownloadingModal) {
       return (
         <Container
@@ -71,7 +77,7 @@ class App extends Component {
             <Modal
               style={[styles.modal, styles.modal1]}
               backdrop={false}
-              ref={c => {
+              ref={(c) => {
                 this._modal = c;
               }}
               swipeToClose={false}
@@ -79,47 +85,47 @@ class App extends Component {
               <View
                 style={{
                   flex: 1,
-                  alignSelf: "stretch",
-                  justifyContent: "center",
-                  padding: 20
+                  alignSelf: 'stretch',
+                  justifyContent: 'center',
+                  padding: 20,
                 }}
               >
                 {this.state.showInstalling
                   ? <Text
-                      style={{
-                        color: theme.brandPrimary,
-                        textAlign: "center",
-                        marginBottom: 15,
-                        fontSize: 15
-                      }}
-                    >
+                    style={{
+                      color: theme.brandPrimary,
+                      textAlign: 'center',
+                      marginBottom: 15,
+                      fontSize: 15,
+                    }}
+                  >
                       Installing update...
                     </Text>
                   : <View
+                    style={{
+                      flex: 1,
+                      alignSelf: 'stretch',
+                      justifyContent: 'center',
+                      padding: 20,
+                    }}
+                  >
+                    <Text
                       style={{
-                        flex: 1,
-                        alignSelf: "stretch",
-                        justifyContent: "center",
-                        padding: 20
+                        color: theme.brandPrimary,
+                        textAlign: 'center',
+                        marginBottom: 15,
+                        fontSize: 15,
                       }}
                     >
-                      <Text
-                        style={{
-                          color: theme.brandPrimary,
-                          textAlign: "center",
-                          marginBottom: 15,
-                          fontSize: 15
-                        }}
-                      >
                         Downloading update...
-                        {" "}
-                        {`${parseInt(this.state.downloadProgress, 10)} %`}
-                      </Text>
-                      <ProgressBar
-                        color="theme.brandPrimary"
-                        progress={parseInt(this.state.downloadProgress, 10)}
-                      />
-                    </View>}
+                        {' '}
+                      {`${parseInt(this.state.downloadProgress, 10)} %`}
+                    </Text>
+                    <ProgressBar
+                      color="theme.brandPrimary"
+                      progress={parseInt(this.state.downloadProgress, 10)}
+                    />
+                  </View>}
               </View>
             </Modal>
           </Content>
@@ -127,8 +133,16 @@ class App extends Component {
       );
     }
 
-    return <MainStackRouter />;
+    if (this.props.loggedIn) {
+      return <MainStackRouter />;
+    }
+
+    return <Login />;
   }
 }
 
-export default App;
+const mapStateToProps = state => ({
+  loggedIn: state.auth.loggedIn,
+});
+
+export default connect(mapStateToProps)(App);
