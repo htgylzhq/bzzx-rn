@@ -27,7 +27,7 @@
     "redux-form": "^6.7.0",
     "redux-persist": "^4.0.0",
     "redux-thunk": "^2.2.0",
-    "remote-redux-devtools": "^0.5.0"
+    "remote-redux-devtools": "^0.5.12"
   },
   "devDependencies": {
     "babel-eslint": "^6.1.2",
@@ -44,8 +44,7 @@
     "jest-react-native": "17.0.0",
     "mocha": "^2.5.3",
     "react-test-renderer": "15.3.2",
-    "remote-redux-devtools-on-debugger": "^0.7.0",
-    "remotedev-server": "^0.1.2"
+    "remotedev-rn-debugger": "^0.8.3"
   },
   "keywords": [
     "android",

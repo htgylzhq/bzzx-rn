@@ -1,4 +1,5 @@
 import User from '../models/User';
+import Msg from '../models/Msg';
 
 export type Action =
   { type: 'PUSH_NEW_ROUTE', route: string }
@@ -10,7 +11,8 @@ export type Action =
     | { type: 'CLOSE_DRAWER'}
     | { type: 'SET_USER', name: string}
     | { type: 'SET_LIST', list: string}
-    | { type: 'LOGIN', user: User };
+    | { type: 'LOGIN', user: User }
+    | { type: 'REFRESH_MSGS', msgs: Msg[] };
 
 export type Dispatch = (action:Action | Array<Action>) => any;
 export type GetState = () => Object;

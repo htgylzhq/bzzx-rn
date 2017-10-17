@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Container, Content, Footer, FooterTab, Icon, Root, Text } from 'native-base';
+import { Button, Footer, FooterTab, Icon, Text } from 'native-base';
 import { TabNavigator } from 'react-navigation';
 import HomeScreen from '../components/home';
 import TianScreen from '../components/tian';
@@ -46,7 +46,7 @@ const HomeTabRouter = TabNavigator({
           onPress={() => props.navigation.navigate('Msg')}
         >
           <Icon name="chatboxes" />
-          <Text>消息</Text>
+          <Text>留言板</Text>
         </Button>
         <Button
           vertical
