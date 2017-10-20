@@ -13,6 +13,7 @@ import {
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import PropTypes from 'prop-types';
+import qs from 'qs';
 import styles from './styles';
 import http from '../../commons/http';
 import { login } from '../../actions/auth';
@@ -63,11 +64,18 @@ class Login extends Component {
     const loginname = this.props.loginname;
     const password = this.props.password;
 
-    http.post('/platform/login/doLogin', {
+    http.request({
+      url: '/platform/login/doLogin',
+      method: 'post',
+      data: {
+        username: loginname,
+        password,
+      },
+      transformRequest: [data => qs.stringify(data)],
+    }, {
       username: loginname,
       password,
     }).then((response) => {
-      console.log('response', response);
       if (response.data.code === 0) {
         const user = new User(response.data.data);
         this.props.onLogin(user);

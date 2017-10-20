@@ -1,12 +1,36 @@
 import type { Action } from '../actions/types';
 import Msg from '../models/Msg';
-import { REFRESH_MSGS } from '../actions/msg';
+import { REFRESH_MSGS, LOAD_MORE_MSGS } from '../actions/msg';
+import { unshift, push } from '../commons/util';
 
-const initialState = [];
+export type State = {
+  minUpdate: number,
+  maxUpdate: number,
+  msgs: Msg[],
+}
 
-export default function (state:Msg[] = initialState, action:Action): Msg[] {
+const initialState = {
+  minUpdate: 0,
+  maxUpdate: 0,
+  msgs: [],
+};
+
+export default function (state:State = initialState, action:Action): Msg[] {
   if (action.type === REFRESH_MSGS) {
-    return state.concat(action.msgs);
+    return {
+      ...state,
+      maxUpdate: action.maxUpdate,
+      minUpdate: state.minUpdate === 0 ? action.minUpdate : state.minUpdate,
+      msgs: unshift(state.msgs, action.msgs),
+    };
+  }
+
+  if (action.type === LOAD_MORE_MSGS) {
+    return {
+      ...state,
+      minUpdate: action.minUpdate,
+      msgs: push(state.msgs, action.msgs),
+    };
   }
 
   return state;

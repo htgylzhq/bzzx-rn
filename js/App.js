@@ -66,7 +66,6 @@ class App extends Component {
   }
 
   render() {
-    console.log('App Rendered')
     if (this.state.showDownloadingModal) {
       return (
         <Container

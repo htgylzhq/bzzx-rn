@@ -3,15 +3,18 @@ import { RefreshControl } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Container, View, Text, List, ListItem, H3, Card, CardItem } from 'native-base';
-import { refresh } from '../../actions/msg';
-// import http from '../../commons/http';
+import { refresh, loadMore } from '../../actions/msg';
+import http from '../../commons/http';
 import Msg from '../../models/Msg';
 
 class MsgScreen extends Component {
 
   static propTypes = {
     msgs: PropTypes.arrayOf(PropTypes.object),
+    minUpdate: PropTypes.number,
+    maxUpdate: PropTypes.number,
     refresh: PropTypes.func,
+    loadMore: PropTypes.func,
   };
 
   constructor() {
@@ -22,61 +25,46 @@ class MsgScreen extends Component {
   }
 
   componentWillMount() {
-    /* http.get('').then((response) => {
-      console.log('response', response);
+    this._refresh();
+  }
+
+  _refresh() {
+    const maxUpdate = this.props.maxUpdate;
+    http.get(`/platform/pub/message/query?maxUpdate=${maxUpdate}`).then((response) => {
       if (response.data.code === 0) {
-        const msgs = response.data.data.map(obj => new Msg(obj));
-        this.props.refresh(msgs);
+        const data = response.data.data;
+        const msgs = data.list.map(obj => new Msg(obj));
+        const newMinUpdate = data.minUpdate;
+        const newMaxUpdate = data.maxUpdate;
+        this.props.refresh(msgs, newMinUpdate, newMaxUpdate);
+        this.setState({ refreshing: false });
+      } else {
+        // 查询留言失败
+        // Todo Alert("查询留言失败！");
+        this.setState({ refreshing: false });
+      }
+    }).catch((error) => {
+      console.log('Refresh msgs error: ', error);
+      this.setState({ refreshing: false });
+    });
+  }
+
+  _loadMore() {
+    const minUpdate = this.props.minUpdate;
+    http.get(`/platform/pub/message/query?minUpdate=${minUpdate}`).then((response) => {
+      if (response.data.code === 0) {
+        const data = response.data.data;
+        const msgs = data.list.map(obj => new Msg(obj));
+        const newMinUpdate = data.minUpdate;
+        const newMaxUpdate = data.maxUpdate;
+        this.props.loadMore(msgs, newMinUpdate, newMaxUpdate);
       } else {
         // 查询留言失败
         // Todo Alert("查询留言失败！");
       }
     }).catch((error) => {
       console.log('Refresh msgs error: ', error);
-    });*/
-    const msgs = [
-      {
-        title: '在好的大学里上学是一种什么感觉？',
-        content: '复旦大二狗（别人提醒我说这个大学可以直接写出来……）感受如下：1.在教室自习，手机电脑钱包随处乱放，根本不用担心被偷（反而丢车的几率会大很多）；2.大部分老师是很负责的，讲课干货很多，然而讲的有趣的老师就少了。不过可以明显看到，大学老师还是比高中老师有水平很多；3.同学智商情商都很高，撕逼问题很少出现（虽然不是没有）；',
-        createTime: '2017-10-13',
-      },
-      {
-        title: '在好的大学里上学是一种什么感觉？',
-        content: '复旦大二狗（别人提醒我说这个大学可以直接写出来……）感受如下：1.在教室自习，手机电脑钱包随处乱放，根本不用担心被偷（反而丢车的几率会大很多）；2.大部分老师是很负责的，讲课干货很多，然而讲的有趣的老师就少了。不过可以明显看到，大学老师还是比高中老师有水平很多；3.同学智商情商都很高，撕逼问题很少出现（虽然不是没有）；',
-        createTime: '2017-10-13',
-      },
-      {
-        title: '在好的大学里上学是一种什么感觉？',
-        content: '复旦大二狗（别人提醒我说这个大学可以直接写出来……）感受如下：1.在教室自习，手机电脑钱包随处乱放，根本不用担心被偷（反而丢车的几率会大很多）；2.大部分老师是很负责的，讲课干货很多，然而讲的有趣的老师就少了。不过可以明显看到，大学老师还是比高中老师有水平很多；3.同学智商情商都很高，撕逼问题很少出现（虽然不是没有）；',
-        createTime: '2017-10-13',
-      },
-    ];
-    this.props.refresh(msgs);
-  }
-
-  _loadMore() {
-    if (this.props.msgs.length === 0) {
-      return;
-    }
-    const msgs = [
-      {
-        title: '在好的大学里上学',
-        content: '复旦大二狗（别人提醒我说这个大学可以直接写出来……）感受如下：1.在教室自习，手机电脑钱包随处乱放，根本不用担心被偷（反而丢车的几率会大很多）；2.大部分老师是很负责的，讲课干货很多，然而讲的有趣的老师就少了。不过可以明显看到，大学老师还是比高中老师有水平很多；3.同学智商情商都很高，撕逼问题很少出现（虽然不是没有）；',
-        createTime: '2017-10-14',
-      },
-      {
-        title: '在好的大学里上学',
-        content: '复旦大二狗（别人提醒我说这个大学可以直接写出来……）感受如下：1.在教室自习，手机电脑钱包随处乱放，根本不用担心被偷（反而丢车的几率会大很多）；2.大部分老师是很负责的，讲课干货很多，然而讲的有趣的老师就少了。不过可以明显看到，大学老师还是比高中老师有水平很多；3.同学智商情商都很高，撕逼问题很少出现（虽然不是没有）；',
-        createTime: '2017-10-14',
-      },
-      {
-        title: '在好的大学里上学',
-        content: '复旦大二狗（别人提醒我说这个大学可以直接写出来……）感受如下：1.在教室自习，手机电脑钱包随处乱放，根本不用担心被偷（反而丢车的几率会大很多）；2.大部分老师是很负责的，讲课干货很多，然而讲的有趣的老师就少了。不过可以明显看到，大学老师还是比高中老师有水平很多；3.同学智商情商都很高，撕逼问题很少出现（虽然不是没有）；',
-        createTime: '2017-10-14',
-      },
-    ];
-    console.log('End...Load more...');
-    this.props.msgs.concat(msgs);
+    });
   }
 
   _renderMsgItem(msg:Msg) {
@@ -108,13 +96,7 @@ class MsgScreen extends Component {
             onEndReached={() => { this._loadMore(); }}
             refreshControl={<RefreshControl
               refreshing={this.state.refreshing}
-              onRefresh={() => {
-                this.setState({ refreshing: true });
-                console.log('refresh');
-                setTimeout(() => {
-                  this.setState({ refreshing: false });
-                });
-              }}
+              onRefresh={() => this._refresh()}
             />}
           />
         </View>
@@ -124,11 +106,18 @@ class MsgScreen extends Component {
 
 }
 
-const mapStateToProps = state => ({ msgs: state.msgs });
+const mapStateToProps = state => ({
+  msgs: state.msg.msgs,
+  minUpdate: state.msg.minUpdate,
+  maxUpdate: state.msg.maxUpdate,
+});
 
 const mapDispatchToProps = dispatch => ({
-  refresh: (msgs) => {
-    dispatch(refresh(msgs));
+  refresh: (msgs, maxUpdate) => {
+    dispatch(refresh(msgs, maxUpdate));
+  },
+  loadMore: (msgs, minUpdate) => {
+    dispatch(loadMore(msgs, minUpdate));
   },
 });
 

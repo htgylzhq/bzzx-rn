@@ -12,7 +12,8 @@ export type Action =
     | { type: 'SET_USER', name: string}
     | { type: 'SET_LIST', list: string}
     | { type: 'LOGIN', user: User }
-    | { type: 'REFRESH_MSGS', msgs: Msg[] };
+    | { type: 'REFRESH_MSGS', msgs: Msg[], maxUpdate: number, minUpdate: number }
+    | { type: 'LOAD_MORE_MSGS', msgs: Msg[], maxUpdate: number, minUpdate: number }
 
 export type Dispatch = (action:Action | Array<Action>) => any;
 export type GetState = () => Object;

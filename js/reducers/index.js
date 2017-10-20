@@ -4,7 +4,7 @@ import drawer from './drawer';
 import user from './user';
 import list from './list';
 import auth from './auth';
-import msgs from './msg';
+import msg from './msg';
 
 export default combineReducers({
   form: formReducer,
@@ -12,5 +12,5 @@ export default combineReducers({
   drawer,
   user,
   list,
-  msgs,
+  msg,
 });
