@@ -1,7 +1,7 @@
 import type { Action } from '../actions/types';
 import Msg from '../models/Msg';
-import { REFRESH_MSGS, LOAD_MORE_MSGS } from '../actions/msg';
-import { unshift, push } from '../commons/util';
+import { LOAD_MORE_MSGS, REFRESH_MSGS } from '../actions/msg';
+import { push, unshift } from '../commons/util';
 
 export type State = {
   minUpdate: number,
@@ -15,7 +15,7 @@ const initialState = {
   msgs: [],
 };
 
-export default function (state:State = initialState, action:Action): Msg[] {
+export default function (state: State = initialState, action: Action): Msg[] {
   if (action.type === REFRESH_MSGS) {
     return {
       ...state,

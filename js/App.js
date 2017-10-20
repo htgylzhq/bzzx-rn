@@ -5,7 +5,7 @@ import CodePush from 'react-native-code-push';
 import { connect } from 'react-redux';
 import { Container, Content, Text, View } from 'native-base';
 import Modal from 'react-native-modalbox';
-import MainStackRouter from './Routers/MainStackRouter';
+import AppWithNavigationState from './navigators/AppNavigator';
 import ProgressBar from './components/loaders/ProgressBar';
 import theme from './themes/base-theme';
 import Login from './components/login';
@@ -133,7 +133,7 @@ class App extends Component {
     }
 
     if (this.props.loggedIn) {
-      return <MainStackRouter />;
+      return <AppWithNavigationState />;
     }
 
     return <Login />;

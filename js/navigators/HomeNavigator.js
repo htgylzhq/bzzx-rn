@@ -1,12 +1,14 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Button, Footer, FooterTab, Icon, Text } from 'native-base';
-import { TabNavigator } from 'react-navigation';
+import { TabNavigator, addNavigationHelpers } from 'react-navigation';
+import { connect } from 'react-redux';
 import HomeScreen from '../components/home';
 import TianScreen from '../components/tian';
 import MsgScreen from '../components/msg';
 import MeScreen from '../components/me';
 
-const HomeTabRouter = TabNavigator({
+const Navigator = TabNavigator({
   Home: {
     screen: HomeScreen,
   },
@@ -61,4 +63,8 @@ const HomeTabRouter = TabNavigator({
     ),
 });
 
-export default HomeTabRouter;
+const HomeNavigator = () => (
+  <Navigator />
+);
+
+export default connect()(HomeNavigator);

@@ -5,6 +5,7 @@ import user from './user';
 import list from './list';
 import auth from './auth';
 import msg from './msg';
+import nav from './router';
 
 export default combineReducers({
   form: formReducer,
@@ -13,4 +14,5 @@ export default combineReducers({
   user,
   list,
   msg,
+  nav,
 });

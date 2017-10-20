@@ -78,6 +78,7 @@ class Login extends Component {
     }).then((response) => {
       if (response.data.code === 0) {
         const user = new User(response.data.data);
+        console.log('logined User: ', user);
         this.props.onLogin(user);
       } else {
         // 登录失败

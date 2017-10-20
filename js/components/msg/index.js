@@ -15,6 +15,8 @@ class MsgScreen extends Component {
     maxUpdate: PropTypes.number,
     refresh: PropTypes.func,
     loadMore: PropTypes.func,
+    navigation: PropTypes.shape({ navigate: PropTypes.func }),
+    dispatch: PropTypes.func,
   };
 
   constructor() {
@@ -67,9 +69,22 @@ class MsgScreen extends Component {
     });
   }
 
+  _onPressMsg(msg) {
+    console.log('row pressed: ', msg);
+    console.log('navigation: ', this.props.navigation);
+    console.log('send id: ', msg.id);
+    this.props.dispatch({
+      type: 'Navigation/NAVIGATE',
+      routeName: 'MsgDetailPage',
+      params: {
+        id: msg.id,
+      },
+    });
+  }
+
   _renderMsgItem(msg:Msg) {
     return (
-      <ListItem>
+      <ListItem onPress={() => this._onPressMsg(msg)}>
         <Card transparent>
           <CardItem header>
             <H3 numberOfLines={1} >{msg.title}</H3>
@@ -90,6 +105,7 @@ class MsgScreen extends Component {
       <Container>
         <View>
           <List
+            button
             dataArray={this.props.msgs}
             renderRow={item => this._renderMsgItem(item)}
             onEndReachedThreshold={20}
@@ -113,12 +129,13 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  refresh: (msgs, maxUpdate) => {
-    dispatch(refresh(msgs, maxUpdate));
+  refresh: (msgs, minUpdate, maxUpdate) => {
+    dispatch(refresh(msgs, minUpdate, maxUpdate));
   },
-  loadMore: (msgs, minUpdate) => {
-    dispatch(loadMore(msgs, minUpdate));
+  loadMore: (msgs, minUpdate, maxUpdate) => {
+    dispatch(loadMore(msgs, minUpdate, maxUpdate));
   },
+  dispatch,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MsgScreen);
