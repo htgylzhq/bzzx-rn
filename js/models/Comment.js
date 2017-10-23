@@ -1,6 +1,5 @@
-export default class Msg {
+export default class Comment {
   id: string;
-  title: string;
   content: string;
   createTime: string;
   creatorName: string;

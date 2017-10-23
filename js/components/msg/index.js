@@ -3,7 +3,7 @@ import { RefreshControl } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Container, View, Text, List, ListItem, H3, Card, CardItem } from 'native-base';
-import { refresh, loadMore } from '../../actions/msg';
+import { refresh, loadMore } from '../../actions/msgIndex';
 import http from '../../commons/http';
 import Msg from '../../models/Msg';
 
@@ -15,7 +15,6 @@ class MsgScreen extends Component {
     maxUpdate: PropTypes.number,
     refresh: PropTypes.func,
     loadMore: PropTypes.func,
-    navigation: PropTypes.shape({ navigate: PropTypes.func }),
     dispatch: PropTypes.func,
   };
 
@@ -70,9 +69,6 @@ class MsgScreen extends Component {
   }
 
   _onPressMsg(msg) {
-    console.log('row pressed: ', msg);
-    console.log('navigation: ', this.props.navigation);
-    console.log('send id: ', msg.id);
     this.props.dispatch({
       type: 'Navigation/NAVIGATE',
       routeName: 'MsgDetailPage',
@@ -123,9 +119,9 @@ class MsgScreen extends Component {
 }
 
 const mapStateToProps = state => ({
-  msgs: state.msg.msgs,
-  minUpdate: state.msg.minUpdate,
-  maxUpdate: state.msg.maxUpdate,
+  msgs: state.msgIndex.msgs,
+  minUpdate: state.msgIndex.minUpdate,
+  maxUpdate: state.msgIndex.maxUpdate,
 });
 
 const mapDispatchToProps = dispatch => ({

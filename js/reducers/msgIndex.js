@@ -1,6 +1,6 @@
 import type { Action } from '../actions/types';
 import Msg from '../models/Msg';
-import { LOAD_MORE_MSGS, REFRESH_MSGS } from '../actions/msg';
+import { LOAD_MORE_MSGS, REFRESH_MSGS } from '../actions/msgIndex';
 import { push, unshift } from '../commons/util';
 
 export type State = {

@@ -1,5 +1,6 @@
 import User from '../models/User';
 import Msg from '../models/Msg';
+import Comment from '../models/Comment';
 
 export type Action =
   { type: 'PUSH_NEW_ROUTE', route: string }
@@ -14,6 +15,8 @@ export type Action =
     | { type: 'LOGIN', user: User }
     | { type: 'REFRESH_MSGS', msgs: Msg[], maxUpdate: number, minUpdate: number }
     | { type: 'LOAD_MORE_MSGS', msgs: Msg[], maxUpdate: number, minUpdate: number }
+    | { type: 'ON_FETCH_MSG', msg: Msg }
+    | { type: 'LOAD_MORE_MSG_COMMENTS', comments: Comment[], maxUpdate: number}
 
 export type Dispatch = (action:Action | Array<Action>) => any;
 export type GetState = () => Object;

@@ -4,7 +4,8 @@ import drawer from './drawer';
 import user from './user';
 import list from './list';
 import auth from './auth';
-import msg from './msg';
+import msgIndex from './msgIndex';
+import msgDetail from './msgDetail';
 import nav from './router';
 
 export default combineReducers({
@@ -13,6 +14,7 @@ export default combineReducers({
   drawer,
   user,
   list,
-  msg,
+  msgIndex,
+  msgDetail,
   nav,
 });

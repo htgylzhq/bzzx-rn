@@ -1,7 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Button, Footer, FooterTab, Icon, Text } from 'native-base';
-import { TabNavigator, addNavigationHelpers } from 'react-navigation';
+import { TabNavigator } from 'react-navigation';
 import { connect } from 'react-redux';
 import HomeScreen from '../components/home';
 import TianScreen from '../components/tian';
