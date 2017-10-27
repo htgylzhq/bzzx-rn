@@ -3,7 +3,7 @@ import { Button, Footer, FooterTab, Icon, Text } from 'native-base';
 import { TabNavigator } from 'react-navigation';
 import { connect } from 'react-redux';
 import HomeScreen from '../components/home';
-import TianScreen from '../components/tian';
+import ProposalScreen from '../components/proposal';
 import MsgScreen from '../components/msg';
 import MeScreen from '../components/me';
 
@@ -11,8 +11,8 @@ const Navigator = TabNavigator({
   Home: {
     screen: HomeScreen,
   },
-  Tian: {
-    screen: TianScreen,
+  Proposal: {
+    screen: ProposalScreen,
   },
   Msg: {
     screen: MsgScreen,
@@ -36,7 +36,7 @@ const Navigator = TabNavigator({
         <Button
           vertical
           active={props.navigationState.index === 1}
-          onPress={() => props.navigation.navigate('Tian')}
+          onPress={() => props.navigation.navigate('Proposal')}
         >
           <Icon name="document" />
           <Text>提案</Text>

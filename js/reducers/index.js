@@ -6,6 +6,8 @@ import list from './list';
 import auth from './auth';
 import msgIndex from './msgIndex';
 import msgDetail from './msgDetail';
+import proposalIndex from './proposalIndex';
+import proposalDetail from './proposalDetail';
 import nav from './router';
 
 export default combineReducers({
@@ -16,5 +18,7 @@ export default combineReducers({
   list,
   msgIndex,
   msgDetail,
+  proposalIndex,
+  proposalDetail,
   nav,
 });
