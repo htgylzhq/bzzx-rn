@@ -109,7 +109,7 @@ class Login extends Component {
         />
         {hasError
           ? <Item style={{ borderColor: 'transparent' }}>
-            <Icon active style={{ color: 'red', marginTop: 5 }} name={'bug'} />
+            <Icon active style={{ color: 'red', marginTop: 5 }} name={'warning'} />
             <Text style={{ fontSize: 15, color: 'red' }}>{error}</Text>
           </Item>
           : <Text />}
