@@ -11,6 +11,7 @@ import SettingScreen from '../components/me/setting';
 import MsgDetailPage from '../components/msg/detail';
 import ProposalDetailPage from '../components/proposal/detail';
 import MyOwnProposalsPage from '../components/me/proposal/own';
+import MyTodoProposalsPage from '../components/me/proposal/todo';
 
 export const AppNavigator = StackNavigator({
   HomeTabRouter: {
@@ -51,6 +52,12 @@ export const AppNavigator = StackNavigator({
       title: '我的提案',
     },
   },
+  MyTodoProposalsPage: {
+    screen: MyTodoProposalsPage,
+    navigationOptions: {
+      title: '提案 - 我的待办',
+    },
+  },
 });
 
 class AppWithNavigationState extends Component {
@@ -87,10 +94,8 @@ AppWithNavigationState.propTypes = {
   nav: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = (state) => {
-  return {
-    nav: state.nav,
-  };
-};
+const mapStateToProps = state => ({
+  nav: state.nav,
+});
 
 export default connect(mapStateToProps)(AppWithNavigationState);

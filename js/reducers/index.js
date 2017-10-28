@@ -9,6 +9,7 @@ import msgDetail from './msgDetail';
 import proposalIndex from './proposalIndex';
 import proposalDetail from './proposalDetail';
 import myOwnProposals from './myOwnProposals';
+import myTodoProposals from './myTodoProposals';
 import nav from './router';
 
 export default combineReducers({
@@ -22,5 +23,6 @@ export default combineReducers({
   proposalIndex,
   proposalDetail,
   myOwnProposals,
+  myTodoProposals,
   nav,
 });

@@ -22,6 +22,10 @@ export type Action =
   | { type: 'LOAD_MORE_PROPOSALS', proposals: Proposal[], maxUpdate: number, minUpdate: number }
   | { type: 'ON_FETCH_PROPOSAL', proposal: Proposal }
   | { type: 'LOAD_MORE_PROPOSAL_COMMENTS', comments: Comment[], maxUpdate: number }
+  | { type: 'REFRESH_MY_OWN_PROPOSALS', proposals: Proposal[], maxUpdate: number, minUpdate: number }
+  | { type: 'LOAD_MORE_MY_OWN_PROPOSALS', proposals: Proposal[], maxUpdate: number, minUpdate: number }
+  | { type: 'REFRESH_MY_TODO_PROPOSALS', proposals: Proposal[], maxUpdate: number, minUpdate: number }
+  | { type: 'LOAD_MORE_MY_TODO_PROPOSALS', proposals: Proposal[], maxUpdate: number, minUpdate: number }
 
 export type Dispatch = (action: Action | Array<Action>) => any;
 export type GetState = () => Object;

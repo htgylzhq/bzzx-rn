@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Proposal from '../../../../models/Proposal';
 import http from '../../../../commons/http';
-import { refresh, loadMore } from '../../../../actions/myOwnProposals';
+import { refresh, loadMore } from '../../../../actions/myTodoProposals';
 
 class MyOwnProposalsScreen extends Component {
 
@@ -31,7 +31,7 @@ class MyOwnProposalsScreen extends Component {
 
   _refresh() {
     const maxUpdate = this.props.maxUpdate;
-    http.get(`/platform/api/cppcc/proposal/type/my?maxUpdate=${maxUpdate}`).then((response) => {
+    http.get(`/platform/api/cppcc/proposal/type/todo?maxUpdate=${maxUpdate}`).then((response) => {
       if (response.data.code === 0) {
         const data = response.data.data;
         const proposals = data.list.map(obj => new Proposal(obj));
@@ -52,7 +52,7 @@ class MyOwnProposalsScreen extends Component {
 
   _loadMore() {
     const minUpdate = this.props.minUpdate;
-    http.get(`/platform/api/cppcc/proposal/type/my?minUpdate=${minUpdate}`).then((response) => {
+    http.get(`/platform/api/cppcc/proposal/type/todo?minUpdate=${minUpdate}`).then((response) => {
       if (response.data.code === 0) {
         const data = response.data.data;
         const proposals = data.list.map(obj => new Proposal(obj));
@@ -119,9 +119,9 @@ class MyOwnProposalsScreen extends Component {
 }
 
 const mapStateToProps = state => ({
-  proposals: state.myOwnProposals.proposals,
-  minUpdate: state.myOwnProposals.minUpdate,
-  maxUpdate: state.myOwnProposals.maxUpdate,
+  proposals: state.myTodoProposals.proposals,
+  minUpdate: state.myTodoProposals.minUpdate,
+  maxUpdate: state.myTodoProposals.maxUpdate,
 });
 
 const mapDispatchToProps = dispatch => ({
