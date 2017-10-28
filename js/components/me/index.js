@@ -2,22 +2,28 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Container, Content, Text, Card, CardItem, Left, Thumbnail, Body, Icon } from 'native-base';
 import { connect } from 'react-redux';
-import { StackNavigator } from 'react-navigation';
 
 class MeScreen extends Component {
 
   static propTypes = {
     username: PropTypes.string,
     unitName: PropTypes.string,
-    navigation: PropTypes.shape({ navigate: PropTypes.func }),
+    dispatch: PropTypes.func,
   };
+
+  navigate(route:string) {
+    this.props.dispatch({
+      type: 'Navigation/NAVIGATE',
+      routeName: route,
+    });
+  }
 
   render() {
     return (
       <Container>
         <Content>
           <Card>
-            <CardItem button onPress={() => this.props.navigation.navigate('Profile')}>
+            <CardItem button onPress={() => this.navigate('Profile')}>
               <Left>
                 <Thumbnail source={{ uri: 'http://images2015.cnblogs.com/blog/533679/201606/533679-20160627094224718-806139364.png' }} />
                 <Body>
@@ -32,18 +38,18 @@ class MeScreen extends Component {
               <Icon active name={'document'} style={{ color: '#0E9EF4' }} />
               <Text>提案</Text>
             </CardItem>
-            <CardItem button bordered onPress={() => this.props.navigation.navigate('MyOwnProposals')}>
+            <CardItem button bordered onPress={() => this.navigate('MyOwnProposalsPage')}>
               <Text>我的提案</Text>
             </CardItem>
-            <CardItem button bordered onPress={() => this.props.navigation.navigate('MyTodoProposals')}>
+            <CardItem button bordered onPress={() => this.navigate('MyTodoProposalsPage')}>
               <Text>我的待办</Text>
             </CardItem>
-            <CardItem button bordered onPress={() => this.props.navigation.navigate('MyDoneProposals')}>
+            <CardItem button bordered onPress={() => this.navigate('MyDoneProposalsPage')}>
               <Text>我的已办</Text>
             </CardItem>
           </Card>
           <Card>
-            <CardItem button onPress={() => this.props.navigation.navigate('Setting')}>
+            <CardItem button onPress={() => this.navigate('Setting')}>
               <Icon active name={'settings'} style={{ color: '#0E9EF4' }} />
               <Text>设置</Text>
             </CardItem>
@@ -60,4 +66,8 @@ const mapStateToProps = (state) => {
   return { id, unitName, username, jiguan, weiyuan, mobile, sex };
 };
 
-export default connect(mapStateToProps)(MeScreen);
+const mapDispatchToProps = dispatch => ({
+  dispatch,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(MeScreen);
