@@ -9,6 +9,7 @@ import HomeNavigator from './HomeNavigator';
 import ProfileScreen from '../components/me/profile';
 import SettingScreen from '../components/me/setting';
 import MsgDetailPage from '../components/msg/detail';
+import ProposalDetailPage from '../components/proposal/detail';
 
 export const AppNavigator = StackNavigator({
   HomeTabRouter: {
@@ -37,6 +38,12 @@ export const AppNavigator = StackNavigator({
       title: '留言板',
     },
   },
+  ProposalDetailPage: {
+    screen: ProposalDetailPage,
+    navigationOptions: {
+      title: '提案',
+    },
+  }
 });
 
 class AppWithNavigationState extends Component {
@@ -74,7 +81,6 @@ AppWithNavigationState.propTypes = {
 };
 
 const mapStateToProps = (state) => {
-  console.log('Root state', state);
   return {
     nav: state.nav,
   };

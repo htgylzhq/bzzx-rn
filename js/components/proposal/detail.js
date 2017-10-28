@@ -33,16 +33,14 @@ class ProposalDetailPage extends Component {
   }
 
   _fetchProposal() {
-    const messageId = this.props.navigation.state.params.id;
-    http.get(`/platform/pub/message/query/${messageId}`).then((response) => {
+    const proposalId = this.props.navigation.state.params.id;
+    http.get(`/platform/api/cppcc/proposal/${proposalId}`).then((response) => {
       if (response.data.code === 0) {
         const data = response.data.data;
-        const message = new Proposal(data.message);
+        const proposal = new Proposal(data.proposal);
         const comments = data.comments.list.map(obj => new Comment(obj));
         const maxUpdate = data.comments.maxUpdate;
-        console.log('comments: ', comments);
-        console.log('maxUpdate: ', maxUpdate);
-        this.props.onFetchProposal(message, comments, maxUpdate);
+        this.props.onFetchProposal(proposal, comments, maxUpdate);
       } else {
         // 查询留言失败
         // Todo Alert("查询留言失败！");
@@ -75,7 +73,7 @@ class ProposalDetailPage extends Component {
 
   _loadMoreComments() {
     const maxUpdate = this.props.maxUpdate;
-    http.get(`/platform/pub/message/comments?messageId=${maxUpdate}`).then((response) => {
+    http.get(`/platform/api/cppcc/proposal/comments?proposalId=${maxUpdate}`).then((response) => {
       if (response.data.code === 0) {
         const data = response.data.data;
         const comments = data.list.map(obj => new Comment(obj));
