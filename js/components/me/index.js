@@ -28,6 +28,21 @@ class MeScreen extends Component {
             </CardItem>
           </Card>
           <Card>
+            <CardItem header>
+              <Icon active name={'document'} style={{ color: '#0E9EF4' }} />
+              <Text>提案</Text>
+            </CardItem>
+            <CardItem button bordered onPress={() => this.props.navigation.navigate('MyOwnProposals')}>
+              <Text>我的提案</Text>
+            </CardItem>
+            <CardItem button bordered onPress={() => this.props.navigation.navigate('MyTodoProposals')}>
+              <Text>我的待办</Text>
+            </CardItem>
+            <CardItem button bordered onPress={() => this.props.navigation.navigate('MyDoneProposals')}>
+              <Text>我的已办</Text>
+            </CardItem>
+          </Card>
+          <Card>
             <CardItem button onPress={() => this.props.navigation.navigate('Setting')}>
               <Icon active name={'settings'} style={{ color: '#0E9EF4' }} />
               <Text>设置</Text>
