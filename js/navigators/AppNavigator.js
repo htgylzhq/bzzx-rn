@@ -12,6 +12,7 @@ import MsgDetailPage from '../components/msg/detail';
 import ProposalDetailPage from '../components/proposal/detail';
 import MyOwnProposalsPage from '../components/me/proposal/own';
 import MyTodoProposalsPage from '../components/me/proposal/todo';
+import MyDoneProposalsPage from '../components/me/proposal/done';
 
 export const AppNavigator = StackNavigator({
   HomeTabRouter: {
@@ -56,6 +57,12 @@ export const AppNavigator = StackNavigator({
     screen: MyTodoProposalsPage,
     navigationOptions: {
       title: '提案 - 我的待办',
+    },
+  },
+  MyDoneProposalsPage: {
+    screen: MyDoneProposalsPage,
+    navigationOptions: {
+      title: '提案 - 我的已办',
     },
   },
 });
