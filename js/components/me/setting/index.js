@@ -1,27 +1,35 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Container, Content, Text, Card, CardItem, Left, Right, Thumbnail } from 'native-base';
+import { Card, CardItem, Container, Content, Text } from 'native-base';
 import { connect } from 'react-redux';
 import { logout } from '../../../actions/auth';
 
 class SettingScreen extends Component {
 
   static propTypes = {
-    username: PropTypes.string,
-    unitName: PropTypes.string,
-    mobile: PropTypes.string,
-    jiebieName: PropTypes.string,
-    sex: PropTypes.string,
-    ethnicityName: PropTypes.string,
-    educationName: PropTypes.string,
-    politicsName: PropTypes.string,
     onLogout: PropTypes.func,
+    dispatch: PropTypes.func,
   };
+
+  navigate(route:string) {
+    this.props.dispatch({
+      type: 'Navigation/NAVIGATE',
+      routeName: route,
+    });
+  }
 
   render() {
     return (
       <Container>
         <Content>
+          <Card>
+            <CardItem button bordered>
+              <Text>修改密码</Text>
+            </CardItem>
+            <CardItem button bordered onPress={() => this.navigate('About')}>
+              <Text>关于我们</Text>
+            </CardItem>
+          </Card>
           <Card>
             <CardItem button onPress={() => this.props.onLogout()}>
               <Text>退出</Text>
@@ -33,13 +41,9 @@ class SettingScreen extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  const { id, unitName, username, jiguan, weiyuan, mobile, sex, jiebieName, ethnicityName, educationName, politicsName } = state.auth.user;
-  return { id, unitName, username, jiguan, weiyuan, mobile, sex, jiebieName, ethnicityName, educationName, politicsName };
-};
-
 const mapDispatchToProps = dispatch => ({
   onLogout: () => dispatch(logout()),
+  dispatch,
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(SettingScreen);
+export default connect(mapDispatchToProps)(SettingScreen);

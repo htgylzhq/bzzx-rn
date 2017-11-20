@@ -8,6 +8,7 @@ import BlankPage from '../components/blankPage';
 import HomeNavigator from './HomeNavigator';
 import ProfileScreen from '../components/me/profile';
 import SettingScreen from '../components/me/setting';
+import AboutScreen from '../components/me/setting/about';
 import MsgDetailPage from '../components/msg/detail';
 import ProposalDetailPage from '../components/proposal/detail';
 import MyOwnProposalsPage from '../components/me/proposal/own';
@@ -33,6 +34,12 @@ export const AppNavigator = StackNavigator({
     screen: SettingScreen,
     navigationOptions: {
       title: '设置',
+    },
+  },
+  About: {
+    screen: AboutScreen,
+    navigationOptions: {
+      title: '关于我们',
     },
   },
   MsgDetailPage: {
