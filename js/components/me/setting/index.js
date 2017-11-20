@@ -23,7 +23,7 @@ class SettingScreen extends Component {
       <Container>
         <Content>
           <Card>
-            <CardItem button bordered>
+            <CardItem button bordered onPress={() => this.navigate('ChangePassword')}>
               <Text>修改密码</Text>
             </CardItem>
             <CardItem button bordered onPress={() => this.navigate('About')}>
@@ -41,9 +41,15 @@ class SettingScreen extends Component {
   }
 }
 
+const mapStateToProps = state => ({
+  user: state.user,
+});
+
 const mapDispatchToProps = dispatch => ({
-  onLogout: () => dispatch(logout()),
+  onLogout: () => {
+    dispatch(logout());
+  },
   dispatch,
 });
 
-export default connect(mapDispatchToProps)(SettingScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(SettingScreen);
