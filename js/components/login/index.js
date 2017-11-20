@@ -36,9 +36,6 @@ const validate = (values) => {
   if (ema.length < 8 && ema !== '') {
     error.loginname = 'too short';
   }
-  if (pw.length > 12) {
-    error.password = 'max 11 characters';
-  }
   if (pw.length < 5 && pw.length > 0) {
     error.password = 'Weak';
   }
