@@ -3,6 +3,7 @@ import { reducer as formReducer } from 'redux-form';
 import drawer from './drawer';
 import user from './user';
 import list from './list';
+import home from './home';
 import auth from './auth';
 import msgIndex from './msgIndex';
 import msgDetail from './msgDetail';
@@ -19,6 +20,7 @@ export default combineReducers({
   drawer,
   user,
   list,
+  home,
   msgIndex,
   msgDetail,
   proposalIndex,
