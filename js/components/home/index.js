@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Container, Content, Card, Text, CardItem, Left, Right, Icon, Toast, Spinner, List, ListItem, H3 } from 'native-base';
+import { Container, Content, Card, CardItem, Left, Right, Icon, Toast, Spinner, List, H3 } from 'native-base';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Proposal from '../../models/Proposal';
 import http from '../../commons/http';
 import onHomeDataLoaded from '../../actions/home';
+import ProposalTodo from '../ProposalTodo/index';
 
 class HomeScreen extends Component {
 
@@ -63,23 +64,7 @@ class HomeScreen extends Component {
 
   _renderProposalItem(proposal: Proposal) {
     return (
-      <ListItem style={{ paddingTop: 0, paddingBottom: 0 }}>
-        <Card transparent>
-          <CardItem header style={{ paddingTop: 0, paddingBottom: 5 }}>
-            <Left>
-              <Text numberOfLines={1}>{proposal.title}</Text>
-            </Left>
-          </CardItem>
-          <CardItem style={{ paddingTop: 0, paddingBottom: 0 }}>
-            <Left>
-              <Text note>{proposal.creatorName}</Text>
-            </Left>
-            <Right>
-              <Text note>{proposal.createTime}</Text>
-            </Right>
-          </CardItem>
-        </Card>
-      </ListItem>
+      <ProposalTodo proposal={proposal} />
     );
   }
 
