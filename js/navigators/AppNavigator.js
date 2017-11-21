@@ -9,6 +9,7 @@ import HomeNavigator from './HomeNavigator';
 import ProfileScreen from '../components/me/profile';
 import SettingScreen from '../components/me/setting';
 import AboutScreen from '../components/me/setting/about';
+import ChangePasswordScreen from '../components/me/setting/change_password';
 import MsgDetailPage from '../components/msg/detail';
 import ProposalDetailPage from '../components/proposal/detail';
 import MyOwnProposalsPage from '../components/me/proposal/own';
@@ -40,6 +41,12 @@ export const AppNavigator = StackNavigator({
     screen: AboutScreen,
     navigationOptions: {
       title: '关于我们',
+    },
+  },
+  ChangePassword: {
+    screen: ChangePasswordScreen,
+    navigationOptions: {
+      title: '修改密码',
     },
   },
   MsgDetailPage: {
@@ -76,6 +83,13 @@ export const AppNavigator = StackNavigator({
 
 class AppWithNavigationState extends Component {
 
+  static propTypes = {
+    dispatch: PropTypes.func.isRequired,
+    nav: PropTypes.shape({
+      index: PropTypes.number,
+    }).isRequired,
+  };
+
   componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', this.onBackPress);
   }
@@ -85,11 +99,10 @@ class AppWithNavigationState extends Component {
   }
 
   onBackPress = () => {
-    const { dispatch, nav } = this.props;
-    if (nav.index === 0) {
+    if (this.props.nav.index === 0) {
       return false;
     }
-    dispatch(NavigationActions.back());
+    this.props.dispatch(NavigationActions.back());
     return true;
   };
 
@@ -102,11 +115,6 @@ class AppWithNavigationState extends Component {
     return <AppNavigator navigation={navigation} />;
   }
 }
-
-AppWithNavigationState.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  nav: PropTypes.object.isRequired,
-};
 
 const mapStateToProps = state => ({
   nav: state.nav,
