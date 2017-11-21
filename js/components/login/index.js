@@ -12,24 +12,16 @@ import User from '../../models/User';
 
 const background = require('../../../images/shadow.png');
 
-const validate = (values) => {
+const validate = ({ loginname, password }) => {
   const error = {};
-  error.loginname = '';
-  error.password = '';
-  let ema = values.loginname;
-  let pw = values.password;
-  if (values.loginname === undefined) {
-    ema = '';
+
+  if (!loginname) {
+    error.loginname = '必填';
   }
-  if (values.password === undefined) {
-    pw = '';
+  if (!password) {
+    error.password = '必填';
   }
-  if (ema.length < 8 && ema !== '') {
-    error.loginname = 'too short';
-  }
-  if (pw.length < 5 && pw.length > 0) {
-    error.password = 'Weak';
-  }
+
   return error;
 };
 
@@ -90,12 +82,9 @@ class Login extends Component {
 
   renderInput = ({
                    input,
-                   meta: { error, pristine },
+                   meta: { error },
                  }) => {
-    let hasError = false;
-    if (!pristine && error !== undefined) {
-      hasError = true;
-    }
+    const hasError = !!error;
     return (
       <Item error={hasError}>
         <Icon active name={input.name === 'loginname' ? 'person' : 'unlock'} />
