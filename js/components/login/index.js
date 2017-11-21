@@ -1,15 +1,6 @@
 import React, { Component } from 'react';
 import { Image } from 'react-native';
-import {
-  Container,
-  Content,
-  Item,
-  Input,
-  Button,
-  Icon,
-  View,
-  Text,
-} from 'native-base';
+import { Button, Container, Content, Icon, Input, Item, Text, Toast, View } from 'native-base';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import PropTypes from 'prop-types';
@@ -75,17 +66,26 @@ class Login extends Component {
     }).then((response) => {
       if (response.data.code === 0) {
         const user = new User(response.data.data);
-        console.log('logined User: ', user);
         this.props.onLogin(user);
       } else {
-        // 登录失败
-        // Todo Alert("用户名或密码错误！");
+        Toast.show({
+          text: response.data.msg,
+          buttonText: '确定',
+          position: 'bottom',
+          type: 'warning',
+          duration: 3000,
+        });
       }
     })
       .catch((error) => {
-        console.log('error', error);
+        Toast.show({
+          text: `貌似网络开小差了？${error}`,
+          buttonText: '确定',
+          position: 'bottom',
+          type: 'danger',
+          duration: 3000,
+        });
       });
-    // this.props.navigation.navigate('Home');
   };
 
   renderInput = ({
