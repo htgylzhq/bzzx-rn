@@ -4,6 +4,7 @@ export default class Proposal {
   content: string;
   createTime: string;
   creatorName: string;
+  state: string;
 
   constructor(obj) {
     Object.assign(this, obj);

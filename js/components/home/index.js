@@ -5,12 +5,14 @@ import { connect } from 'react-redux';
 import Proposal from '../../models/Proposal';
 import http from '../../commons/http';
 import onHomeDataLoaded from '../../actions/home';
-import ProposalTodo from '../ProposalTodo/index';
+import ProposalTodo from '../model/ProposalTodo';
+import ProposalMy from '../model/ProposalMy';
 
 class HomeScreen extends Component {
 
   static propTypes = {
     proposalsTodo: PropTypes.arrayOf(PropTypes.instanceOf(Proposal)),
+    proposalsMy: PropTypes.arrayOf(PropTypes.instanceOf(Proposal)),
     dispatch: PropTypes.func,
     onHomeDataLoaded: PropTypes.func,
   };
@@ -39,7 +41,8 @@ class HomeScreen extends Component {
         if (response.data.code === 0) {
           const data = response.data.data;
           const proposalsTodo = data.proposalsTodo.map(obj => new Proposal(obj));
-          this.props.onHomeDataLoaded(proposalsTodo);
+          const proposalsMy = data.proposalsTodo.map(obj => new Proposal(obj));
+          this.props.onHomeDataLoaded(proposalsTodo, proposalsMy);
         } else {
           Toast.show({
             text: response.data.msg,
@@ -62,10 +65,21 @@ class HomeScreen extends Component {
       });
   }
 
-  _renderProposalItem(proposal: Proposal) {
-    return (
-      <ProposalTodo proposal={proposal} />
-    );
+  _renderProposalItem(proposal: Proposal, type: String) {
+    let comp;
+    switch (type) {
+      case 'todo':
+        comp = <ProposalTodo proposal={proposal} />;
+        break;
+      case 'my':
+        comp = <ProposalMy proposal={proposal} />;
+        break;
+      default:
+        comp = null;
+        break;
+    }
+
+    return comp;
   }
 
   render() {
@@ -101,9 +115,43 @@ class HomeScreen extends Component {
                   <List
                     button
                     dataArray={this.props.proposalsTodo}
-                    renderRow={item => this._renderProposalItem(item)}
+                    renderRow={item => this._renderProposalItem(item, 'todo')}
                   />
                 </CardItem>
+            }
+          </Card>
+          <Card>
+            <CardItem header button onPress={() => this.navigate('MyTodoProposalsPage')}>
+              <Left>
+                <H3>我创建的提案</H3>
+              </Left>
+              <Right>
+                <Icon name="arrow-forward" />
+              </Right>
+            </CardItem>
+            {
+              this.state.loading
+                ?
+                  <CardItem style={{ flex: 1, alignItems: 'center', alignSelf: 'center' }}>
+                    <Spinner />
+                  </CardItem>
+                :
+                  null
+            }
+            {
+              this.props.proposalsMy.length === 0
+                ?
+                  <CardItem cardBody style={{ flex: 1, alignItems: 'center', alignSelf: 'center' }}>
+                    <Icon active name="create" style={{ color: 'blue', fontSize: 36 }} />
+                  </CardItem>
+                :
+                  <CardItem cardBody>
+                    <List
+                      button
+                      dataArray={this.props.proposalsTodo}
+                      renderRow={item => this._renderProposalItem(item, 'my')}
+                    />
+                  </CardItem>
             }
           </Card>
         </Content>
@@ -114,11 +162,12 @@ class HomeScreen extends Component {
 
 const mapStateToProps = state => ({
   proposalsTodo: state.home.proposalsTodo,
+  proposalsMy: state.home.proposalsMy,
 });
 
 const mapDispatchToProps = dispatch => ({
-  onHomeDataLoaded: (proposalsTodo) => {
-    dispatch(onHomeDataLoaded(proposalsTodo));
+  onHomeDataLoaded: (proposalsTodo, proposalsMy) => {
+    dispatch(onHomeDataLoaded(proposalsTodo, proposalsMy));
   },
   dispatch,
 });
