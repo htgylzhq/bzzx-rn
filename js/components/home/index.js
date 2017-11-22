@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Content, Card, CardItem, Left, Right, Icon, Toast, Spinner, List, H3 } from 'native-base';
+import { Container, Content, Card, CardItem, Left, Right, Icon, Toast, Spinner, List, H3, Button, Text } from 'native-base';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Proposal from '../../models/Proposal';
@@ -41,7 +41,7 @@ class HomeScreen extends Component {
         if (response.data.code === 0) {
           const data = response.data.data;
           const proposalsTodo = data.proposalsTodo.map(obj => new Proposal(obj));
-          const proposalsMy = data.proposalsTodo.map(obj => new Proposal(obj));
+          const proposalsMy = data.proposalsMy.map(obj => new Proposal(obj));
           this.props.onHomeDataLoaded(proposalsTodo, proposalsMy);
         } else {
           Toast.show({
@@ -142,7 +142,10 @@ class HomeScreen extends Component {
               this.props.proposalsMy.length === 0
                 ?
                   <CardItem cardBody style={{ flex: 1, alignItems: 'center', alignSelf: 'center' }}>
-                    <Icon active name="create" style={{ color: 'blue', fontSize: 36 }} />
+                    <Button iconLeft primary>
+                      <Icon active name="create" />
+                      <Text>写新提案</Text>
+                    </Button>
                   </CardItem>
                 :
                   <CardItem cardBody>
