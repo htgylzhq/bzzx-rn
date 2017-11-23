@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { RefreshControl } from 'react-native';
-import { Container, List, Card, CardItem, Text, Toast } from 'native-base';
+import { Container, List, Card, CardItem, Text } from 'native-base';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Proposal from '../../models/Proposal';

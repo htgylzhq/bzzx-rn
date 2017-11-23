@@ -7,12 +7,13 @@ export default class ProposalTodo extends Component {
 
   static propTypes = {
     proposal: PropTypes.instanceOf(Proposal),
+    onPress: PropTypes.func,
   };
 
   render() {
-    const { proposal } = this.props;
+    const { proposal, onPress } = this.props;
     return (
-      <ListItem style={{ paddingTop: 0, paddingBottom: 0 }}>
+      <ListItem style={{ paddingTop: 0, paddingBottom: 0 }} onPress={onPress}>
         <Card transparent>
           <CardItem header style={{ paddingTop: 0, paddingBottom: 5 }}>
             <Left>
