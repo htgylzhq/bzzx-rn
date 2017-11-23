@@ -11,10 +11,12 @@ import SettingScreen from '../components/me/setting';
 import AboutScreen from '../components/me/setting/about';
 import ChangePasswordScreen from '../components/me/setting/change_password';
 import MsgDetailPage from '../components/msg/detail';
+import ProposalIndex from '../components/proposal';
 import ProposalDetailPage from '../components/proposal/detail';
 import MyOwnProposalsPage from '../components/me/proposal/own';
 import MyTodoProposalsPage from '../components/me/proposal/todo';
 import MyDoneProposalsPage from '../components/me/proposal/done';
+import theme from '../themes/base-theme';
 
 export const AppNavigator = StackNavigator({
   HomeTabRouter: {
@@ -53,6 +55,16 @@ export const AppNavigator = StackNavigator({
     screen: MsgDetailPage,
     navigationOptions: {
       title: '留言板',
+    },
+  },
+  ProposalIndex: {
+    screen: ProposalIndex,
+    navigationOptions: {
+      title: '政协提案',
+      headerStyle: {
+        backgroundColor: theme.brandPrimary,
+      },
+      headerTintColor: theme.tabTextColor,
     },
   },
   ProposalDetailPage: {

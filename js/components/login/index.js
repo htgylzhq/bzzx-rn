@@ -75,7 +75,6 @@ class Login extends Component {
           buttonText: '确定',
           position: 'bottom',
           type: 'danger',
-          duration: 3000,
         });
       });
   };

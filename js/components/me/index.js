@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Container, Content, Text, Card, CardItem, Left, Thumbnail, Body, Icon } from 'native-base';
 import { connect } from 'react-redux';
+import { NavigationActions } from 'react-navigation';
 
 class MeScreen extends Component {
 
@@ -11,11 +12,11 @@ class MeScreen extends Component {
     dispatch: PropTypes.func,
   };
 
-  navigate(route:string) {
-    this.props.dispatch({
-      type: 'Navigation/NAVIGATE',
-      routeName: route,
-    });
+  navigate(routeName:string, params:Object) {
+    this.props.dispatch(NavigationActions.navigate({
+      routeName,
+      params,
+    }));
   }
 
   render() {

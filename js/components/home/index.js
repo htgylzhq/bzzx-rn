@@ -142,7 +142,7 @@ class HomeScreen extends Component {
               this.props.proposalsMy.length === 0
                 ?
                   <CardItem cardBody style={{ flex: 1, alignItems: 'center', alignSelf: 'center' }}>
-                    <Button iconLeft primary>
+                    <Button iconLeft primary style={{ marginTop: 20 }}>
                       <Icon active name="create" />
                       <Text>写新提案</Text>
                     </Button>
