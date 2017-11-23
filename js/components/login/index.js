@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Image } from 'react-native';
-import { Button, Container, Content, Icon, Input, Item, Text, Toast, View } from 'native-base';
+import { Button, Container, Content, Icon, Input, Item, Text, View } from 'native-base';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import PropTypes from 'prop-types';
@@ -9,20 +9,21 @@ import styles from './styles';
 import http from '../../commons/http';
 import { login } from '../../actions/auth';
 import User from '../../models/User';
+import { Toaster } from '../../commons/util';
 
 const background = require('../../../images/shadow.png');
 
 const validate = ({ loginname, password }) => {
-  const error = {};
+  const err = {};
 
   if (!loginname) {
-    error.loginname = '必填';
+    err.loginname = '必填';
   }
   if (!password) {
-    error.password = '必填';
+    err.password = '必填';
   }
 
-  return error;
+  return err;
 };
 
 class Login extends Component {
@@ -60,22 +61,11 @@ class Login extends Component {
         const user = new User(response.data.data);
         this.props.onLogin(user);
       } else {
-        Toast.show({
-          text: response.data.msg,
-          buttonText: '确定',
-          position: 'bottom',
-          type: 'warning',
-          duration: 3000,
-        });
+        Toaster.warn(response.data.msg);
       }
     })
-      .catch((error) => {
-        Toast.show({
-          text: `貌似网络开小差了？${error}`,
-          buttonText: '确定',
-          position: 'bottom',
-          type: 'danger',
-        });
+      .catch((err) => {
+        Toaster.error(err);
       });
   };
 

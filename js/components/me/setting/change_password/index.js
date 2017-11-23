@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { Container, Content, Button, Text, Item, Label, Input, Icon, Toast } from 'native-base';
+import { Container, Content, Button, Text, Item, Label, Input, Icon } from 'native-base';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import PropTypes from 'prop-types';
 import qs from 'qs';
 import http from '../../../../commons/http';
 import { logout } from '../../../../actions/auth';
+import { Toaster } from '../../../../commons/util';
 
 const validate = (values) => {
   const error = {};
@@ -51,31 +52,13 @@ class ChangePassword extends Component {
       transformRequest: [data => qs.stringify(data)],
     }).then((response) => {
       if (response.data.code === 0) {
-        Toast.show({
-          text: '密码已修改，请重新登录',
-          buttonText: '确定',
-          position: 'bottom',
-          type: 'success',
-          duration: 3000,
-        });
+        Toaster.success('密码已修改，请重新登录');
         this.props.onLogout();
       } else {
-        Toast.show({
-          text: response.data.msg,
-          buttonText: '确定',
-          position: 'bottom',
-          type: 'warning',
-          duration: 3000,
-        });
+        Toaster.warn(response.data.msg);
       }
     }).catch((error) => {
-      Toast.show({
-        text: `貌似网络开小差了？${error}`,
-        buttonText: '确定',
-        position: 'bottom',
-        type: 'danger',
-        duration: 3000,
-      });
+      Toaster.error(`貌似网络开小差了？${error}`);
     });
   };
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Content, Card, CardItem, Left, Right, Icon, Toast, Spinner, List, H3, Button, Text } from 'native-base';
+import { Container, Content, Card, CardItem, Left, Right, Icon, Spinner, List, H3, Button, Text } from 'native-base';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Proposal from '../../models/Proposal';
@@ -7,6 +7,7 @@ import http from '../../commons/http';
 import onHomeDataLoaded from '../../actions/home';
 import ProposalTodo from '../model/ProposalTodo';
 import ProposalMy from '../model/ProposalMy';
+import { Toaster } from '../../commons/util';
 
 class HomeScreen extends Component {
 
@@ -44,24 +45,12 @@ class HomeScreen extends Component {
           const proposalsMy = data.proposalsMy.map(obj => new Proposal(obj));
           this.props.onHomeDataLoaded(proposalsTodo, proposalsMy);
         } else {
-          Toast.show({
-            text: response.data.msg,
-            buttonText: '确定',
-            position: 'bottom',
-            type: 'warning',
-            duration: 3000,
-          });
+          Toaster.warn(response.data.msg);
         }
         this.setState({ loading: false });
       })
-      .catch((error) => {
-        Toast.show({
-          text: `貌似网络开小差了？${error}`,
-          buttonText: '确定',
-          position: 'bottom',
-          type: 'danger',
-          duration: 3000,
-        });
+      .catch((err) => {
+        Toaster.error(err);
       });
   }
 

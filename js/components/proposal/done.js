@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { RefreshControl } from 'react-native';
-import { Container, List, Card, CardItem, Text, Toast } from 'native-base';
+import { Container, List, Card, CardItem, Text } from 'native-base';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Proposal from '../../models/Proposal';
 import ProposalDone from '../model/ProposalDone';
 import http from '../../commons/http';
 import { refresh, loadMore } from '../../actions/myDoneProposals';
+import { Toaster } from '../../commons/util';
 
 class ProposalDoneScreen extends Component {
 
@@ -42,22 +43,11 @@ class ProposalDoneScreen extends Component {
         const newMaxUpdate = data.maxUpdate;
         this.props.refresh(proposals, newMinUpdate, newMaxUpdate);
       } else {
-        Toast.show({
-          text: response.data.msg,
-          buttonText: '确定',
-          position: 'bottom',
-          type: 'warning',
-          duration: 3000,
-        });
+        Toaster.warn(response.data.msg);
       }
     }).catch((error) => {
       this.setState({ refreshing: false });
-      Toast.show({
-        text: `貌似网络开小差了？${error}`,
-        buttonText: '确定',
-        position: 'bottom',
-        type: 'danger',
-      });
+      Toaster.error(`貌似网络开小差了？${error}`);
     });
   }
 
@@ -71,21 +61,10 @@ class ProposalDoneScreen extends Component {
         const newMaxUpdate = data.maxUpdate;
         this.props.loadMore(proposals, newMinUpdate, newMaxUpdate);
       } else {
-        Toast.show({
-          text: response.data.msg,
-          buttonText: '确定',
-          position: 'bottom',
-          type: 'warning',
-          duration: 3000,
-        });
+        Toaster.warn(response.data.msg);
       }
     }).catch((error) => {
-      Toast.show({
-        text: `貌似网络开小差了？${error}`,
-        buttonText: '确定',
-        position: 'bottom',
-        type: 'danger',
-      });
+      Toaster.error(`貌似网络开小差了？${error}`);
     });
   }
 
@@ -112,27 +91,27 @@ class ProposalDoneScreen extends Component {
           {
             this.props.proposals.length === 0
               ?
-              <CardItem
-                button
-                onPress={() => this._refresh()}
-                style={{ flex: 1, alignSelf: 'center', alignItems: 'center' }}
-              >
-                <Text note>没有数据</Text>
-              </CardItem>
-              :
-              <CardItem cardBody >
-                <List
+                <CardItem
                   button
-                  dataArray={this.props.proposals}
-                  renderRow={item => this._renderProposalItem(item)}
-                  onEndReachedThreshold={20}
-                  onEndReached={() => { this._loadMore(); }}
-                  refreshControl={<RefreshControl
-                    refreshing={this.state.refreshing}
-                    onRefresh={() => this._refresh()}
-                  />}
-                />
-              </CardItem>
+                  onPress={() => this._refresh()}
+                  style={{ flex: 1, alignSelf: 'center', alignItems: 'center' }}
+                >
+                  <Text note>没有数据</Text>
+                </CardItem>
+              :
+                <CardItem cardBody >
+                  <List
+                    button
+                    dataArray={this.props.proposals}
+                    renderRow={item => this._renderProposalItem(item)}
+                    onEndReachedThreshold={20}
+                    onEndReached={() => { this._loadMore(); }}
+                    refreshControl={<RefreshControl
+                      refreshing={this.state.refreshing}
+                      onRefresh={() => this._refresh()}
+                    />}
+                  />
+                </CardItem>
           }
         </Card>
       </Container>

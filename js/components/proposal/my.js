@@ -7,6 +7,7 @@ import Proposal from '../../models/Proposal';
 import ProposalMy from '../model/ProposalMy';
 import http from '../../commons/http';
 import { refresh, loadMore } from '../../actions/myOwnProposals';
+import { Toaster } from '../../commons/util';
 
 class ProposalMyScreen extends Component {
 
@@ -42,22 +43,11 @@ class ProposalMyScreen extends Component {
         const newMaxUpdate = data.maxUpdate;
         this.props.refresh(proposals, newMinUpdate, newMaxUpdate);
       } else {
-        Toast.show({
-          text: response.data.msg,
-          buttonText: '确定',
-          position: 'bottom',
-          type: 'warning',
-          duration: 3000,
-        });
+        Toaster.warn(response.data.msg);
       }
     }).catch((error) => {
       this.setState({ refreshing: false });
-      Toast.show({
-        text: `貌似网络开小差了？${error}`,
-        buttonText: '确定',
-        position: 'bottom',
-        type: 'danger',
-      });
+      Toaster.error(`貌似网络开小差了？${error}`);
     });
   }
 
@@ -71,21 +61,10 @@ class ProposalMyScreen extends Component {
         const newMaxUpdate = data.maxUpdate;
         this.props.loadMore(proposals, newMinUpdate, newMaxUpdate);
       } else {
-        Toast.show({
-          text: response.data.msg,
-          buttonText: '确定',
-          position: 'bottom',
-          type: 'warning',
-          duration: 3000,
-        });
+        Toaster.warn(response.data.msg);
       }
     }).catch((error) => {
-      Toast.show({
-        text: `貌似网络开小差了？${error}`,
-        buttonText: '确定',
-        position: 'bottom',
-        type: 'danger',
-      });
+      Toaster.error(`貌似网络开小差了？${error}`);
     });
   }
 

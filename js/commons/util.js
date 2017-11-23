@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import { Toast } from 'native-base';
 
 export const unshift = (array0, array1) => {
   array1.reverse().forEach((element) => {
@@ -24,4 +25,33 @@ export const push = (array0, array1) => {
     }
   });
   return array0;
+};
+
+export const Toaster = {
+  success: (text) => {
+    Toast.show({
+      text,
+      buttonText: '确定',
+      position: 'bottom',
+      type: 'success',
+      duration: 3000,
+    });
+  },
+  warn: (text) => {
+    Toast.show({
+      text,
+      buttonText: '确定',
+      position: 'bottom',
+      type: 'warning',
+      duration: 3000,
+    });
+  },
+  error: (text) => {
+    Toast.show({
+      text,
+      buttonText: '确定',
+      position: 'bottom',
+      type: 'danger',
+    });
+  },
 };
