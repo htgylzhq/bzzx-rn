@@ -3,6 +3,8 @@ import { Container, Tabs, Tab, Text } from 'native-base';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import ProposalDiagram from './diagram';
+import ProposalInfoPage from './info';
+import ProposalContentPage from './content';
 
 class ProposalDetailIndex extends Component {
 
@@ -39,10 +41,13 @@ class ProposalDetailIndex extends Component {
     return (
       <Container>
         <Tabs locked initialPage={initialPage}>
-          <Tab heading={'详细信息'}>
-            <Text>详细信息</Text>
+          <Tab heading={'基础信息'}>
+            <ProposalInfoPage proposalId={this.state.params.id} />
           </Tab>
-          <Tab heading={'流程图'}>
+          <Tab heading="内容">
+            <ProposalContentPage proposalId={this.state.params.id} />
+          </Tab>
+          <Tab heading={'流程图'} style={{ paddingLeft: 0, paddingRight: 0 }}>
             <ProposalDiagram proposalId={this.state.params.id} />
           </Tab>
           <Tab heading={'办理历史'}>

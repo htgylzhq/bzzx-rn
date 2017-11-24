@@ -5,6 +5,7 @@ import Comment from '../models/Comment';
 export const ON_FETCH_PROPOSAL = 'ON_FETCH_PROPOSAL';
 export const LOAD_MORE_PROPOSAL_COMMENTS = 'LOAD_MORE_PROPOSAL_COMMENTS';
 
+export const ON_FETCH_PROPOSAL_INFO = 'ON_FETCH_PROPOSAL_INFO';
 
 export function onFetchProposal(proposal: Proposal, comments: Comment[], maxUpdate:number): Action {
   return {
@@ -20,5 +21,12 @@ export function loadMore(comments: Comment[], maxUpdate:number):Action {
     type: LOAD_MORE_PROPOSAL_COMMENTS,
     comments,
     maxUpdate,
+  };
+}
+
+export function onFetchProposalInfo(proposal: Proposal): Action {
+  return {
+    type: ON_FETCH_PROPOSAL_INFO,
+    proposal,
   };
 }

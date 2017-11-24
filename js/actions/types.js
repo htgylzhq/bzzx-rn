@@ -29,6 +29,7 @@ export type Action =
   | { type: 'REFRESH_MY_DONE_PROPOSALS', proposals: Proposal[], maxUpdate: number, minUpdate: number }
   | { type: 'LOAD_MORE_MY_DONE_PROPOSALS', proposals: Proposal[], maxUpdate: number, minUpdate: number }
   | { type: 'LOAD_HOME_DATA', proposalsTodo: Proposal[], proposalsMy: Proposal[] }
+  | { type: 'ON_FETCH_PROPOSAL_INFO', proposal: Proposal }
 
 export type Dispatch = (action: Action | Array<Action>) => any;
 export type GetState = () => Object;
