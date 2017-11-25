@@ -2,6 +2,7 @@ import User from '../models/User';
 import Msg from '../models/Msg';
 import Comment from '../models/Comment';
 import Proposal from '../models/Proposal';
+import ProposalLog from '../models/ProposalLog';
 
 export type Action =
   { type: 'PUSH_NEW_ROUTE', route: string }
@@ -30,6 +31,7 @@ export type Action =
   | { type: 'LOAD_MORE_MY_DONE_PROPOSALS', proposals: Proposal[], maxUpdate: number, minUpdate: number }
   | { type: 'LOAD_HOME_DATA', proposalsTodo: Proposal[], proposalsMy: Proposal[] }
   | { type: 'ON_FETCH_PROPOSAL_INFO', proposal: Proposal }
+  | { type: '', proposalLogs: ProposalLog[] }
 
 export type Dispatch = (action: Action | Array<Action>) => any;
 export type GetState = () => Object;

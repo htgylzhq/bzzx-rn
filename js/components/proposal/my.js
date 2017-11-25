@@ -24,7 +24,6 @@ class ProposalMyScreen extends Component {
     super();
     this.state = {
       refreshing: false,
-      fabActive: false,
     };
   }
 

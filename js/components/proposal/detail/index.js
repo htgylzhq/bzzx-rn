@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Container, Tabs, Tab, Text } from 'native-base';
+import { Container, Tabs, Tab } from 'native-base';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import ProposalDiagram from './diagram';
 import ProposalInfoPage from './info';
 import ProposalContentPage from './content';
+import ProposalLogPage from './log';
 
 class ProposalDetailIndex extends Component {
 
@@ -51,7 +52,7 @@ class ProposalDetailIndex extends Component {
             <ProposalDiagram proposalId={this.state.params.id} />
           </Tab>
           <Tab heading={'办理历史'}>
-            <Text>办理历史</Text>
+            <ProposalLogPage proposalId={this.state.params.id} />
           </Tab>
         </Tabs>
       </Container>
