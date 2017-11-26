@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Container, Content, Card, CardItem, Left, Right, Icon, Spinner, List, H3, Button, Text } from 'native-base';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { NavigationActions } from 'react-navigation';
 import Proposal from '../../models/Proposal';
 import http from '../../commons/http';
 import onHomeDataLoaded from '../../actions/home';
@@ -29,11 +30,11 @@ class HomeScreen extends Component {
     this._fetchData();
   }
 
-  navigate(route:string) {
-    this.props.dispatch({
-      type: 'Navigation/NAVIGATE',
-      routeName: route,
-    });
+  navigate(routeName:string, params:Object) {
+    this.props.dispatch(NavigationActions.navigate({
+      routeName,
+      params,
+    }));
   }
 
   _fetchData() {
