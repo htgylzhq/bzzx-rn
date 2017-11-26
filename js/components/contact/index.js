@@ -1,11 +1,17 @@
 import React, { Component } from 'react';
 import { Container, Content, Text, ListItem, Body, Spinner } from 'native-base';
+import PropTypes from 'prop-types';
+import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
 import AtoZListView from 'react-native-atoz-listview';
 import { Toaster } from '../../commons/util';
 import http from '../../commons/http';
 
 class ContactScreen extends Component {
+
+  static propTypes = {
+    dispatch: PropTypes.func,
+  };
 
   constructor(props) {
     super(props);
@@ -17,6 +23,17 @@ class ContactScreen extends Component {
 
   componentWillMount() {
     this._fetchData();
+  }
+
+  navigate(routeName:string, params:Object) {
+    this.props.dispatch(NavigationActions.navigate({
+      routeName,
+      params,
+    }));
+  }
+
+  _onPressContact(contact) {
+    this.navigate('ContactDetailPage', { contact });
   }
 
   _fetchData() {
@@ -42,7 +59,7 @@ class ContactScreen extends Component {
     );
 
   renderRow = item => (
-    <ListItem button style={{ height: 75 }} onPress={() => console.log('item: ', item)}>
+    <ListItem button style={{ height: 75 }} onPress={() => this._onPressContact(item)}>
       <Body>
         <Text>{item.username}</Text>
         <Text note>{item.unitFullName}</Text>
@@ -76,4 +93,12 @@ class ContactScreen extends Component {
 
 }
 
-export default connect()(ContactScreen);
+const mapStateToProps = state => ({
+  nothing: state.nothing || {},
+});
+
+const mapDispatchToProps = dispatch => ({
+  dispatch,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ContactScreen);
