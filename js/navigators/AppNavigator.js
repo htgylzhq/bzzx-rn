@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { StackNavigator, addNavigationHelpers, NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
 import Login from '../components/login/';
-import BlankPage from '../components/blankPage';
 import HomeNavigator from './HomeNavigator';
 import ProfileScreen from '../components/me/profile';
 import SettingScreen from '../components/me/setting';
@@ -25,7 +24,6 @@ export const AppNavigator = StackNavigator({
       header: null,
     },
   },
-  BlankPage: { screen: BlankPage },
   Login: { screen: Login },
   Profile: {
     screen: ProfileScreen,

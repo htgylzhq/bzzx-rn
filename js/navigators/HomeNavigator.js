@@ -4,7 +4,7 @@ import { TabNavigator } from 'react-navigation';
 import { connect } from 'react-redux';
 import HomeScreen from '../components/home';
 import WorkScreen from '../components/work';
-import MsgScreen from '../components/msg';
+import ContactScreen from '../components/contact';
 import MeScreen from '../components/me';
 
 const Navigator = TabNavigator({
@@ -14,8 +14,8 @@ const Navigator = TabNavigator({
   Work: {
     screen: WorkScreen,
   },
-  Msg: {
-    screen: MsgScreen,
+  Contact: {
+    screen: ContactScreen,
   },
   Me: {
     screen: MeScreen,
@@ -44,10 +44,10 @@ const Navigator = TabNavigator({
         <Button
           vertical
           active={props.navigationState.index === 2}
-          onPress={() => props.navigation.navigate('Msg')}
+          onPress={() => props.navigation.navigate('Contact')}
         >
-          <Icon name="chatboxes" />
-          <Text>留言板</Text>
+          <Icon name="contacts" />
+          <Text>通讯录</Text>
         </Button>
         <Button
           vertical
