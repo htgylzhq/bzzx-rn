@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { RefreshControl } from 'react-native';
-import { Container, View, List, ListItem, Card, CardItem, H3, Text } from 'native-base';
+import { Container, View, List, ListItem, Card, CardItem, H3, Text, Fab, Button, Icon } from 'native-base';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Proposal from '../../../../models/Proposal';
@@ -22,11 +22,12 @@ class MyOwnProposalsScreen extends Component {
     super();
     this.state = {
       refreshing: false,
+      fabActive: false,
     };
   }
 
   componentWillMount() {
-    this._refresh();
+    // this._refresh();
   }
 
   _refresh() {
@@ -99,7 +100,23 @@ class MyOwnProposalsScreen extends Component {
   render() {
     return (
       <Container>
-        <View>
+        <Fab
+          active={this.state.fabActive}
+          direction="up"
+          containerStyle={{ }}
+          style={{ backgroundColor: '#5067FF' }}
+          position="bottomRight"
+          onPress={() => this.setState({ fabActive: !this.state.fabActive })}
+        >
+          <Icon name="share" />
+          <Button style={{ backgroundColor: '#34A34F' }}>
+            <Icon name="logo-whatsapp" />
+          </Button>
+          <Button style={{ backgroundColor: '#3B5998' }}>
+            <Icon name="logo-facebook" />
+          </Button>
+        </Fab>
+        {/*<View style={{ flex: 1 }}>
           <List
             button
             dataArray={this.props.proposals}
@@ -111,7 +128,7 @@ class MyOwnProposalsScreen extends Component {
               onRefresh={() => this._refresh()}
             />}
           />
-        </View>
+        </View>*/}
       </Container>
     );
   }

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
 import AtoZListView from 'react-native-atoz-listview';
-import { Toaster } from '../../commons/util';
+import { Toaster, delay } from '../../commons/util';
 import http from '../../commons/http';
 import { onFetchContacts } from '../../actions/contact';
 
@@ -24,8 +24,8 @@ class ContactScreen extends Component {
     };
   }
 
-  componentWillMount() {
-    this._fetchData();
+  async componentWillMount() {
+    await this._fetchData();
   }
 
   navigate(routeName:string, params:Object) {
@@ -44,8 +44,8 @@ class ContactScreen extends Component {
       .then((response) => {
         if (response.data.code === 0) {
           const data = response.data.data;
-          this.setState({ loading: false });
           this.props.onFetchContacts(data);
+          this.setState({ loading: false });
         } else {
           Toaster.warn(response.data.msg);
         }
