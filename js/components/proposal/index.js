@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { Container, Tabs, Tab } from 'native-base';
+import { Container, Tabs, Tab, Fab, Icon } from 'native-base';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { NavigationActions } from 'react-navigation';
 import ProposalMyScreen from '../proposal/my';
 import ProposalTodoScreen from '../proposal/todo';
 import ProposalDoneScreen from '../proposal/done';
+import theme from '../../themes/base-theme';
 
 class ProposalIndex extends Component {
 
@@ -12,6 +14,7 @@ class ProposalIndex extends Component {
     navigation: PropTypes.shape({
       state: PropTypes.object,
     }),
+    dispatch: PropTypes.func,
   };
 
   constructor(props) {
@@ -19,6 +22,13 @@ class ProposalIndex extends Component {
     this.state = {
       params: this.props.navigation.state.params,
     };
+  }
+
+  navigate(routeName:string, params:Object) {
+    this.props.dispatch(NavigationActions.navigate({
+      routeName,
+      params,
+    }));
   }
 
   render() {
@@ -51,9 +61,26 @@ class ProposalIndex extends Component {
             <ProposalDoneScreen />
           </Tab>
         </Tabs>
+        <Fab
+          direction="up"
+          style={{ backgroundColor: theme.brandPrimary }}
+          position="bottomRight"
+          onPress={() => this.navigate('ProposalFormPage')}
+        >
+          <Icon name="create" />
+        </Fab>
       </Container>
     );
   }
 }
 
-export default connect()(ProposalIndex);
+const mapStateToProps = state => ({
+  nothing: state.nothing || {},
+});
+
+const mapDispatchToProps = dispatch => ({
+  dispatch,
+});
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProposalIndex);
