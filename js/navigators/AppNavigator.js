@@ -12,6 +12,7 @@ import ChangePasswordScreen from '../components/me/setting/change_password';
 import MsgDetailPage from '../components/msg/detail';
 import ProposalIndex from '../components/proposal';
 import ProposalDetailIndex from '../components/proposal/detail';
+import ProposalFormPage from '../components/proposal/form';
 import ContactDetailPage from '../components/contact/detail';
 import MyOwnProposalsPage from '../components/me/proposal/own';
 import MyTodoProposalsPage from '../components/me/proposal/todo';
@@ -92,6 +93,12 @@ export const AppNavigator = StackNavigator({
     screen: MyDoneProposalsPage,
     navigationOptions: {
       title: '提案 - 我的已办',
+    },
+  },
+  ProposalFormPage: {
+    screen: ProposalFormPage,
+    navigationOptions: {
+      title: '写新提案',
     },
   },
   ContactDetailPage: {
