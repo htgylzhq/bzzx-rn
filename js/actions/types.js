@@ -31,8 +31,8 @@ export type Action =
   | { type: 'LOAD_MORE_MY_DONE_PROPOSALS', proposals: Proposal[], maxUpdate: number, minUpdate: number }
   | { type: 'LOAD_HOME_DATA', proposalsTodo: Proposal[], proposalsMy: Proposal[] }
   | { type: 'ON_FETCH_PROPOSAL_INFO', proposal: Proposal }
-  | { type: '', proposalLogs: ProposalLog[] }
-
+  | { type: 'ON_FETCH_PROPOSAL_LOGS', proposalLogs: ProposalLog[] }
+  | { type: 'ON_FETCH_CONTACTS', contacts: Object }
 export type Dispatch = (action: Action | Array<Action>) => any;
 export type GetState = () => Object;
 export type PromiseAction = Promise<Action>;

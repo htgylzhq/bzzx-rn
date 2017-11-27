@@ -12,6 +12,7 @@ import proposalDetail from './proposalDetail';
 import myOwnProposals from './myOwnProposals';
 import myTodoProposals from './myTodoProposals';
 import myDoneProposals from './myDoneProposals';
+import contacts from './contact';
 import nav from './router';
 
 export default combineReducers({
@@ -29,4 +30,5 @@ export default combineReducers({
   myTodoProposals,
   myDoneProposals,
   nav,
+  contacts,
 });

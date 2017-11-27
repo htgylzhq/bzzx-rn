@@ -6,11 +6,14 @@ import { connect } from 'react-redux';
 import AtoZListView from 'react-native-atoz-listview';
 import { Toaster } from '../../commons/util';
 import http from '../../commons/http';
+import { onFetchContacts } from '../../actions/contact';
 
 class ContactScreen extends Component {
 
   static propTypes = {
     dispatch: PropTypes.func,
+    onFetchContacts: PropTypes.func,
+    contacts: PropTypes.object,
   };
 
   constructor(props) {
@@ -41,7 +44,8 @@ class ContactScreen extends Component {
       .then((response) => {
         if (response.data.code === 0) {
           const data = response.data.data;
-          this.setState({ data, loading: false });
+          this.setState({ loading: false });
+          this.props.onFetchContacts(data);
         } else {
           Toaster.warn(response.data.msg);
         }
@@ -77,7 +81,7 @@ class ContactScreen extends Component {
               <Spinner />
               :
               <AtoZListView
-                data={this.state.data}
+                data={this.props.contacts}
                 renderRow={this.renderRow}
                 rowHeight={75}
                 renderSectionHeader={this.renderSectionHeader}
@@ -94,11 +98,14 @@ class ContactScreen extends Component {
 }
 
 const mapStateToProps = state => ({
-  nothing: state.nothing || {},
+  contacts: state.contacts.contacts,
 });
 
 const mapDispatchToProps = dispatch => ({
   dispatch,
+  onFetchContacts: (contacts) => {
+    dispatch(onFetchContacts(contacts));
+  },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContactScreen);
