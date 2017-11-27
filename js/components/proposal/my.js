@@ -95,7 +95,7 @@ class ProposalMyScreen extends Component {
                 onPress={() => this._refresh()}
                 style={{ flex: 1, alignSelf: 'center', alignItems: 'center' }}
               >
-                <Text note>没有数据</Text>
+                <Text note>没有数据，点击刷新</Text>
               </CardItem>
               :
               <CardItem cardBody >
