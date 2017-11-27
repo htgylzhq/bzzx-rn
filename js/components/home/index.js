@@ -141,7 +141,7 @@ class HomeScreen extends Component {
                   <CardItem cardBody>
                     <List
                       button
-                      dataArray={this.props.proposalsTodo}
+                      dataArray={this.props.proposalsMy}
                       renderRow={item => this._renderProposalItem(item, 'my')}
                     />
                   </CardItem>
