@@ -1,12 +1,26 @@
 import React, { Component } from 'react';
-import { Container, Content, Text, ListItem, Body, Spinner } from 'native-base';
+import { StyleSheet } from 'react-native';
+import { Container, Content, Text, ListItem, Body, Spinner, View, Left } from 'native-base';
 import PropTypes from 'prop-types';
 import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
-import AtoZListView from 'react-native-atoz-listview';
-import { Toaster, delay } from '../../commons/util';
+import AtoZList from 'react-native-atoz-list';
+import randomcolor from 'randomcolor';
+import { Toaster } from '../../commons/util';
 import http from '../../commons/http';
 import { onFetchContacts } from '../../actions/contact';
+
+const styles = StyleSheet.create({
+  avatar: {
+    width: 50,
+    height: 50,
+    margin: 10,
+    borderRadius: 25,
+    backgroundColor: '#ccc',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
 
 class ContactScreen extends Component {
 
@@ -56,14 +70,17 @@ class ContactScreen extends Component {
       });
   }
 
-  renderSectionHeader = (sectionData, sectionId) => (
-    <ListItem itemDivider style={{ height: 60 }}>
-      <Text style={{ fontSize: 24 }}>{sectionId}</Text>
-    </ListItem>
+  renderSectionHeader = data => (
+    <View style={{ height: 60, justifyContent: 'center', backgroundColor: '#eee', paddingLeft: 10 }}>
+      <Text style={{ fontSize: 24 }}>{data.sectionId}</Text>
+    </View>
     );
 
   renderRow = item => (
     <ListItem button style={{ height: 75 }} onPress={() => this._onPressContact(item)}>
+      <View style={[styles.avatar, { backgroundColor: randomcolor() }]}>
+        <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{item.username.substring(0, 1)}</Text>
+      </View>
       <Body>
         <Text>{item.username}</Text>
         <Text note>{item.unitFullName}</Text>
@@ -80,14 +97,14 @@ class ContactScreen extends Component {
             ?
               <Spinner />
               :
-              <AtoZListView
+              <AtoZList
                 data={this.props.contacts}
-                renderRow={this.renderRow}
-                rowHeight={75}
-                renderSectionHeader={this.renderSectionHeader}
+                renderCell={this.renderRow}
+                cellHeight={75}
+                renderSection={this.renderSectionHeader}
                 sectionHeaderHeight={60}
                 sectionListTextStyle={{ fontSize: 16, paddingLeft: 10, paddingRight: 10 }}
-                initialListSize={999}
+                initialListSize={399}
               />
           }
         </Content>
