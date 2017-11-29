@@ -7,7 +7,7 @@ import theme from '../../themes/base-theme';
 export default class ProposalInfo extends Component {
 
   static propTypes = {
-    proposal: PropTypes.instanceOf(Proposal),
+    proposal: PropTypes.shape(Proposal),
   };
 
   render() {

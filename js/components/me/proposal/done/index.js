@@ -10,7 +10,7 @@ import { refresh, loadMore } from '../../../../actions/myDoneProposals';
 class MyOwnProposalsScreen extends Component {
 
   static propTypes = {
-    proposals: PropTypes.arrayOf(PropTypes.instanceOf(Proposal)),
+    proposals: PropTypes.arrayOf(PropTypes.shape(Proposal)),
     minUpdate: PropTypes.number,
     maxUpdate: PropTypes.number,
     refresh: PropTypes.func,

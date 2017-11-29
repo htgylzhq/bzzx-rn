@@ -6,7 +6,7 @@ import Proposal from '../../models/Proposal';
 export default class ProposalTodo extends Component {
 
   static propTypes = {
-    proposal: PropTypes.instanceOf(Proposal),
+    proposal: PropTypes.shape(Proposal),
     onPress: PropTypes.func,
   };
 

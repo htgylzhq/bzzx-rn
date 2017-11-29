@@ -11,7 +11,7 @@ import { refresh, loadMore } from '../../actions/myOwnProposals';
 class ProposalMyScreen extends Component {
 
   static propTypes = {
-    proposals: PropTypes.arrayOf(PropTypes.instanceOf(Proposal)),
+    proposals: PropTypes.arrayOf(PropTypes.shape(Proposal)),
     loadMore: PropTypes.func,
     dispatch: PropTypes.func,
   };

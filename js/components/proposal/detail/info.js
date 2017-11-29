@@ -11,7 +11,7 @@ class ProposalInfoPage extends Component {
 
   static propTypes = {
     onFetchProposalInfo: PropTypes.func,
-    proposal: PropTypes.instanceOf(Proposal),
+    proposal: PropTypes.shape(Proposal),
   };
 
   constructor() {

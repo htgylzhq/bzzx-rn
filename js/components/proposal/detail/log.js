@@ -10,7 +10,7 @@ import theme from '../../../themes/base-theme';
 class ProposalLogPage extends Component {
 
   static propTypes = {
-    proposalLogs: PropTypes.arrayOf(PropTypes.instanceOf(ProposalLog)),
+    proposalLogs: PropTypes.arrayOf(PropTypes.shape(ProposalLog)),
     onFetchProposalLogs: PropTypes.func,
   };
 

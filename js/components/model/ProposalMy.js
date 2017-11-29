@@ -6,7 +6,7 @@ import Proposal from '../../models/Proposal';
 export default class ProposalMy extends Component {
 
   static propTypes = {
-    proposal: PropTypes.instanceOf(Proposal),
+    proposal: PropTypes.shape(Proposal),
   };
 
   render() {
