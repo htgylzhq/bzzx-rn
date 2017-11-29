@@ -35,10 +35,16 @@ class ContactScreen extends Component {
     this.state = {
       loading: true,
     };
+
+    this.isUnmounted = false;
   }
 
   async componentWillMount() {
     await this._fetchData();
+  }
+
+  componentWillUnmount() {
+    this.isUnmounted = true;
   }
 
   navigate(routeName:string, params:Object) {
@@ -54,7 +60,7 @@ class ContactScreen extends Component {
 
   async _fetchData() {
     const res = await http.get('/platform/api/user/list');
-    if (res.code === 0) {
+    if (res.code === 0 && !this.isUnmounted) {
       this.props.onFetchContacts(res.data);
       this.setState({ loading: false });
     }
