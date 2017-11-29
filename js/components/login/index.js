@@ -47,8 +47,9 @@ class Login extends Component {
     };
     const res = await http.post('/platform/login/doLogin', params);
     if (res.code === 0) {
-      const user = new User(res.data);
-      this.props.onLogin(user);
+      const user = new User(res.data.user);
+      const sid = res.data.sid;
+      this.props.onLogin(user, sid);
     }
   }
 
@@ -105,8 +106,8 @@ const mapStateToProps = state => (state && state.form && state.form.login && sta
 };
 
 const mapDispatchToProps = dispatch => ({
-  onLogin: (user) => {
-    dispatch(login(user));
+  onLogin: (user, sid) => {
+    dispatch(login(user, sid));
   },
 });
 

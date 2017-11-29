@@ -8,21 +8,23 @@ import http from '../../commons/http';
 import onHomeDataLoaded from '../../actions/home';
 import ProposalTodo from '../model/ProposalTodo';
 import ProposalMy from '../model/ProposalMy';
+import _global from '../../commons/global';
 
 class HomeScreen extends Component {
 
   static propTypes = {
-    proposalsTodo: PropTypes.arrayOf(PropTypes.instanceOf(Proposal)),
-    proposalsMy: PropTypes.arrayOf(PropTypes.instanceOf(Proposal)),
+    proposalsTodo: PropTypes.arrayOf(PropTypes.shape(Proposal)),
+    proposalsMy: PropTypes.arrayOf(PropTypes.shape(Proposal)),
     dispatch: PropTypes.func,
     onHomeDataLoaded: PropTypes.func,
   };
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       loading: true,
     };
+    _global.setDispatch(props.dispatch);
   }
 
   componentWillMount() {

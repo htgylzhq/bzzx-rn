@@ -19,6 +19,7 @@ export default function (state:State = initialState, action:Action): State {
       ...state,
       loggedIn: true,
       user: action.user,
+      sid: action.sid,
     };
   }
 
@@ -27,6 +28,7 @@ export default function (state:State = initialState, action:Action): State {
       ...state,
       loggedIn: false,
       user: null,
+      sid: null,
     };
   }
 

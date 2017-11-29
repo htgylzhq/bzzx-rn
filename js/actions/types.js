@@ -14,7 +14,7 @@ export type Action =
   | { type: 'CLOSE_DRAWER' }
   | { type: 'SET_USER', name: string }
   | { type: 'SET_LIST', list: string }
-  | { type: 'LOGIN', user: User }
+  | { type: 'LOGIN', user: User, sid: string }
   | { type: 'REFRESH_MSGS', msgs: Msg[], maxUpdate: number, minUpdate: number }
   | { type: 'LOAD_MORE_MSGS', msgs: Msg[], maxUpdate: number, minUpdate: number }
   | { type: 'ON_FETCH_MSG', msg: Msg }
