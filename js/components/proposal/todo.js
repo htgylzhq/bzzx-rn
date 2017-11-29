@@ -8,7 +8,6 @@ import Proposal from '../../models/Proposal';
 import ProposalTodo from '../model/ProposalTodo';
 import http from '../../commons/http';
 import { refresh, loadMore } from '../../actions/myTodoProposals';
-import { Toaster } from '../../commons/util';
 
 class ProposalTodoScreen extends Component {
 
@@ -39,40 +38,29 @@ class ProposalTodoScreen extends Component {
     }));
   }
 
-  _refresh() {
+  async _refresh() {
     const maxUpdate = this.props.maxUpdate;
-    http.get(`/platform/api/cppcc/proposal/type/todo?maxUpdate=${maxUpdate}`).then((response) => {
+    const res = await http.get(`/platform/api/cppcc/proposal/type/todo?maxUpdate=${maxUpdate}`);
+    if (res.code === 0) {
+      const data = res.data;
+      const proposals = data.list.map(obj => new Proposal(obj));
+      const newMinUpdate = data.minUpdate;
+      const newMaxUpdate = data.maxUpdate;
+      this.props.refresh(proposals, newMinUpdate, newMaxUpdate);
       this.setState({ refreshing: false });
-      if (response.data.code === 0) {
-        const data = response.data.data;
-        const proposals = data.list.map(obj => new Proposal(obj));
-        const newMinUpdate = data.minUpdate;
-        const newMaxUpdate = data.maxUpdate;
-        this.props.refresh(proposals, newMinUpdate, newMaxUpdate);
-      } else {
-        Toaster.warn(response.data.msg);
-      }
-    }).catch((err) => {
-      this.setState({ refreshing: false });
-      Toaster.error(`貌似网络开小差了？${err}`);
-    });
+    }
   }
 
-  _loadMore() {
+  async _loadMore() {
     const minUpdate = this.props.minUpdate;
-    http.get(`/platform/api/cppcc/proposal/type/todo?minUpdate=${minUpdate}`).then((response) => {
-      if (response.data.code === 0) {
-        const data = response.data.data;
-        const proposals = data.list.map(obj => new Proposal(obj));
-        const newMinUpdate = data.minUpdate;
-        const newMaxUpdate = data.maxUpdate;
-        this.props.loadMore(proposals, newMinUpdate, newMaxUpdate);
-      } else {
-        Toaster.warn(response.data.msg);
-      }
-    }).catch((err) => {
-      Toaster.error(`貌似网络开小差了？${err}`);
-    });
+    const res = await http.get(`/platform/api/cppcc/proposal/type/todo?minUpdate=${minUpdate}`);
+    if (res.code === 0) {
+      const data = res.data;
+      const proposals = data.list.map(obj => new Proposal(obj));
+      const newMinUpdate = data.minUpdate;
+      const newMaxUpdate = data.maxUpdate;
+      this.props.loadMore(proposals, newMinUpdate, newMaxUpdate);
+    }
   }
 
   _onPressProposal(proposal:Proposal) {

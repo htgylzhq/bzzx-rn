@@ -8,7 +8,6 @@ import http from '../../commons/http';
 import onHomeDataLoaded from '../../actions/home';
 import ProposalTodo from '../model/ProposalTodo';
 import ProposalMy from '../model/ProposalMy';
-import { Toaster } from '../../commons/util';
 
 class HomeScreen extends Component {
 
@@ -37,22 +36,14 @@ class HomeScreen extends Component {
     }));
   }
 
-  _fetchData() {
-    http.get('/platform/api/home')
-      .then((response) => {
-        if (response.data.code === 0) {
-          const data = response.data.data;
-          const proposalsTodo = data.proposalsTodo.map(obj => new Proposal(obj));
-          const proposalsMy = data.proposalsMy.map(obj => new Proposal(obj));
-          this.props.onHomeDataLoaded(proposalsTodo, proposalsMy);
-        } else {
-          Toaster.warn(response.data.msg);
-        }
-        this.setState({ loading: false });
-      })
-      .catch((err) => {
-        Toaster.error(err);
-      });
+  async _fetchData() {
+    const res = await http.get('/platform/api/home');
+    if (res.code === 0) {
+      const proposalsTodo = res.data.proposalsTodo.map(obj => new Proposal(obj));
+      const proposalsMy = res.data.proposalsMy.map(obj => new Proposal(obj));
+      this.props.onHomeDataLoaded(proposalsTodo, proposalsMy);
+      this.setState({ loading: false });
+    }
   }
 
   _renderProposalItem(proposal: Proposal, type: String) {

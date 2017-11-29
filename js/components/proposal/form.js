@@ -8,7 +8,6 @@ import { Field, reduxForm } from 'redux-form';
 import PropTypes from 'prop-types';
 import { Container, Content, Button, Text, Item, Label, Input, Picker, View, Spinner } from 'native-base';
 import { NavigationActions } from 'react-navigation';
-import qs from 'qs';
 import http from '../../commons/http';
 import { Toaster, delay } from '../../commons/util';
 
@@ -62,28 +61,19 @@ class ProposalForm extends Component {
     this.props.dispatch(NavigationActions.back());
   }
 
-  _submit = () => {
+  async _submit() {
     const { title, content, proposalUnitId } = this.props;
 
-    http.request({
-      url: '/platform/cppcc/proposal/save',
-      method: 'post',
-      data: {
-        title,
-        content,
-      },
-      transformRequest: [data => qs.stringify(data)],
-    }).then((response) => {
-      if (response.data.code === 0) {
-        Toaster.success('操作成功');
-        this.navigateBack();
-      } else {
-        Toaster.warn(response.data.msg);
-      }
-    }).catch((err) => {
-      Toaster.error(err);
+    const res = http.post('/platform/cppcc/proposal/save', {
+      title,
+      content,
     });
-  };
+
+    if (res.code === 0) {
+      Toaster.success('操作成功');
+      this.navigateBack();
+    }
+  }
 
   renderInput = ({
                    input,

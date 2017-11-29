@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
-import { Container, Content, Text, ListItem, Body, Spinner, View, Left } from 'native-base';
+import { Container, Content, Text, ListItem, Body, Spinner, View } from 'native-base';
 import PropTypes from 'prop-types';
 import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
 import AtoZList from 'react-native-atoz-list';
 import randomcolor from 'randomcolor';
-import { Toaster } from '../../commons/util';
 import http from '../../commons/http';
 import { onFetchContacts } from '../../actions/contact';
 
@@ -53,21 +52,12 @@ class ContactScreen extends Component {
     this.navigate('ContactDetailPage', { contact });
   }
 
-  _fetchData() {
-    http.get('/platform/api/user/list')
-      .then((response) => {
-        if (response.data.code === 0) {
-          const data = response.data.data;
-          this.props.onFetchContacts(data);
-          this.setState({ loading: false });
-        } else {
-          Toaster.warn(response.data.msg);
-        }
-        this.setState({ loading: false });
-      })
-      .catch((err) => {
-        Toaster.error(err);
-      });
+  async _fetchData() {
+    const res = await http.get('/platform/api/user/list');
+    if (res.code === 0) {
+      this.props.onFetchContacts(res.data);
+      this.setState({ loading: false });
+    }
   }
 
   renderSectionHeader = data => (

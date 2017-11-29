@@ -3,7 +3,6 @@ import { Spinner, List, ListItem, Card, CardItem, Text, Left, Right, Body, View,
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import http from '../../../commons/http';
-import { Toaster } from '../../../commons/util';
 import ProposalLog from '../../../models/ProposalLog';
 import { onFetchProposalLogs } from '../../../actions/proposalDetail';
 import theme from '../../../themes/base-theme';
@@ -11,7 +10,6 @@ import theme from '../../../themes/base-theme';
 class ProposalLogPage extends Component {
 
   static propTypes = {
-    proposalId: PropTypes.string,
     proposalLogs: PropTypes.arrayOf(PropTypes.instanceOf(ProposalLog)),
     onFetchProposalLogs: PropTypes.func,
   };
@@ -27,20 +25,15 @@ class ProposalLogPage extends Component {
     this._fetchProposalLogs();
   }
 
-  _fetchProposalLogs() {
+  async _fetchProposalLogs() {
     const { proposalId } = this.props;
-    http.get(`/platform/api/cppcc/proposal/${proposalId}`).then((response) => {
-      if (response.data.code === 0) {
-        const data = response.data.data;
-        const proposalLogs = data.taskComments.map(obj => new ProposalLog(obj));
-        this.setState({ loading: false });
-        this.props.onFetchProposalLogs(proposalLogs);
-      } else {
-        Toaster.warn(response.data.msg);
-      }
-    }).catch((error) => {
-      Toaster.error(`貌似网络开小差了？${error}`);
-    });
+    const res = await http.get(`/platform/api/cppcc/proposal/${proposalId}`);
+    if (res.code === 0) {
+      const data = res.data;
+      const proposalLogs = data.taskComments.map(obj => new ProposalLog(obj));
+      this.setState({ loading: false });
+      this.props.onFetchProposalLogs(proposalLogs);
+    }
   }
 
   _renderProposalLog(proposalLog: ProposalLog) {
