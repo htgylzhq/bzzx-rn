@@ -6,11 +6,11 @@ import {
 } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import PropTypes from 'prop-types';
-import { Container, Content, Button, Text, Item, Label, Input, Picker, View } from 'native-base';
+import { Container, Content, Button, Text, Item, Label, Input, Picker, View, Spinner } from 'native-base';
 import { NavigationActions } from 'react-navigation';
 import qs from 'qs';
 import http from '../../commons/http';
-import { Toaster } from '../../commons/util';
+import { Toaster, delay } from '../../commons/util';
 
 const validate = (values) => {
   const error = {};
@@ -28,13 +28,7 @@ const validate = (values) => {
   return error;
 };
 
-const proposalUnits = [
-  { name: '单位A', id: 'A' },
-  { name: '单位B', id: 'B' },
-  { name: '单位C', id: 'C' },
-  { name: '单位D', id: 'D' },
-  { name: '单位E', id: 'E' },
-];
+let proposalUnits = [];
 
 class ProposalForm extends Component {
 
@@ -48,13 +42,48 @@ class ProposalForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      proposalUnitId: 'B',
+      loading: true,
     };
+  }
+
+  async componentWillMount() {
+    await delay(3000);
+    proposalUnits = [
+      { name: '单位A', id: 'A' },
+      { name: '单位B', id: 'B' },
+      { name: '单位C', id: 'C' },
+      { name: '单位D', id: 'D' },
+      { name: '单位E', id: 'E' },
+    ];
+    this.setState({ loading: false });
   }
 
   navigateBack() {
     this.props.dispatch(NavigationActions.back());
   }
+
+  _submit = () => {
+    const { title, content, proposalUnitId } = this.props;
+
+    http.request({
+      url: '/platform/cppcc/proposal/save',
+      method: 'post',
+      data: {
+        title,
+        content,
+      },
+      transformRequest: [data => qs.stringify(data)],
+    }).then((response) => {
+      if (response.data.code === 0) {
+        Toaster.success('操作成功');
+        this.navigateBack();
+      } else {
+        Toaster.warn(response.data.msg);
+      }
+    }).catch((err) => {
+      Toaster.error(err);
+    });
+  };
 
   renderInput = ({
                    input,
@@ -93,7 +122,7 @@ class ProposalForm extends Component {
     );
   };
 
-  renderPicker = ({ input: { onChange, value}, meta, ...pickerProps }) => (
+  renderPicker = ({ input: { onChange, value }, meta, ...pickerProps }) => (
     <View style={{ marginTop: 10 }}>
       <Label>建议承办单位</Label>
       <Picker
@@ -106,32 +135,16 @@ class ProposalForm extends Component {
     </View>
   );
 
-  _submit = () => {
-    const { title, content, proposalUnitId } = this.props;
-
-    http.request({
-      url: '/platform/cppcc/proposal/save',
-      method: 'post',
-      data: {
-        title,
-        content,
-      },
-      transformRequest: [data => qs.stringify(data)],
-    }).then((response) => {
-      if (response.data.code === 0) {
-        Toaster.success('操作成功');
-        this.navigateBack();
-      } else {
-        Toaster.warn(response.data.msg);
-      }
-    }).catch((err) => {
-      Toaster.error(err);
-    });
-  };
-
   render() {
-    return (
-      <Container>
+    let comp;
+    if (this.state.loading) {
+      comp = (
+        <Content padder>
+          <Spinner />
+        </Content>
+      );
+    } else {
+      comp = (
         <Content padder>
           <Field name={'title'} component={this.renderInput} />
           <Field
@@ -149,6 +162,12 @@ class ProposalForm extends Component {
             <Text>提交</Text>
           </Button>
         </Content>
+      );
+    }
+
+    return (
+      <Container>
+        {comp}
       </Container>
     );
   }
