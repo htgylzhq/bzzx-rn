@@ -21,6 +21,7 @@ const Navigator = TabNavigator({
     screen: MeScreen,
   },
 }, {
+  lazy: true,
   tabBarPosition: 'bottom',
   tabBarComponent: props => (
     <Footer>
