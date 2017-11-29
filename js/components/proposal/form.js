@@ -6,7 +6,7 @@ import {
 } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import PropTypes from 'prop-types';
-import { Container, Content, Button, Text, Item, Label, Input, Picker } from 'native-base';
+import { Container, Content, Button, Text, Item, Label, Input, Picker, View } from 'native-base';
 import { NavigationActions } from 'react-navigation';
 import qs from 'qs';
 import http from '../../commons/http';
@@ -56,11 +56,6 @@ class ProposalForm extends Component {
     this.props.dispatch(NavigationActions.back());
   }
 
-  onProposalUnitIdChange(proposalUnitId:string) {
-    console.log('select: ', proposalUnitId);
-    this.setState({ proposalUnitId });
-  }
-
   renderInput = ({
                    input,
                    meta: { error },
@@ -99,14 +94,17 @@ class ProposalForm extends Component {
   };
 
   renderPicker = ({ input: { onChange, value}, meta, ...pickerProps }) => (
-    <Picker
-      selectedValue={value}
-      onValueChange={val => onChange(val)}
-      {...pickerProps}
-    >
-      {proposalUnits.map(i => <Picker.Item label={i.name} value={i.id} key={i.id} />)}
-    </Picker>
-    );
+    <View style={{ marginTop: 10 }}>
+      <Label>建议承办单位</Label>
+      <Picker
+        selectedValue={value}
+        onValueChange={val => onChange(val)}
+        {...pickerProps}
+      >
+        {proposalUnits.map(i => <Picker.Item label={i.name} value={i.id} key={i.id} />)}
+      </Picker>
+    </View>
+  );
 
   _submit = () => {
     const { title, content, proposalUnitId } = this.props;
@@ -136,13 +134,13 @@ class ProposalForm extends Component {
       <Container>
         <Content padder>
           <Field name={'title'} component={this.renderInput} />
-          <Field name={'content'} component={this.renderInput} />
           <Field
             name={'proposalUnitId'}
             component={this.renderPicker}
             iosHeader="建议承办单位"
             mode="dropdown"
           />
+          <Field name={'content'} component={this.renderInput} />
           <Button
             block
             style={{ marginTop: 20 }}
