@@ -1,6 +1,7 @@
 import axios from 'axios';
 import qs from 'qs';
 import { Toaster } from './util';
+import _global from './global';
 
 axios.interceptors.request.use(
   config => config,
@@ -24,6 +25,10 @@ function checkStatus(response) {
 }
 
 function checkCode(res) {
+  if (res.msg === '登录失效') {
+    Toaster.error(res.msg);
+    _global.logout();
+  }
   if (res.code !== 0) {
     Toaster.error(res.msg);
   }
