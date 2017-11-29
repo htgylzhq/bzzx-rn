@@ -4,12 +4,10 @@ import { Button, Container, Content, Icon, Input, Item, Text, View } from 'nativ
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import PropTypes from 'prop-types';
-import qs from 'qs';
 import styles from './styles';
 import http from '../../commons/http';
 import { login } from '../../actions/auth';
 import User from '../../models/User';
-import { Toaster } from '../../commons/util';
 
 const background = require('../../../images/shadow.png');
 
@@ -28,8 +26,6 @@ const validate = ({ loginname, password }) => {
 
 class Login extends Component {
   static propTypes = {
-    loginname: PropTypes.string,
-    password: PropTypes.string,
     onLogin: PropTypes.func,
   };
 
@@ -41,33 +37,20 @@ class Login extends Component {
     this.renderInput = this.renderInput.bind(this);
   }
 
-  _login = () => {
+  async _login() {
     const loginname = this.props.loginname;
     const password = this.props.password;
 
-    http.request({
-      url: '/platform/login/doLogin',
-      method: 'post',
-      data: {
-        username: loginname,
-        password,
-      },
-      transformRequest: [data => qs.stringify(data)],
-    }, {
+    const params = {
       username: loginname,
       password,
-    }).then((response) => {
-      if (response.data.code === 0) {
-        const user = new User(response.data.data);
-        this.props.onLogin(user);
-      } else {
-        Toaster.warn(response.data.msg);
-      }
-    })
-      .catch((err) => {
-        Toaster.error(err);
-      });
-  };
+    };
+    const res = await http.post('/platform/login/doLogin', params);
+    if (res.code === 0) {
+      const user = new User(res.data);
+      this.props.onLogin(user);
+    }
+  }
 
   renderInput = ({
                    input,
