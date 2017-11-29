@@ -129,7 +129,7 @@ class HomeScreen extends Component {
                     </Button>
                   </CardItem>
                 :
-                  <CardItem cardBody>
+                  <CardItem cardBody style={{ flex: 1 }}>
                     <List
                       button
                       dataArray={this.props.proposalsMy}
