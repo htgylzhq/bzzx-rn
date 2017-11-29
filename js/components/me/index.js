@@ -62,10 +62,7 @@ class MeScreen extends Component {
 
 }
 
-const mapStateToProps = (state) => {
-  const { id, unitName, username, jiguan, weiyuan, mobile, sex } = state.auth.user;
-  return { id, unitName, username, jiguan, weiyuan, mobile, sex };
-};
+const mapStateToProps = state => ({ ...(state.auth.user) } || {});
 
 const mapDispatchToProps = dispatch => ({
   dispatch,
