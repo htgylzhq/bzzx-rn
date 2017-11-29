@@ -12,8 +12,6 @@ import qs from 'qs';
 import http from '../../commons/http';
 import { Toaster } from '../../commons/util';
 
-const PickerItem = Picker.Item;
-
 const validate = (values) => {
   const error = {};
   const { title, proposalUnitId, content } = values;
@@ -30,6 +28,14 @@ const validate = (values) => {
   return error;
 };
 
+const proposalUnits = [
+  { name: '单位A', id: 'A' },
+  { name: '单位B', id: 'B' },
+  { name: '单位C', id: 'C' },
+  { name: '单位D', id: 'D' },
+  { name: '单位E', id: 'E' },
+];
+
 class ProposalForm extends Component {
 
   static propTypes = {
@@ -42,7 +48,7 @@ class ProposalForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      proposalUnitId: this.props.proposalUnitId,
+      proposalUnitId: 'B',
     };
   }
 
@@ -51,6 +57,7 @@ class ProposalForm extends Component {
   }
 
   onProposalUnitIdChange(proposalUnitId:string) {
+    console.log('select: ', proposalUnitId);
     this.setState({ proposalUnitId });
   }
 
@@ -91,21 +98,18 @@ class ProposalForm extends Component {
     );
   };
 
-  renderPicker = () => (
+  renderPicker = ({ input: { onChange, value}, meta, ...pickerProps }) => (
     <Picker
-      iosHeader="建议承办单位"
-      mode="dropdown"
-      onValueChange={value => this.onProposalUnitIdChange(value)}
+      selectedValue={value}
+      onValueChange={val => onChange(val)}
+      {...pickerProps}
     >
-      <PickerItem lable={'单位A'} value={1} />
-      <PickerItem lable={'单位B'} value={2} />
-      <PickerItem lable={'单位C'} value={3} />
-      <PickerItem lable={'单位D'} value={4} />
+      {proposalUnits.map(i => <Picker.Item label={i.name} value={i.id} key={i.id} />)}
     </Picker>
     );
 
   _submit = () => {
-    const { title, content } = this.props;
+    const { title, content, proposalUnitId } = this.props;
 
     http.request({
       url: '/platform/cppcc/proposal/save',
@@ -115,9 +119,6 @@ class ProposalForm extends Component {
         content,
       },
       transformRequest: [data => qs.stringify(data)],
-    }, {
-      title,
-      content,
     }).then((response) => {
       if (response.data.code === 0) {
         Toaster.success('操作成功');
@@ -135,8 +136,13 @@ class ProposalForm extends Component {
       <Container>
         <Content padder>
           <Field name={'title'} component={this.renderInput} />
-          {/* 闪退 <Field name={'proposalUnitId'} component={this.renderPicker} />*/}
           <Field name={'content'} component={this.renderInput} />
+          <Field
+            name={'proposalUnitId'}
+            component={this.renderPicker}
+            iosHeader="建议承办单位"
+            mode="dropdown"
+          />
           <Button
             block
             style={{ marginTop: 20 }}
