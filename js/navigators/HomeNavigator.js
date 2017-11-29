@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Footer, FooterTab, Icon, Text } from 'native-base';
-import { TabNavigator } from 'react-navigation';
+import { TabNavigator, NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
 import HomeScreen from '../components/home';
 import WorkScreen from '../components/work';
@@ -62,6 +62,38 @@ const Navigator = TabNavigator({
     </Footer>
     ),
 });
+
+const defaultGetStateForAction = Navigator.router.getStateForAction;
+
+Navigator.router.getStateForAction = (action, state) => {
+
+  if (action.type === NavigationActions.NAVIGATE) {
+    const actions = state.actions || [];
+    actions.push(action);
+    const newState = defaultGetStateForAction(action, state);
+    return { ...newState, actions };
+  }
+
+  if (action.type === NavigationActions.BACK) {
+    const actions = state.actions;
+    actions.pop();
+    let newAction = actions.pop();
+    actions.push(action);
+    if (!newAction) {
+      newAction = NavigationActions.navigate({
+        routeName: state.routes[0].routeName,
+      });
+      if (state.index === 0) {
+        return null;
+      }
+    }
+
+    const newState = defaultGetStateForAction(newAction, state);
+    return { ...newState, actions };
+  }
+
+  return defaultGetStateForAction(action, state);
+};
 
 const HomeNavigator = () => (
   <Navigator />
