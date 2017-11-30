@@ -33,6 +33,7 @@ export type Action =
   | { type: 'ON_FETCH_PROPOSAL_INFO', proposal: Proposal }
   | { type: 'ON_FETCH_PROPOSAL_LOGS', proposalLogs: ProposalLog[] }
   | { type: 'ON_FETCH_CONTACTS', contacts: Object }
+  | { type: 'ON_FETCH_UNDERTAKERS', undertakers: Object[] }
 export type Dispatch = (action: Action | Array<Action>) => any;
 export type GetState = () => Object;
 export type PromiseAction = Promise<Action>;

@@ -14,6 +14,7 @@ import myTodoProposals from './myTodoProposals';
 import myDoneProposals from './myDoneProposals';
 import contacts from './contact';
 import nav from './router';
+import undertaker from './undertaker';
 
 export default combineReducers({
   form: formReducer,
@@ -31,4 +32,5 @@ export default combineReducers({
   myDoneProposals,
   nav,
   contacts,
+  undertaker,
 });

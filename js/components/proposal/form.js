@@ -10,6 +10,7 @@ import { Container, Content, Button, Text, Item, Label, Input, Picker, View, Spi
 import { NavigationActions } from 'react-navigation';
 import http from '../../commons/http';
 import { Toaster, delay } from '../../commons/util';
+import { onFetchUndertakers } from '../../actions/undertaker';
 
 const validate = (values) => {
   const error = {};
@@ -27,8 +28,6 @@ const validate = (values) => {
   return error;
 };
 
-let undertakers = [];
-
 class ProposalForm extends Component {
 
   static propTypes = {
@@ -36,6 +35,12 @@ class ProposalForm extends Component {
     proposalUnitId: PropTypes.string,
     title: PropTypes.string,
     content: PropTypes.string,
+    undertakers: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.string,
+        name: PropTypes.string,
+      })
+    ),
   };
 
   constructor(props) {
@@ -48,7 +53,8 @@ class ProposalForm extends Component {
   async componentWillMount() {
     const res = await http.get('/platform/api/unit/undertaker');
     if (res.code === 0) {
-      undertakers = res.data;
+      const undertakers = res.data;
+      this.props.onFetchUndertakers(undertakers);
       this.setState({ loading: false });
     }
   }
@@ -59,7 +65,7 @@ class ProposalForm extends Component {
 
   async _submit() {
     const { title, content, proposalUnitId } = this.props;
-    const filteredUndertakers = _.filter(undertakers, n => n.id === proposalUnitId);
+    const filteredUndertakers = _.filter(this.props.undertakers, n => n.id === proposalUnitId);
     const selectedUndertaker = _.first(filteredUndertakers) || {};
     const proposalUnitName = selectedUndertaker.name || '';
 
@@ -113,18 +119,20 @@ class ProposalForm extends Component {
     );
   };
 
-  renderPicker = ({ input: { onChange, value }, ...pickerProps }) => (
-    <View style={{ marginTop: 10 }}>
-      <Label>建议承办单位</Label>
-      <Picker
-        selectedValue={value}
-        onValueChange={val => onChange(val)}
-        {...pickerProps}
-      >
-        {undertakers.map(i => <Picker.Item label={i.name} value={i.id} key={i.id} />)}
-      </Picker>
-    </View>
-  );
+  renderPicker = ({ input: { onChange, value }, ...pickerProps }) => {
+    return (
+      <View style={{ marginTop: 10 }}>
+        <Label>建议承办单位</Label>
+        <Picker
+          selectedValue={value}
+          onValueChange={val => onChange(val)}
+          {...pickerProps}
+        >
+          {this.props.undertakers.map(i => <Picker.Item label={i.name} value={i.id} key={i.id} />)}
+        </Picker>
+      </View>
+    );
+  };
 
   render() {
     let comp;
@@ -164,14 +172,24 @@ class ProposalForm extends Component {
   }
 }
 
-const mapStateToProps = state => (state && state.form && state.form.proposal && state.form.proposal.values) || {
-  title: '',
-  proposalUnitId: '',
-  content: '',
+const mapStateToProps = (state) => {
+  const formValues = (state && state.form && state.form.proposal && state.form.proposal.values) || {
+    title: '',
+    proposalUnitId: '',
+    content: '',
+  };
+  const undertakers = (state.undertaker && state.undertaker.undertakers) || [];
+  const undertaker = undertakers[0] || {};
+  const initialValues = {
+    proposalUnitId: undertaker.id || '',
+    proposalUnitName: undertaker.name || '',
+  };
+  return { ...formValues, undertakers, initialValues };
 };
 
 const mapDispatchToProps = dispatch => ({
   dispatch,
+  onFetchUndertakers: (undertakers) => { dispatch(onFetchUndertakers(undertakers)); },
 });
 
 const ProposalFormPage = reduxForm(
