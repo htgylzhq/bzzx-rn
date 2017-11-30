@@ -27,7 +27,7 @@ const validate = (values) => {
   return error;
 };
 
-let proposalUnits = [];
+let undertakers = [];
 
 class ProposalForm extends Component {
 
@@ -46,15 +46,11 @@ class ProposalForm extends Component {
   }
 
   async componentWillMount() {
-    await delay(3000);
-    proposalUnits = [
-      { name: '单位A', id: 'A' },
-      { name: '单位B', id: 'B' },
-      { name: '单位C', id: 'C' },
-      { name: '单位D', id: 'D' },
-      { name: '单位E', id: 'E' },
-    ];
-    this.setState({ loading: false });
+    const res = await http.get('/platform/api/unit/undertaker');
+    if (res.code === 0) {
+      undertakers = res.data;
+      this.setState({ loading: false });
+    }
   }
 
   navigateBack() {
@@ -63,10 +59,15 @@ class ProposalForm extends Component {
 
   async _submit() {
     const { title, content, proposalUnitId } = this.props;
+    const filteredUndertakers = _.filter(undertakers, n => n.id === proposalUnitId);
+    const selectedUndertaker = _.first(filteredUndertakers) || {};
+    const proposalUnitName = selectedUndertaker.name || '';
 
-    const res = http.post('/platform/cppcc/proposal/save', {
+    const res = await http.post('/platform/cppcc/proposal/save', {
       title,
       content,
+      proposalUnitId,
+      proposalUnitName,
     });
 
     if (res.code === 0) {
@@ -112,7 +113,7 @@ class ProposalForm extends Component {
     );
   };
 
-  renderPicker = ({ input: { onChange, value }, meta, ...pickerProps }) => (
+  renderPicker = ({ input: { onChange, value }, ...pickerProps }) => (
     <View style={{ marginTop: 10 }}>
       <Label>建议承办单位</Label>
       <Picker
@@ -120,7 +121,7 @@ class ProposalForm extends Component {
         onValueChange={val => onChange(val)}
         {...pickerProps}
       >
-        {proposalUnits.map(i => <Picker.Item label={i.name} value={i.id} key={i.id} />)}
+        {undertakers.map(i => <Picker.Item label={i.name} value={i.id} key={i.id} />)}
       </Picker>
     </View>
   );
