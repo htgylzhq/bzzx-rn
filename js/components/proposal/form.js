@@ -10,7 +10,6 @@ import { Container, Content, Button, Text, Item, Label, Input, Picker, View, Spi
 import { NavigationActions } from 'react-navigation';
 import http from '../../commons/http';
 import { Toaster, delay } from '../../commons/util';
-import { onFetchUndertakers } from '../../actions/undertaker';
 
 const validate = (values) => {
   const error = {};
@@ -28,6 +27,8 @@ const validate = (values) => {
   return error;
 };
 
+let proposalUnits = [];
+
 class ProposalForm extends Component {
 
   static propTypes = {
@@ -35,45 +36,47 @@ class ProposalForm extends Component {
     proposalUnitId: PropTypes.string,
     title: PropTypes.string,
     content: PropTypes.string,
-    undertakers: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.string,
-        name: PropTypes.string,
-      })
-    ),
+    navigation: PropTypes.shape({
+      state: PropTypes.object,
+    }),
   };
 
   constructor(props) {
     super(props);
     this.state = {
       loading: true,
+      params: this.props.navigation.state.params,
     };
   }
-
   async componentWillMount() {
-    const res = await http.get('/platform/api/unit/undertaker');
-    if (res.code === 0) {
-      const undertakers = res.data;
-      this.props.onFetchUndertakers(undertakers);
-      this.setState({ loading: false });
+    await delay(3000);
+    proposalUnits = [
+      { name: '单位A', id: 'A' },
+      { name: '单位B', id: 'B' },
+      { name: '单位C', id: 'C' },
+      { name: '单位D', id: 'D' },
+      { name: '单位E', id: 'E' },
+    ];
+    this.setState({ loading: false });
+    const initData = {
+      title: this.state.params.title,
+      content: this.state.params.content,
+      proposalUnitId: this.state.params.proposalUnitId,
     }
+    this.props.initialize(initData);
   }
 
   navigateBack() {
     this.props.dispatch(NavigationActions.back());
   }
 
-  async _submit() {
+  async _submit(type) {
     const { title, content, proposalUnitId } = this.props;
-    const filteredUndertakers = _.filter(this.props.undertakers, n => n.id === proposalUnitId);
-    const selectedUndertaker = _.first(filteredUndertakers) || {};
-    const proposalUnitName = selectedUndertaker.name || '';
 
-    const res = await http.post('/platform/cppcc/proposal/save', {
+    const res = http.post('/platform/cppcc/proposal/' + type, {
       title,
       content,
       proposalUnitId,
-      proposalUnitName,
     });
 
     if (res.code === 0) {
@@ -119,20 +122,18 @@ class ProposalForm extends Component {
     );
   };
 
-  renderPicker = ({ input: { onChange, value }, ...pickerProps }) => {
-    return (
-      <View style={{ marginTop: 10 }}>
-        <Label>建议承办单位</Label>
-        <Picker
-          selectedValue={value}
-          onValueChange={val => onChange(val)}
-          {...pickerProps}
-        >
-          {this.props.undertakers.map(i => <Picker.Item label={i.name} value={i.id} key={i.id} />)}
-        </Picker>
-      </View>
-    );
-  };
+  renderPicker = ({ input: { onChange, value }, meta, ...pickerProps }) => (
+    <View style={{ marginTop: 10 }}>
+      <Label>建议承办单位</Label>
+      <Picker
+        selectedValue={value}
+        onValueChange={val => onChange(val)}
+        {...pickerProps}
+      >
+        {proposalUnits.map(i => <Picker.Item label={i.name} value={i.id} key={i.id} />)}
+      </Picker>
+    </View>
+  );
 
   render() {
     let comp;
@@ -153,13 +154,32 @@ class ProposalForm extends Component {
             mode="dropdown"
           />
           <Field name={'content'} component={this.renderInput} />
+          { !this.state.params && !this.state.params.edit &&
+            <Button
+              block
+              style={{ marginTop: 20 }}
+              onPress={() => this._submit('save')}
+            >
+              <Text>提交</Text>
+            </Button>
+          }
+          { this.state.params && this.state.params.edit &&
           <Button
             block
             style={{ marginTop: 20 }}
-            onPress={() => this._submit()}
+            onPress={() => this._submit('edit')}
           >
-            <Text>提交</Text>
+            <Text>提交修改</Text>
           </Button>
+          }
+          { this.state.params && this.state.params.edit &&
+            <Button
+              block
+              style={{ marginTop: 20 }}
+            >
+              <Text>提交审核</Text>
+            </Button>
+          }
         </Content>
       );
     }
@@ -172,24 +192,14 @@ class ProposalForm extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  const formValues = (state && state.form && state.form.proposal && state.form.proposal.values) || {
-    title: '',
-    proposalUnitId: '',
-    content: '',
-  };
-  const undertakers = (state.undertaker && state.undertaker.undertakers) || [];
-  const undertaker = undertakers[0] || {};
-  const initialValues = {
-    proposalUnitId: undertaker.id || '',
-    proposalUnitName: undertaker.name || '',
-  };
-  return { ...formValues, undertakers, initialValues };
+const mapStateToProps = state => (state && state.form && state.form.proposal && state.form.proposal.values) || {
+  title: '',
+  proposalUnitId: '',
+  content: '',
 };
 
 const mapDispatchToProps = dispatch => ({
   dispatch,
-  onFetchUndertakers: (undertakers) => { dispatch(onFetchUndertakers(undertakers)); },
 });
 
 const ProposalFormPage = reduxForm(

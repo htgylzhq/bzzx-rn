@@ -55,16 +55,20 @@ class ProposalMyScreen extends Component {
   _onPressProposal(proposal:Proposal) {
     this.props.dispatch({
       type: 'Navigation/NAVIGATE',
-      routeName: 'ProposalDetailPage',
+      routeName: 'ProposalFormPage',
       params: {
         id: proposal.id,
+        title: proposal.title,
+        content: proposal.content,
+        proposalUnitId: proposal.proposalUnitId,
+        edit: true,
       },
     });
   }
 
   _renderProposalItem(proposal:Proposal) {
     return (
-      <ProposalMy proposal={proposal} />
+      <ProposalMy proposal={proposal} onPress={() => this._onPressProposal(proposal)} />
     );
   }
 
