@@ -36,9 +36,7 @@ class ProposalForm extends Component {
     proposalUnitId: PropTypes.string,
     title: PropTypes.string,
     content: PropTypes.string,
-    navigation: PropTypes.shape({
-      state: PropTypes.object,
-    }),
+    navigation: PropTypes.shape({ }),
     undertakers: PropTypes.arrayOf(
       PropTypes.shape({})
     ),
@@ -48,10 +46,14 @@ class ProposalForm extends Component {
     super(props);
     this.state = {
       loading: true,
-      params: this.props.navigation.state.params,
     };
   }
   async componentWillMount() {
+    this.props.initialize({
+      proposalUnitId: this.props.proposalUnitId,
+      proposalUnitName: this.props.proposalUnitName,
+      ...this.props.navigation.state.params,
+    });
     const res = await http.get('/platform/api/unit/undertaker');
     if (res.code === 0) {
       const undertakers = res.data;
@@ -179,11 +181,12 @@ const mapStateToProps = (state) => {
   };
   const undertakers = (state.undertaker && state.undertaker.undertakers) || [];
   const undertaker = undertakers[0] || {};
+
   const initialValues = {
     proposalUnitId: undertaker.id || '',
     proposalUnitName: undertaker.name || '',
   };
-  return { ...formValues, undertakers, initialValues };
+  return { ...formValues, undertakers, ...initialValues };
 };
 
 const mapDispatchToProps = dispatch => ({

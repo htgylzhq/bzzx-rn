@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { RefreshControl } from 'react-native';
 import { Container, List, Card, CardItem, Text } from 'native-base';
+import { NavigationActions } from 'react-navigation';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Proposal from '../../models/Proposal';
@@ -25,6 +26,13 @@ class ProposalMyScreen extends Component {
 
   componentWillMount() {
     this._refresh();
+  }
+
+  navigate(routeName:string, params:Object) {
+    this.props.dispatch(NavigationActions.navigate({
+      routeName,
+      params,
+    }));
   }
 
   async _refresh() {
@@ -53,17 +61,11 @@ class ProposalMyScreen extends Component {
   }
 
   _onPressProposal(proposal:Proposal) {
-    this.props.dispatch({
-      type: 'Navigation/NAVIGATE',
-      routeName: 'ProposalFormPage',
-      params: {
-        id: proposal.id,
-        title: proposal.title,
-        content: proposal.content,
-        proposalUnitId: proposal.proposalUnitId,
-        edit: true,
-      },
-    });
+    if (proposal.state === '待提交') {
+      this.navigate('ProposalFormPage', proposal);
+    } else {
+      this.navigate('ProposalDetailPage', proposal);
+    }
   }
 
   _renderProposalItem(proposal:Proposal) {
