@@ -1,4 +1,4 @@
-import { AsyncStorage } from 'react-native';
+import { AsyncStorage, Platform } from 'react-native';
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import { persistStore, autoRehydrate } from 'redux-persist';
@@ -11,8 +11,10 @@ export default function configureStore(onCompletion:()=>void):any {
     applyMiddleware(thunk, promise),
     autoRehydrate(),
     devToolsEnhancer({
-      realtime: true,
-    })
+      name: `bzzx-${Platform.OS}`,
+      hostname: 'localhost',
+      port: 5678,
+    }),
   );
 
   const store = createStore(reducer, enhancer);
