@@ -4,6 +4,7 @@ import { Container, List, Card, CardItem, Text } from 'native-base';
 import { NavigationActions } from 'react-navigation';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 import Proposal from '../../models/Proposal';
 import ProposalMy from '../model/ProposalMy';
 import http from '../../commons/http';
@@ -111,7 +112,7 @@ class ProposalMyScreen extends Component {
 }
 
 const mapStateToProps = state => ({
-  proposals: state.myOwnProposals.proposals,
+  proposals: _.cloneDeep(state.myOwnProposals.proposals),
   minUpdate: state.myOwnProposals.minUpdate,
   maxUpdate: state.myOwnProposals.maxUpdate,
 });
