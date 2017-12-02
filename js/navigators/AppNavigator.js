@@ -97,8 +97,11 @@ export const AppNavigator = StackNavigator({
   },
   ProposalFormPage: {
     screen: ProposalFormPage,
-    navigationOptions: {
-      title: '写新提案',
+    navigationOptions: ({ navigation }) => {
+      console.log({ navigation });
+      return {
+        title: (navigation && navigation.state && navigation.state.params && navigation.state.params.id) ? '修改提案' : '写新提案',
+      };
     },
   },
   ContactDetailPage: {
