@@ -66,13 +66,15 @@ class ProposalForm extends Component {
     this.props.dispatch(NavigationActions.back());
   }
 
-  async _submit() {
+  async _submit(onlySave:boolean = true) {
     const { title, content, proposalUnitId } = this.props;
     const filteredUndertakers = _.filter(this.props.undertakers, n => n.id === proposalUnitId);
     const selectedUndertaker = _.first(filteredUndertakers) || {};
     const proposalUnitName = selectedUndertaker.name || '';
 
-    const res = await http.post('/platform/cppcc/proposal/save', {
+    const url = onlySave ? '/platform/cppcc/proposal/save' : '/platform/cppcc/proposal/saveAndSubmit';
+
+    const res = await http.post(url, {
       title,
       content,
       proposalUnitId,
@@ -157,9 +159,16 @@ class ProposalForm extends Component {
           <Button
             block
             style={{ marginTop: 20 }}
-            onPress={() => this._submit()}
+            onPress={() => this._submit(true)}
           >
             <Text>保存</Text>
+          </Button>
+          <Button
+            block
+            style={{ marginTop: 20 }}
+            onPress={() => this._submit(false)}
+          >
+            <Text>保存并提交</Text>
           </Button>
         </Content>
       );
