@@ -11,7 +11,7 @@ import AboutScreen from '../components/me/setting/about';
 import ChangePasswordScreen from '../components/me/setting/change_password';
 import MsgDetailPage from '../components/msg/detail';
 import ProposalIndex from '../components/proposal';
-import ProposalDetailIndex from '../components/proposal/detail';
+import ProposalDetailPage from '../components/proposal/detail';
 import ProposalFormPage from '../components/proposal/form';
 import ContactDetailPage from '../components/contact/detail';
 import MyOwnProposalsPage from '../components/me/proposal/own';
@@ -67,8 +67,8 @@ export const AppNavigator = StackNavigator({
       headerTintColor: theme.tabTextColor,
     },
   },
-  ProposalDetailIndex: {
-    screen: ProposalDetailIndex,
+  ProposalDetailPage: {
+    screen: ProposalDetailPage,
     navigationOptions: {
       title: '政协提案',
       headerStyle: {

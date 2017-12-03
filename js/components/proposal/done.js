@@ -65,7 +65,7 @@ class ProposalDoneScreen extends Component {
   }
 
   _onPressProposal(proposal:Proposal) {
-    this.navigate('ProposalDetailIndex', { id: proposal.id });
+    this.navigate('ProposalDetailPage', { id: proposal.id });
   }
 
   _renderProposalItem(proposal:Proposal) {
