@@ -52,10 +52,10 @@ class HomeScreen extends Component {
     let comp;
     switch (type) {
       case 'todo':
-        comp = <ProposalTodo proposal={proposal} />;
+        comp = <ProposalTodo proposal={proposal} dispatch={this.props.dispatch} />;
         break;
       case 'my':
-        comp = <ProposalMy proposal={proposal} />;
+        comp = <ProposalMy proposal={proposal} dispatch={this.props.dispatch} />;
         break;
       default:
         comp = null;
