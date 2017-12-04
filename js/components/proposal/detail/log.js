@@ -41,7 +41,7 @@ class ProposalLogPage extends Component {
       <ListItem style={{ paddingTop: 0, paddingBottom: 0 }}>
         <Card transparent>
           <CardItem header bordered style={{ paddingTop: 0, paddingBottom: 5 }}>
-            <H3 style={{ color: theme.brandPrimary }}>{proposalLog.taskName}</H3>
+            <H3>{proposalLog.taskName}</H3>
           </CardItem>
           <CardItem style={{ paddingTop: 0 }}>
             <Left>

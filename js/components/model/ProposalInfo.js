@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Card, H3, CardItem, Left, Text, Right } from 'native-base';
 import PropTypes from 'prop-types';
 import Proposal from '../../models/Proposal';
-import theme from '../../themes/base-theme';
 
 export default class ProposalInfo extends Component {
 
@@ -14,8 +13,8 @@ export default class ProposalInfo extends Component {
     const { proposal } = this.props;
     return (
       <Card>
-        <CardItem header style={{ backgroundColor: theme.brandInfo }}>
-          <H3 style={{ color: '#FFFFFF' }}>{proposal.title}</H3>
+        <CardItem header style={{ borderBottomWidth: 2, borderBottomColor: '#921001' }}>
+          <H3 style={{ fontWeight: '700', fontSize: 28 }}>{proposal.title}</H3>
         </CardItem>
         <CardItem bordered>
           <Left>
