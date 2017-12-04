@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Content, Button, Text, Item, Label, Input, Icon } from 'native-base';
+import { Container, Content, Button, Text, Item, Label, Input, Icon, View } from 'native-base';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import PropTypes from 'prop-types';
@@ -86,20 +86,22 @@ class ChangePassword extends Component {
     return (
       <Item error={hasError} stackedLabel>
         <Label>{label}</Label>
-        <Input
-          secureTextEntry
-          {...input}
-        />
-        {
-          hasError
-          ?
-            <Item style={{ borderColor: 'transparent' }} >
-              <Icon active style={{ color: 'red', marginTop: 5 }} name="warning" />
-              <Text style={{ fontSize: 15, color: 'red' }}>{error}</Text>
-            </Item>
-            :
-            <Text />
-        }
+        <View style={{ flexDirection: 'row' }} >
+          <Input
+            secureTextEntry
+            {...input}
+          />
+          {
+            hasError
+            ?
+              <Item style={{ borderColor: 'transparent' }} >
+                <Icon active style={{ color: 'red', marginTop: 5 }} name="warning" />
+                <Text style={{ fontSize: 15, color: 'red' }}>{error}</Text>
+              </Item>
+              :
+              <Text />
+          }
+        </View>
       </Item>
     );
   };
