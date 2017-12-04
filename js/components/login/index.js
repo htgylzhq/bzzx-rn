@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image } from 'react-native';
+import { Image, ImageBackground } from 'react-native';
 import { Button, Container, Content, Icon, Input, Item, Text, View } from 'native-base';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
@@ -9,7 +9,8 @@ import http from '../../commons/http';
 import { login } from '../../actions/auth';
 import User from '../../models/User';
 
-const background = require('../../../images/shadow.png');
+const background = require('../../../images/bg_1.png');
+const bgLogo = require('../../../images/bg_logo.png');
 
 const validate = ({ loginname, password }) => {
   const err = {};
@@ -78,10 +79,11 @@ class Login extends Component {
 
   render() {
     return (
-      <Container>
+      <Container style={{ overflow: 'hidden' }}>
         <View style={styles.container}>
           <Content>
-            <Image source={background} style={styles.shadow}>
+            <ImageBackground source={background} style={styles.shadow} resizeMode="cover">
+              <Image source={bgLogo} style={styles.logo} resizeMode="contain" />
               <View style={styles.bg}>
                 <Field name={'loginname'} component={this.renderInput} />
                 <Field name={'password'} component={this.renderInput} />
@@ -89,10 +91,10 @@ class Login extends Component {
                   style={styles.btn}
                   onPress={() => this._login()}
                 >
-                  <Text>登录</Text>
+                  <Text style={{ marginLeft: 'auto', marginRight: 'auto' }}>登录</Text>
                 </Button>
               </View>
-            </Image>
+            </ImageBackground>
           </Content>
         </View>
       </Container>
