@@ -32,30 +32,65 @@ export const AppNavigator = StackNavigator({
     screen: ProfileScreen,
     navigationOptions: {
       title: '个人信息',
+      headerStyle: {
+        backgroundColor: '#941001',
+      },
+      headerTitleStyle: {
+        color: '#fff',
+      },
+      headerTintColor: '#fff',
     },
   },
   Setting: {
     screen: SettingScreen,
     navigationOptions: {
       title: '设置',
+      headerStyle: {
+        backgroundColor: '#941001',
+      },
+      headerTitleStyle: {
+        color: '#fff',
+      },
+      headerTintColor: '#fff',
     },
   },
   About: {
     screen: AboutScreen,
     navigationOptions: {
       title: '关于我们',
+      headerStyle: {
+        backgroundColor: '#941001',
+      },
+      headerTitleStyle: {
+        color: '#fff',
+      },
+      headerTintColor: '#fff',
     },
   },
   ChangePassword: {
     screen: ChangePasswordScreen,
     navigationOptions: {
       title: '修改密码',
+      headerStyle: {
+        backgroundColor: '#941001',
+      },
+      headerTitleStyle: {
+        color: '#fff',
+      },
+      headerTintColor: '#fff',
     },
   },
   MsgDetailPage: {
     screen: MsgDetailPage,
     navigationOptions: {
       title: '留言板',
+      headerStyle: {
+        backgroundColor: '#941001',
+      },
+      headerTitleStyle: {
+        color: '#fff',
+      },
+      headerTintColor: '#fff',
     },
   },
   ProposalIndex: {
@@ -82,24 +117,52 @@ export const AppNavigator = StackNavigator({
     screen: YuShenPage,
     navigationOptions: {
       title: '提案预审',
+      headerStyle: {
+        backgroundColor: '#941001',
+      },
+      headerTitleStyle: {
+        color: '#fff',
+      },
+      headerTintColor: '#fff',
     },
   },
   MyOwnProposalsPage: {
     screen: MyOwnProposalsPage,
     navigationOptions: {
       title: '我的提案',
+      headerStyle: {
+        backgroundColor: '#941001',
+      },
+      headerTitleStyle: {
+        color: '#fff',
+      },
+      headerTintColor: '#fff',
     },
   },
   MyTodoProposalsPage: {
     screen: MyTodoProposalsPage,
     navigationOptions: {
       title: '提案 - 我的待办',
+      headerStyle: {
+        backgroundColor: '#941001',
+      },
+      headerTitleStyle: {
+        color: '#fff',
+      },
+      headerTintColor: '#fff',
     },
   },
   MyDoneProposalsPage: {
     screen: MyDoneProposalsPage,
     navigationOptions: {
       title: '提案 - 我的已办',
+      headerStyle: {
+        backgroundColor: '#941001',
+      },
+      headerTitleStyle: {
+        color: '#fff',
+      },
+      headerTintColor: '#fff',
     },
   },
   ProposalFormPage: {
@@ -114,6 +177,13 @@ export const AppNavigator = StackNavigator({
     screen: ContactDetailPage,
     navigationOptions: {
       title: '通讯录',
+      headerStyle: {
+        backgroundColor: '#941001',
+      },
+      headerTitleStyle: {
+        color: '#fff',
+      },
+      headerTintColor: '#fff',
     },
   },
 });
