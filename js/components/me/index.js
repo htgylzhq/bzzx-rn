@@ -42,14 +42,17 @@ class MeScreen extends Component {
           </Card>
           <Card>
             <CardItem button bordered onPress={() => this.navigate('ChangePassword')}>
+              <Icon name="lock" style={{ color: '#921001' }} />
               <Text>修改密码</Text>
             </CardItem>
             <CardItem button bordered onPress={() => this.navigate('About')}>
+              <Icon name="md-infinite" style={{ color: '#921001' }} />
               <Text>关于我们</Text>
             </CardItem>
           </Card>
           <Card>
             <CardItem button onPress={() => this.props.onLogout()}>
+              <Icon name="md-log-out" style={{ color: '#921001' }} />
               <Text>退出</Text>
             </CardItem>
           </Card>

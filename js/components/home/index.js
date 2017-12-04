@@ -70,8 +70,9 @@ class HomeScreen extends Component {
       <Container>
         <Content contentContainerStyle={{ flex: 1 }}>
           <Card>
-            <CardItem header button onPress={() => this.navigate('ProposalIndex', { tab: 'my' })}>
+            <CardItem header button onPress={() => this.navigate('ProposalIndex', { tab: 'my' })} style={{ borderBottomWidth: 1, borderBottomColor: '#921001' }}>
               <Left>
+                <Icon name="paper" style={{ marginRight: 10, color: '#921001' }} />
                 <H3>我创建的提案</H3>
               </Left>
               <Right>
@@ -107,8 +108,9 @@ class HomeScreen extends Component {
             }
           </Card>
           <Card>
-            <CardItem header button onPress={() => this.navigate('ProposalIndex', { tab: 'todo' })}>
+            <CardItem header button onPress={() => this.navigate('ProposalIndex', { tab: 'todo' })} style={{ borderBottomWidth: 1, borderBottomColor: '#921001' }}>
               <Left>
+                <Icon name="refresh" style={{ marginRight: 10, color: '#921001' }} />
                 <H3>我的待办提案</H3>
               </Left>
               <Right>
