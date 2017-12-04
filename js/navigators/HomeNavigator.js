@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import { Button, Footer, FooterTab, Icon, Text } from 'native-base';
 import { TabNavigator, NavigationActions } from 'react-navigation';
@@ -66,8 +67,12 @@ const Navigator = TabNavigator({
 const defaultGetStateForAction = Navigator.router.getStateForAction;
 
 Navigator.router.getStateForAction = (action, state) => {
-
   if (action.type === NavigationActions.NAVIGATE) {
+    const route = state.routes[state.index];
+    if (route.routeName === action.routeName) {
+      return null;
+    }
+
     const actions = state.actions || [];
     actions.push(action);
     const newState = defaultGetStateForAction(action, state);
