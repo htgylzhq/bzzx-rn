@@ -158,14 +158,14 @@ class ProposalForm extends Component {
           <Field name={'content'} component={this.renderInput} />
           <Button
             block
-            style={{ marginTop: 20 }}
+            style={{ marginTop: 20, backgroundColor: '#941001' }}
             onPress={() => this._submit(true)}
           >
             <Text>保存</Text>
           </Button>
           <Button
             block
-            style={{ marginTop: 20 }}
+            style={{ marginTop: 20, backgroundColor: '#941001' }}
             onPress={() => this._submit(false)}
           >
             <Text>保存并提交</Text>

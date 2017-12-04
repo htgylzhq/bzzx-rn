@@ -170,6 +170,13 @@ export const AppNavigator = StackNavigator({
     navigationOptions: ({ navigation }) => {
       return {
         title: (navigation && navigation.state && navigation.state.params && navigation.state.params.id) ? '修改提案' : '写新提案',
+        headerStyle: {
+          backgroundColor: '#941001',
+        },
+        headerTitleStyle: {
+          color: '#fff',
+        },
+        headerTintColor: '#fff',
       };
     },
   },
