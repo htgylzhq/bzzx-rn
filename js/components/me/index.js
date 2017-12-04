@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Container, Content, Text, Card, CardItem, Left, Thumbnail, Body, Icon } from 'native-base';
 import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation';
+import { logout } from '../../actions/auth';
 
 class MeScreen extends Component {
 
@@ -10,13 +11,18 @@ class MeScreen extends Component {
     username: PropTypes.string,
     unitName: PropTypes.string,
     dispatch: PropTypes.func,
+    onLogout: PropTypes.func,
   };
 
-  navigate(routeName:string, params:Object) {
+  navigate(routeName:string, params:Object, route:string) {
     this.props.dispatch(NavigationActions.navigate({
       routeName,
       params,
     }));
+    this.props.dispatch({
+      type: 'Navigation/NAVIGATE',
+      routeName: route,
+    });
   }
 
   render() {
@@ -35,24 +41,16 @@ class MeScreen extends Component {
             </CardItem>
           </Card>
           <Card>
-            <CardItem header>
-              <Icon active name={'document'} style={{ color: '#0E9EF4' }} />
-              <Text>提案</Text>
+            <CardItem button bordered onPress={() => this.navigate('ChangePassword')}>
+              <Text>修改密码</Text>
             </CardItem>
-            <CardItem button bordered onPress={() => this.navigate('MyOwnProposalsPage')}>
-              <Text>我的提案</Text>
-            </CardItem>
-            <CardItem button bordered onPress={() => this.navigate('MyTodoProposalsPage')}>
-              <Text>我的待办</Text>
-            </CardItem>
-            <CardItem button bordered onPress={() => this.navigate('MyDoneProposalsPage')}>
-              <Text>我的已办</Text>
+            <CardItem button bordered onPress={() => this.navigate('About')}>
+              <Text>关于我们</Text>
             </CardItem>
           </Card>
           <Card>
-            <CardItem button onPress={() => this.navigate('Setting')}>
-              <Icon active name={'settings'} style={{ color: '#0E9EF4' }} />
-              <Text>设置</Text>
+            <CardItem button onPress={() => this.props.onLogout()}>
+              <Text>退出</Text>
             </CardItem>
           </Card>
         </Content>
@@ -62,9 +60,14 @@ class MeScreen extends Component {
 
 }
 
-const mapStateToProps = state => ({ ...(state.auth.user) } || {});
+const mapStateToProps = state => ({ ...(state.auth.user) } || {
+  user: state.user,
+});
 
 const mapDispatchToProps = dispatch => ({
+  onLogout: () => {
+    dispatch(logout());
+  },
   dispatch,
 });
 
