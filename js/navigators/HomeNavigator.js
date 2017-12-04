@@ -26,10 +26,11 @@ const Navigator = TabNavigator({
   tabBarPosition: 'bottom',
   tabBarComponent: props => (
     <Footer>
-      <FooterTab>
+      <FooterTab style={{ backgroundColor: '#941001' }}>
         <Button
           vertical
           active={props.navigationState.index === 0}
+          style={{ backgroundColor: '#941001' }}
           onPress={() => props.navigation.navigate('Home')}
         >
           <Icon name="home" />
@@ -37,6 +38,7 @@ const Navigator = TabNavigator({
         </Button>
         <Button
           vertical
+          style={{ backgroundColor: '#941001' }}
           active={props.navigationState.index === 1}
           onPress={() => props.navigation.navigate('Work')}
         >
@@ -45,6 +47,7 @@ const Navigator = TabNavigator({
         </Button>
         <Button
           vertical
+          style={{ backgroundColor: '#941001' }}
           active={props.navigationState.index === 2}
           onPress={() => props.navigation.navigate('Contact')}
         >
@@ -53,6 +56,7 @@ const Navigator = TabNavigator({
         </Button>
         <Button
           vertical
+          style={{ backgroundColor: '#941001' }}
           active={props.navigationState.index === 3}
           onPress={() => props.navigation.navigate('Me')}
         >
