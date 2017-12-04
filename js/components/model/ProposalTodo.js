@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Card, Text, CardItem, Left, Right, ListItem } from 'native-base';
+import { NavigationActions } from 'react-navigation';
 import PropTypes from 'prop-types';
 import Proposal from '../../models/Proposal';
 
@@ -7,13 +8,33 @@ export default class ProposalTodo extends Component {
 
   static propTypes = {
     proposal: PropTypes.shape(Proposal),
+    dispatch: PropTypes.func,
     onPress: PropTypes.func,
   };
 
+  navigate(routeName:string, params:Object) {
+    this.props.dispatch(NavigationActions.navigate({
+      routeName,
+      params,
+    }));
+  }
+
+  _onPress = () => {
+    if (this.props.onPress) {
+      return this.props.onPress();
+    }
+
+    if (this.props.dispatch) {
+      this.navigate('ProposalDetailPage', { id: this.props.proposal.id, task: this.props.proposal.state });
+    }
+
+    return (() => {})();
+  };
+
   render() {
-    const { proposal, onPress } = this.props;
+    const { proposal } = this.props;
     return (
-      <ListItem style={{ paddingTop: 0, paddingBottom: 0 }} onPress={onPress}>
+      <ListItem style={{ paddingTop: 0, paddingBottom: 0 }} onPress={this._onPress}>
         <Card transparent>
           <CardItem header style={{ paddingTop: 0, paddingBottom: 5 }}>
             <Left>
