@@ -10,6 +10,9 @@
     "eject-native-base": "node node_modules/native-base/ejectTheme.js"
   },
   "dependencies": {
+    "appcenter": "^1.0.1",
+    "appcenter-analytics": "^1.0.1",
+    "appcenter-crashes": "^1.0.1",
     "axios": "^0.16.2",
     "color": "^0.11.3",
     "lodash": "^4.17.4",
