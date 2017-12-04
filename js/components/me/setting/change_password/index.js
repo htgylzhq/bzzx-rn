@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Dimensions } from 'react-native';
 import { Container, Content, Button, Text, Item, Label, Input, Icon, View } from 'native-base';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
@@ -8,6 +9,7 @@ import http from '../../../../commons/http';
 import { logout } from '../../../../actions/auth';
 import { Toaster } from '../../../../commons/util';
 
+const deviceWidth = Dimensions.get('window').width;
 const validate = (values) => {
   const error = {};
   const { oldPassword, newPassword, repeatPassword } = values;
@@ -84,7 +86,7 @@ class ChangePassword extends Component {
     }
 
     return (
-      <Item error={hasError} stackedLabel>
+      <Item error={hasError} stackedLabel style={{ marginBottom: 20 }}>
         <Label>{label}</Label>
         <View style={{ flexDirection: 'row' }} >
           <Input
@@ -114,7 +116,8 @@ class ChangePassword extends Component {
           <Field name={'newPassword'} component={this.renderInput} />
           <Field name={'repeatPassword'} component={this.renderInput} />
           <Button
-            style={{ marginTop: 20, alignSelf: 'center' }}
+            block
+            style={{ marginTop: 20, alignSelf: 'center', backgroundColor: '#921001', width: deviceWidth * 0.6 }}
             onPress={() => this._submit()}
           >
             <Text>提交</Text>

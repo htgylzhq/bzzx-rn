@@ -62,7 +62,7 @@ class ContactDetailPage extends Component {
             <FieldItem label={'政治面貌'} value={contact.politicsName} />
             <CardItem>
               <Body>
-                <Button block primary onPress={() => this.callNumber(contact.mobile)}>
+                <Button block style={{ backgroundColor: '#941001' }} onPress={() => this.callNumber(contact.mobile)}>
                   <Icon name="call" />
                   <Text>{contact.mobile}</Text>
                 </Button>

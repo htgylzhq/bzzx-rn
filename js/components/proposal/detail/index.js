@@ -59,17 +59,17 @@ class ProposalDetailIndex extends Component {
 
     return (
       <Container>
-        <Tabs locked>
-          <Tab heading={'基础信息'}>
+        <Tabs locked tabBarUnderlineStyle={{ backgroundColor: '#941001' }}>
+          <Tab heading={'基础信息'} textStyle={{ color: '#000' }} activeTextStyle={{ color: '#941001' }} tabStyle={{ backgroundColor: '#fff' }} activeTabStyle={{ backgroundColor: '#fff' }}>
             <ProposalInfoPage proposalId={this.state.params.id} />
           </Tab>
-          <Tab heading="内容">
+          <Tab heading="内容" textStyle={{ color: '#000' }} activeTextStyle={{ color: '#941001' }} tabStyle={{ backgroundColor: '#fff' }} activeTabStyle={{ backgroundColor: '#fff' }}>
             <ProposalContentPage proposalId={this.state.params.id} />
           </Tab>
-          <Tab heading={'流程图'} style={{ paddingLeft: 0, paddingRight: 0 }}>
+          <Tab heading={'流程图'} style={{ paddingLeft: 0, paddingRight: 0 }} textStyle={{ color: '#000' }} activeTextStyle={{ color: '#941001' }} tabStyle={{ backgroundColor: '#fff' }} activeTabStyle={{ backgroundColor: '#fff' }}>
             <ProposalDiagram proposalId={this.state.params.id} />
           </Tab>
-          <Tab heading={'办理历史'}>
+          <Tab heading={'办理历史'} textStyle={{ color: '#000' }} activeTextStyle={{ color: '#941001' }} tabStyle={{ backgroundColor: '#fff' }} activeTabStyle={{ backgroundColor: '#fff' }}>
             <ProposalLogPage proposalId={this.state.params.id} />
           </Tab>
         </Tabs>

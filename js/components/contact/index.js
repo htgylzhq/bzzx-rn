@@ -67,15 +67,15 @@ class ContactScreen extends Component {
   }
 
   renderSectionHeader = data => (
-    <View style={{ height: 60, justifyContent: 'center', backgroundColor: '#eee', paddingLeft: 10 }}>
+    <View style={{ height: 60, justifyContent: 'center', backgroundColor: '#eee', paddingLeft: 30 }}>
       <Text style={{ fontSize: 24 }}>{data.sectionId}</Text>
     </View>
     );
 
   renderRow = item => (
     <ListItem button style={{ height: 75 }} onPress={() => this._onPressContact(item)}>
-      <View style={[styles.avatar, { backgroundColor: randomcolor() }]}>
-        <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{item.username.substring(0, 1)}</Text>
+      <View style={[styles.avatar, { backgroundColor: 'rgb(179,199,249)' }]}>
+        <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#fff' }}>{item.username.substring(0, 1)}</Text>
       </View>
       <Body>
         <Text>{item.username}</Text>
