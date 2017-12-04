@@ -72,6 +72,43 @@ class HomeScreen extends Component {
           <Card>
             <CardItem header button onPress={() => this.navigate('MyTodoProposalsPage')}>
               <Left>
+                <H3>我创建的提案</H3>
+              </Left>
+              <Right>
+                <Icon name="arrow-forward" />
+              </Right>
+            </CardItem>
+            {
+              this.state.loading
+                ?
+                  <CardItem style={{ flex: 1, alignItems: 'center', alignSelf: 'center' }}>
+                    <Spinner />
+                  </CardItem>
+                :
+                null
+            }
+            {
+              this.props.proposalsMy.length === 0
+                ?
+                  <CardItem cardBody style={{ flex: 1, justifyContent: 'center', alignItems: 'center', alignSelf: 'center' }}>
+                    <Button iconLeft primary style={{ marginTop: 20 }}>
+                      <Icon active name="create" />
+                      <Text>写新提案</Text>
+                    </Button>
+                  </CardItem>
+                :
+                  <CardItem cardBody style={{ flex: 1 }}>
+                    <List
+                      button
+                      dataArray={this.props.proposalsMy}
+                      renderRow={item => this._renderProposalItem(item, 'my')}
+                    />
+                  </CardItem>
+            }
+          </Card>
+          <Card>
+            <CardItem header button onPress={() => this.navigate('MyTodoProposalsPage')}>
+              <Left>
                 <H3>我的待办提案</H3>
               </Left>
               <Right>
@@ -101,43 +138,6 @@ class HomeScreen extends Component {
                     renderRow={item => this._renderProposalItem(item, 'todo')}
                   />
                 </CardItem>
-            }
-          </Card>
-          <Card>
-            <CardItem header button onPress={() => this.navigate('MyTodoProposalsPage')}>
-              <Left>
-                <H3>我创建的提案</H3>
-              </Left>
-              <Right>
-                <Icon name="arrow-forward" />
-              </Right>
-            </CardItem>
-            {
-              this.state.loading
-                ?
-                  <CardItem style={{ flex: 1, alignItems: 'center', alignSelf: 'center' }}>
-                    <Spinner />
-                  </CardItem>
-                :
-                  null
-            }
-            {
-              this.props.proposalsMy.length === 0
-                ?
-                  <CardItem cardBody style={{ flex: 1, justifyContent: 'center', alignItems: 'center', alignSelf: 'center' }}>
-                    <Button iconLeft primary style={{ marginTop: 20 }}>
-                      <Icon active name="create" />
-                      <Text>写新提案</Text>
-                    </Button>
-                  </CardItem>
-                :
-                  <CardItem cardBody style={{ flex: 1 }}>
-                    <List
-                      button
-                      dataArray={this.props.proposalsMy}
-                      renderRow={item => this._renderProposalItem(item, 'my')}
-                    />
-                  </CardItem>
             }
           </Card>
         </Content>

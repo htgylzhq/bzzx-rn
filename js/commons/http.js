@@ -4,12 +4,12 @@ import { Toaster } from './util';
 import _global from './global';
 
 axios.interceptors.request.use(
-  config => config,
+  (config) => { console.log('request: ', config); return config; },
   error => Promise.reject(error)
 );
 
 axios.interceptors.response.use(
-  response => response,
+  (response) => { console.log('response: ', response); return response; },
   error => Promise.resolve(error.response)
 );
 

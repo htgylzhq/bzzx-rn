@@ -16,7 +16,7 @@ export default class ProposalDiagram extends Component {
         <Image
           style={{ width: 429, height: 183, transform: [{ rotate: '90deg' }] }}
           resizeMode="cover"
-          source={{ uri: `http://bzzx.tengri.cc/platform/cppcc/proposal/diagram?id=${proposalId}` }}
+          source={{ uri: `http://bzzx.tengri.cc/platform/cppcc/proposal/diagram?id=${proposalId}&rand=${Math.random()}` }}
         />
       </View>
     );
