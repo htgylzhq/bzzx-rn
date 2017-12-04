@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import { Container, Tabs, Tab } from 'native-base';
+import { Container, Tabs, Tab, Fab, Icon } from 'native-base';
 import { connect } from 'react-redux';
+import { NavigationActions } from 'react-navigation';
 import PropTypes from 'prop-types';
 import ProposalDiagram from './diagram';
 import ProposalInfoPage from './info';
 import ProposalContentPage from './content';
 import ProposalLogPage from './log';
+import theme from '../../../themes/base-theme';
 
 class ProposalDetailIndex extends Component {
 
@@ -13,6 +15,7 @@ class ProposalDetailIndex extends Component {
     navigation: PropTypes.shape({
       state: PropTypes.object,
     }),
+    dispatch: PropTypes.func,
   };
 
   constructor(props) {
@@ -22,26 +25,41 @@ class ProposalDetailIndex extends Component {
     };
   }
 
+  navigate(routeName:string, params:Object) {
+    this.props.dispatch(NavigationActions.navigate({
+      routeName,
+      params,
+    }));
+  }
+
   render() {
-    let initialPage = 0;
-    switch (this.state.params.tab) {
-      case 'my':
-        initialPage = 0;
-        break;
-      case 'todo':
-        initialPage = 1;
-        break;
-      case 'done':
-        initialPage = 2;
+    const task = (this.state.params && this.state.params.task) || '';
+    let formPage = '';
+    switch (task) {
+      case '预审':
+        formPage = 'YuShenPage';
         break;
       default:
-        initialPage = 0;
+        formPage = '';
         break;
     }
+    const operationComp = formPage
+      ?
+      (
+        <Fab
+          direction="up"
+          style={{ backgroundColor: theme.brandPrimary }}
+          position="bottomRight"
+          onPress={() => this.navigate(formPage, { id: this.state.params.id })}
+        >
+          <Icon name="play" />
+        </Fab>
+      )
+      : null;
 
     return (
       <Container>
-        <Tabs locked initialPage={initialPage}>
+        <Tabs locked>
           <Tab heading={'基础信息'}>
             <ProposalInfoPage proposalId={this.state.params.id} />
           </Tab>
@@ -55,9 +73,18 @@ class ProposalDetailIndex extends Component {
             <ProposalLogPage proposalId={this.state.params.id} />
           </Tab>
         </Tabs>
+        { operationComp }
       </Container>
     );
   }
 }
 
-export default connect()(ProposalDetailIndex);
+const mapStateToProps = state => ({
+  nothing: state.nothing,
+});
+
+const mapDispatchToProps = dispatch => ({
+  dispatch,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProposalDetailIndex);

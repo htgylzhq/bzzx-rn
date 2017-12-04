@@ -64,7 +64,7 @@ class ProposalTodoScreen extends Component {
   }
 
   _onPressProposal(proposal:Proposal) {
-    this.navigate('ProposalDetailPage', { id: proposal.id });
+    this.navigate('ProposalDetailPage', { id: proposal.id, task: proposal.state });
   }
 
   _renderProposalItem(proposal:Proposal) {

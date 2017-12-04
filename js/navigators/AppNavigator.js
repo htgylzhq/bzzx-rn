@@ -17,6 +17,7 @@ import ContactDetailPage from '../components/contact/detail';
 import MyOwnProposalsPage from '../components/me/proposal/own';
 import MyTodoProposalsPage from '../components/me/proposal/todo';
 import MyDoneProposalsPage from '../components/me/proposal/done';
+import YuShenPage from '../components/proposal/task/yu_shen';
 import theme from '../themes/base-theme';
 
 export const AppNavigator = StackNavigator({
@@ -75,6 +76,12 @@ export const AppNavigator = StackNavigator({
         backgroundColor: theme.brandPrimary,
       },
       headerTintColor: theme.tabTextColor,
+    },
+  },
+  YuShenPage: {
+    screen: YuShenPage,
+    navigationOptions: {
+      title: '提案预审',
     },
   },
   MyOwnProposalsPage: {
