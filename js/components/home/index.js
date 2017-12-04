@@ -70,7 +70,7 @@ class HomeScreen extends Component {
       <Container>
         <Content contentContainerStyle={{ flex: 1 }}>
           <Card>
-            <CardItem header button onPress={() => this.navigate('MyTodoProposalsPage')}>
+            <CardItem header button onPress={() => this.navigate('ProposalIndex', { tab: 'my' })}>
               <Left>
                 <H3>我创建的提案</H3>
               </Left>
@@ -107,7 +107,7 @@ class HomeScreen extends Component {
             }
           </Card>
           <Card>
-            <CardItem header button onPress={() => this.navigate('MyTodoProposalsPage')}>
+            <CardItem header button onPress={() => this.navigate('ProposalIndex', { tab: 'todo' })}>
               <Left>
                 <H3>我的待办提案</H3>
               </Left>
