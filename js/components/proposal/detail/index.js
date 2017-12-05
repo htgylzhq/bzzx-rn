@@ -7,6 +7,7 @@ import ProposalDiagram from './diagram';
 import ProposalInfoPage from './info';
 import ProposalContentPage from './content';
 import ProposalLogPage from './log';
+import ProposalCommentPage from './comment';
 import theme from '../../../themes/base-theme';
 
 class ProposalDetailIndex extends Component {
@@ -74,6 +75,9 @@ class ProposalDetailIndex extends Component {
           </Tab>
           <Tab heading={'办理历史'} textStyle={{ color: '#000' }} activeTextStyle={{ color: '#941001' }} tabStyle={{ backgroundColor: '#fff', borderBottomColor: '#ddd', borderBottomWidth: 1 }} activeTabStyle={{ backgroundColor: '#fff' }}>
             <ProposalLogPage proposalId={this.state.params.id} />
+          </Tab>
+          <Tab heading={'评论'} textStyle={{ color: '#000' }} activeTextStyle={{ color: '#941001' }} tabStyle={{ backgroundColor: '#fff', borderBottomColor: '#ddd', borderBottomWidth: 1 }} activeTabStyle={{ backgroundColor: '#fff' }}>
+            <ProposalCommentPage proposalId={this.state.params.id} />
           </Tab>
         </Tabs>
         { operationComp }
