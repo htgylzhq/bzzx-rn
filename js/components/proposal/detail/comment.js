@@ -5,12 +5,9 @@ import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import http from '../../../commons/http';
-import Proposal from '../../../models/Proposal';
-import { onFetchProposalInfo } from '../../../actions/proposalDetail';
 
 class ProposalContentPage extends Component {
   static propTypes = {
-    proposal: PropTypes.shape(Proposal),
     commentVal: PropTypes.string,
   };
   constructor(props) {
@@ -69,16 +66,12 @@ class ProposalContentPage extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  const formValues = (state && state.form && state.form.comment && state.form.comment.values) || {
-    commentVal: '',
-  };
-  const proposal = state.proposalDetail.proposal;
-  return { proposal, formValues };
+const mapStateToProps = state => (state && state.form && state.form.comment && state.form.comment.values) || {
+  commentVal: '',
 };
 
 const mapDispatchToProps = dispatch => ({
-  onFetchProposalInfo: proposal => dispatch(onFetchProposalInfo(proposal)),
+  dispatch,
 });
 
 const ProposalContentPageWithComment = reduxForm({
