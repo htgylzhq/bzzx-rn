@@ -14,9 +14,6 @@ import ProposalIndex from '../components/proposal';
 import ProposalDetailPage from '../components/proposal/detail';
 import ProposalFormPage from '../components/proposal/form';
 import ContactDetailPage from '../components/contact/detail';
-import MyOwnProposalsPage from '../components/me/proposal/own';
-import MyTodoProposalsPage from '../components/me/proposal/todo';
-import MyDoneProposalsPage from '../components/me/proposal/done';
 import YuShenPage from '../components/proposal/task/yu_shen';
 import theme from '../themes/base-theme';
 
@@ -117,45 +114,6 @@ export const AppNavigator = StackNavigator({
     screen: YuShenPage,
     navigationOptions: {
       title: '提案预审',
-      headerStyle: {
-        backgroundColor: '#941001',
-      },
-      headerTitleStyle: {
-        color: '#fff',
-      },
-      headerTintColor: '#fff',
-    },
-  },
-  MyOwnProposalsPage: {
-    screen: MyOwnProposalsPage,
-    navigationOptions: {
-      title: '我的提案',
-      headerStyle: {
-        backgroundColor: '#941001',
-      },
-      headerTitleStyle: {
-        color: '#fff',
-      },
-      headerTintColor: '#fff',
-    },
-  },
-  MyTodoProposalsPage: {
-    screen: MyTodoProposalsPage,
-    navigationOptions: {
-      title: '提案 - 我的待办',
-      headerStyle: {
-        backgroundColor: '#941001',
-      },
-      headerTitleStyle: {
-        color: '#fff',
-      },
-      headerTintColor: '#fff',
-    },
-  },
-  MyDoneProposalsPage: {
-    screen: MyDoneProposalsPage,
-    navigationOptions: {
-      title: '提案 - 我的已办',
       headerStyle: {
         backgroundColor: '#941001',
       },
