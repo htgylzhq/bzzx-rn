@@ -1,7 +1,7 @@
 import type { Action } from '../actions/types';
 import Proposal from '../models/Proposal';
 import { LOAD_MORE_MY_DONE_PROPOSALS, REFRESH_MY_DONE_PROPOSALS } from '../actions/myDoneProposals';
-import { push, unshift } from '../commons/util';
+import { push } from '../commons/util';
 
 export type State = {
   minUpdate: number,
@@ -21,7 +21,7 @@ export default function (state: State = initialState, action: Action): Proposal[
       ...state,
       maxUpdate: action.maxUpdate,
       minUpdate: state.minUpdate === 0 ? action.minUpdate : state.minUpdate,
-      proposals: unshift(state.proposals, action.proposals),
+      proposals: action.proposals,
     };
   }
 

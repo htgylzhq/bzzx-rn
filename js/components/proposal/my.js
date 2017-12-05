@@ -37,8 +37,7 @@ class ProposalMyScreen extends Component {
   }
 
   async _refresh() {
-    const maxUpdate = this.props.maxUpdate;
-    const res = await http.get(`/platform/api/cppcc/proposal/type/my?maxUpdate=${maxUpdate}`);
+    const res = await http.get('/platform/api/cppcc/proposal/type/my?maxUpdate=0');
     if (res.code === 0) {
       const data = res.data;
       const proposals = data.list.map(obj => new Proposal(obj));

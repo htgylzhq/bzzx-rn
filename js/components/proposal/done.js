@@ -14,7 +14,6 @@ class ProposalDoneScreen extends Component {
   static propTypes = {
     proposals: PropTypes.arrayOf(PropTypes.shape(Proposal)),
     minUpdate: PropTypes.number,
-    maxUpdate: PropTypes.number,
     refresh: PropTypes.func,
     loadMore: PropTypes.func,
     dispatch: PropTypes.func,
@@ -40,7 +39,7 @@ class ProposalDoneScreen extends Component {
   }
 
   async _refresh() {
-    const maxUpdate = this.props.maxUpdate;
+    const maxUpdate = 0;
     const res = await http.get(`/platform/api/cppcc/proposal/type/done?maxUpdate=${maxUpdate}`);
     if (res.code === 0) {
       const data = res.data;

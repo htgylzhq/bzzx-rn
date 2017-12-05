@@ -14,7 +14,6 @@ class ProposalTodoScreen extends Component {
   static propTypes = {
     proposals: PropTypes.arrayOf(PropTypes.shape(Proposal)),
     minUpdate: PropTypes.number,
-    maxUpdate: PropTypes.number,
     refresh: PropTypes.func,
     loadMore: PropTypes.func,
     dispatch: PropTypes.func,
@@ -39,7 +38,7 @@ class ProposalTodoScreen extends Component {
   }
 
   async _refresh() {
-    const maxUpdate = this.props.maxUpdate;
+    const maxUpdate = 0;
     const res = await http.get(`/platform/api/cppcc/proposal/type/todo?maxUpdate=${maxUpdate}`);
     if (res.code === 0) {
       const data = res.data;
