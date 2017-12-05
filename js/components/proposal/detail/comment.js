@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
 import { Spinner, Container, Footer, Input, Left, Right, Button, Text, Content, Thumbnail, Form, List, ListItem, Body, H3, Card, CardItem } from 'native-base';
 import { Dimensions } from 'react-native';
-import { Field, reduxForm } from 'redux-form';
+import { Field, reduxForm, reset } from 'redux-form';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import http from '../../../commons/http';
+import Comment from '../../../models/Comment';
+import { onFetchComment } from '../../../actions/comment';
 
 class ProposalContentPage extends Component {
   static propTypes = {
+    onFetchComment: PropTypes.func,
     commentVal: PropTypes.string,
+    resetForm: PropTypes.func,
   };
   constructor(props) {
     super(props);
@@ -17,13 +21,32 @@ class ProposalContentPage extends Component {
       submitting: false,
     };
   }
+  componentWillMount() {
+    this._fetchComment();
+  }
+
+  async _fetchComment() {
+    const { proposalId } = this.props;
+    const res = await http.get(`${proposalId}`);
+    if (res.code === 0) {
+      const data = res.data;
+      const comment = new Comment(data.proposal);
+      this.setState({ loading: false });
+      this.props.onFetchComment(comment);
+    }
+  }
   async _submit() {
     this.setState({ submitting: true });
     const { commentVal } = this.props;
     const res = await http.post('111', {
       commentVal,
     });
-    console.log(res);
+    if (res.code === 0) {
+      const comment = res.data;
+      this.props.onFetchComment(comment);
+      this.props.resetForm('comment');
+      this.setState({ loading: false });
+    }
   }
   renderInput = ({ input }) => (
     <Input {...input} placeholderTextColor={'#c0c0c0'} placeholder={'发表评论'} style={{ backgroundColor: '#fff', flex: 1, alignItems: 'flex-end', height: 35, borderWidth: 1, borderColor: '#ddd', paddingTop: 1, paddingBottom: 1, paddingLeft: 5, paddingRight: 5, borderRadius: 3 }} />
@@ -56,7 +79,7 @@ class ProposalContentPage extends Component {
             <Field style={{ flex: 1 }} name="commentVal" component={this.renderInput} type="text" />
           </Left>
           <Right style={{ flex: 0, marginLeft: 10, marginRight: 10 }}>
-            <Button disabled={this.state.submitting} onPress={() => this._submit()} style={{ backgroundColor: '#fff', borderWidth: 1, borderColor: '#ddd', height: 35, borderRadius: 3 }}>
+            <Button disabled={false} onPress={() => this._submit()} style={{ backgroundColor: '#fff', borderWidth: 1, borderColor: '#ddd', height: 35, borderRadius: 3 }}>
               <Text style={{ color: '#c0c0c0' }}>发表</Text>
             </Button>
           </Right>
@@ -71,6 +94,8 @@ const mapStateToProps = state => (state && state.form && state.form.comment && s
 };
 
 const mapDispatchToProps = dispatch => ({
+  onFetchComment: comment => dispatch(onFetchComment(comment)),
+  resetForm: formName => dispatch(reset(formName)),
   dispatch,
 });
 
