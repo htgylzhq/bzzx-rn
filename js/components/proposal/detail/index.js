@@ -39,6 +39,9 @@ class ProposalDetailIndex extends Component {
       case '预审':
         formPage = 'YuShenPage';
         break;
+      case '立案审查':
+        formPage = 'LiAnPage';
+        break;
       default:
         formPage = '';
         break;

@@ -15,6 +15,7 @@ import ProposalDetailPage from '../components/proposal/detail';
 import ProposalFormPage from '../components/proposal/form';
 import ContactDetailPage from '../components/contact/detail';
 import YuShenPage from '../components/proposal/task/yu_shen';
+import LiAnPage from '../components/proposal/task/li_an';
 import theme from '../themes/base-theme';
 
 export const AppNavigator = StackNavigator({
@@ -123,20 +124,31 @@ export const AppNavigator = StackNavigator({
       headerTintColor: '#fff',
     },
   },
+  LiAnPage: {
+    screen: LiAnPage,
+    navigationOptions: {
+      title: '提案立案',
+      headerStyle: {
+        backgroundColor: '#941001',
+      },
+      headerTitleStyle: {
+        color: '#fff',
+      },
+      headerTintColor: '#fff',
+    },
+  },
   ProposalFormPage: {
     screen: ProposalFormPage,
-    navigationOptions: ({ navigation }) => {
-      return {
-        title: (navigation && navigation.state && navigation.state.params && navigation.state.params.id) ? '修改提案' : '写新提案',
-        headerStyle: {
-          backgroundColor: '#941001',
-        },
-        headerTitleStyle: {
-          color: '#fff',
-        },
-        headerTintColor: '#fff',
-      };
-    },
+    navigationOptions: ({ navigation }) => ({
+      title: (navigation && navigation.state && navigation.state.params && navigation.state.params.id) ? '修改提案' : '写新提案',
+      headerStyle: {
+        backgroundColor: '#941001',
+      },
+      headerTitleStyle: {
+        color: '#fff',
+      },
+      headerTintColor: '#fff',
+    }),
   },
   ContactDetailPage: {
     screen: ContactDetailPage,
