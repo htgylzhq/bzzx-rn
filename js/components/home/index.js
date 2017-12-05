@@ -76,7 +76,7 @@ class HomeScreen extends Component {
                 <H3>我创建的提案</H3>
               </Left>
               <Right>
-                <Icon name="arrow-forward" />
+                <Icon name="arrow-forward" style={{ color: '#921001' }} />
               </Right>
             </CardItem>
             {
@@ -92,13 +92,13 @@ class HomeScreen extends Component {
               this.props.proposalsMy.length === 0
                 ?
                   <CardItem cardBody style={{ flex: 1, justifyContent: 'center', alignItems: 'center', alignSelf: 'center' }}>
-                    <Button iconLeft primary style={{ marginTop: 20 }}>
+                    <Button iconLeft primary style={{ marginTop: 20, backgroundColor: '#921001' }} onPress={() => this.navigate('ProposalFormPage')} >
                       <Icon active name="create" />
                       <Text>写新提案</Text>
                     </Button>
                   </CardItem>
                 :
-                  <CardItem cardBody style={{ flex: 1 }}>
+                  <CardItem cardBody style={{ flex: 1, justifyContent: 'flex-start', alignItems: 'flex-start' }}>
                     <List
                       button
                       dataArray={this.props.proposalsMy}
@@ -114,7 +114,7 @@ class HomeScreen extends Component {
                 <H3>我的待办提案</H3>
               </Left>
               <Right>
-                <Icon name="arrow-forward" />
+                <Icon name="arrow-forward" style={{ color: '#921001' }} />
               </Right>
             </CardItem>
             {
