@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import { Dimensions } from 'react-native';
 import { Card, H3, CardItem, Left, Text, Right } from 'native-base';
 import PropTypes from 'prop-types';
 import Proposal from '../../models/Proposal';
 
+const deviceWidth = Dimensions.get('window').width;
 export default class ProposalInfo extends Component {
 
   static propTypes = {
@@ -13,8 +15,8 @@ export default class ProposalInfo extends Component {
     const { proposal } = this.props;
     return (
       <Card>
-        <CardItem header style={{ borderBottomWidth: 2, borderBottomColor: '#921001' }}>
-          <H3 style={{ fontWeight: '700', fontSize: 28 }}>{proposal.title}</H3>
+        <CardItem header style={{ width: deviceWidth * 0.95, marginLeft: 'auto', marginRight: 'auto', borderBottomWidth: 2, borderBottomColor: '#921001', paddingTop: 0, paddingBottom: 0 }}>
+          <H3 style={{ fontWeight: '700', fontSize: 24, paddingTop: 17, paddingBottom: 17 }}>{proposal.title}</H3>
         </CardItem>
         <CardItem bordered>
           <Left>
