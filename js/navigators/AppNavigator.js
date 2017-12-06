@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { BackHandler } from 'react-native';
 import PropTypes from 'prop-types';
-import { StackNavigator, addNavigationHelpers, NavigationActions } from 'react-navigation';
+import { addNavigationHelpers, NavigationActions, StackNavigator } from 'react-navigation';
 import { connect } from 'react-redux';
 import Login from '../components/login';
 import HomeNavigator from './HomeNavigator';
@@ -18,6 +18,7 @@ import YuShenPage from '../components/proposal/task/yu_shen';
 import LiAnPage from '../components/proposal/task/li_an';
 import ReeditPage from '../components/proposal/task/reedit';
 import ClueIndex from '../components/clue';
+import ClueDetailPage from '../components/clue/detail';
 import theme from '../themes/base-theme';
 
 export const AppNavigator = StackNavigator({
@@ -105,6 +106,16 @@ export const AppNavigator = StackNavigator({
   },
   ClueIndex: {
     screen: ClueIndex,
+    navigationOptions: {
+      title: '提案线索',
+      headerStyle: {
+        backgroundColor: theme.brandPrimary,
+      },
+      headerTintColor: theme.tabTextColor,
+    },
+  },
+  ClueDetailPage: {
+    screen: ClueDetailPage,
     navigationOptions: {
       title: '提案线索',
       headerStyle: {

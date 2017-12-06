@@ -3,7 +3,8 @@ import Msg from '../models/Msg';
 import Comment from '../models/Comment';
 import Proposal from '../models/Proposal';
 import ProposalLog from '../models/ProposalLog';
-import { REFRESH_PUB_CLUES, LOAD_MORE_PUB_CLUES } from '../actions/pubClues';
+import { LOAD_MORE_PUB_CLUES, REFRESH_PUB_CLUES } from '../actions/pubClues';
+import { ON_FETCH_CLUE_INFO } from './clueDetail';
 
 export type Action =
   { type: 'PUSH_NEW_ROUTE', route: string }
@@ -38,6 +39,7 @@ export type Action =
   | { type: 'ON_FETCH_UNDERTAKERS', undertakers: Object[] }
   | { type: REFRESH_PUB_CLUES, clues: Object[] }
   | { type: LOAD_MORE_PUB_CLUES, clues: Object[] }
+  | { type: ON_FETCH_CLUE_INFO, clue: Object}
   ;
 
 export type Dispatch = (action: Action | Array<Action>) => any;

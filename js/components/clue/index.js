@@ -1,21 +1,17 @@
 import React, { Component } from 'react';
 import { RefreshControl } from 'react-native';
-import { Container, List, Card, CardItem, Text, ListItem, Left, Right } from 'native-base';
+import { Body, Card, CardItem, Container, List, ListItem, Text } from 'native-base';
 import { NavigationActions } from 'react-navigation';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import http from '../../commons/http';
-import { refresh, loadMore } from '../../actions/pubClues';
+import { loadMore, refresh } from '../../actions/pubClues';
 
 class ClueIndexScreen extends Component {
 
   static propTypes = {
-    clues: PropTypes.arrayOf(PropTypes.shape({
-      id: PropTypes.string,
-      title: PropTypes.string,
-      content: PropTypes.string,
-    })),
+    clues: PropTypes.arrayOf(PropTypes.shape({})),
     loadMore: PropTypes.func,
     dispatch: PropTypes.func,
   };
@@ -71,17 +67,14 @@ class ClueIndexScreen extends Component {
       <ListItem style={{ paddingTop: 0, paddingBottom: 0 }} onPress={() => this._onPressClue(clue)}>
         <Card transparent>
           <CardItem header style={{ paddingTop: 0, paddingBottom: 5 }}>
-            <Left>
+            <Body>
               <Text numberOfLines={1}>{clue.title}</Text>
-            </Left>
+            </Body>
           </CardItem>
           <CardItem style={{ paddingTop: 0, paddingBottom: 0 }}>
-            <Left>
-              <Text note>{clue.state}</Text>
-            </Left>
-            <Right>
-              <Text note>{clue.createTime}</Text>
-            </Right>
+            <Body>
+              <Text note numberOfLines={3}>{clue.content}</Text>
+            </Body>
           </CardItem>
         </Card>
       </ListItem>

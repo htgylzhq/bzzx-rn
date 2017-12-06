@@ -18,6 +18,7 @@ import undertaker from './undertaker';
 import reedit from './reedit';
 import comment from './comment';
 import pubClues from './pubClues';
+import clueDetail from './clueDetail';
 
 export default combineReducers({
   form: formReducer,
@@ -39,4 +40,5 @@ export default combineReducers({
   comment,
   reedit,
   pubClues,
+  clueDetail,
 });
