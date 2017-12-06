@@ -31,6 +31,7 @@ export type Action =
   | { type: 'LOAD_MORE_MY_DONE_PROPOSALS', proposals: Proposal[], maxUpdate: number, minUpdate: number }
   | { type: 'LOAD_HOME_DATA', proposalsTodo: Proposal[], proposalsMy: Proposal[] }
   | { type: 'ON_FETCH_PROPOSAL_INFO', proposal: Proposal }
+  | { type: 'REEDIT_ON_FETCH_PROPOSAL_INFO', proposal: Proposal }
   | { type: 'ON_FETCH_PROPOSAL_LOGS', proposalLogs: ProposalLog[] }
   | { type: 'ON_FETCH_CONTACTS', contacts: Object }
   | { type: 'ON_FETCH_UNDERTAKERS', undertakers: Object[] }

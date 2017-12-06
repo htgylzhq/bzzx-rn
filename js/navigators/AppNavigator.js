@@ -16,6 +16,7 @@ import ProposalFormPage from '../components/proposal/form';
 import ContactDetailPage from '../components/contact/detail';
 import YuShenPage from '../components/proposal/task/yu_shen';
 import LiAnPage from '../components/proposal/task/li_an';
+import ReeditPage from '../components/proposal/task/reedit';
 import theme from '../themes/base-theme';
 
 export const AppNavigator = StackNavigator({
@@ -128,6 +129,19 @@ export const AppNavigator = StackNavigator({
     screen: LiAnPage,
     navigationOptions: {
       title: '提案立案',
+      headerStyle: {
+        backgroundColor: '#941001',
+      },
+      headerTitleStyle: {
+        color: '#fff',
+      },
+      headerTintColor: '#fff',
+    },
+  },
+  ReeditPage: {
+    screen: ReeditPage,
+    navigationOptions: {
+      title: '提案修改',
       headerStyle: {
         backgroundColor: '#941001',
       },

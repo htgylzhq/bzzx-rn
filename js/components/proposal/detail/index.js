@@ -43,6 +43,9 @@ class ProposalDetailIndex extends Component {
       case '立案审查':
         formPage = 'LiAnPage';
         break;
+      case '修改提案':
+        formPage = 'ReeditPage';
+        break;
       default:
         formPage = '';
         break;

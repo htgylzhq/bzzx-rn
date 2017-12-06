@@ -6,12 +6,14 @@ import {
 } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import PropTypes from 'prop-types';
-import { Container, Content, Button, Text, Item, Label, Input, Picker, View, Spinner } from 'native-base';
+import { Container, Content, Button, Text, Item, Label, Input, Picker, View, Spinner, ListItem, Left, Right, Radio } from 'native-base';
 import { NavigationActions } from 'react-navigation';
 import _ from 'lodash';
-import http from '../../commons/http';
-import { Toaster } from '../../commons/util';
-import { onFetchUndertakers } from '../../actions/undertaker';
+import http from '../../../commons/http';
+import { Toaster } from '../../../commons/util';
+import { onFetchUndertakers } from '../../../actions/undertaker';
+import { onFetchProposalInfo } from '../../../actions/reedit';
+import Proposal from '../../../models/Proposal';
 
 const validate = (values) => {
   const error = {};
@@ -29,7 +31,7 @@ const validate = (values) => {
   return error;
 };
 
-class ProposalForm extends Component {
+class ReeditForm extends Component {
 
   static propTypes = {
     dispatch: PropTypes.func,
@@ -45,40 +47,63 @@ class ProposalForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      loading: true,
+      loadingUndertakers: true,
+      loadingProposal: true,
     };
   }
+
   async componentWillMount() {
-    this.props.initialize({
-      proposalUnitId: this.props.proposalUnitId,
-      proposalUnitName: this.props.proposalUnitName,
-      ...this.props.navigation.state.params,
-    });
-    const res = await http.get('/platform/api/unit/undertaker');
-    if (res.code === 0) {
-      const undertakers = res.data;
-      this.props.onFetchUndertakers(undertakers);
-      this.setState({ loading: false });
-    }
+    this._fetchUndertakers();
+    this._fetchProposal();
   }
 
   navigateBack() {
     this.props.dispatch(NavigationActions.back());
   }
 
-  async _submit(onlySave:boolean = true) {
-    const { title, content, proposalUnitId } = this.props;
+  async _fetchUndertakers() {
+    const res = await http.get('/platform/api/unit/undertaker');
+    if (res.code === 0) {
+      const undertakers = res.data;
+      this.props.onFetchUndertakers(undertakers);
+      this.setState({ loadingUndertakers: false });
+      if (!this.state.loadingUndertakers && !this.state.loadingProposal) {
+        this.props.initialize(this.props.initialValues);
+      }
+    }
+  }
+
+  async _fetchProposal() {
+    const proposalId = this.props.navigation.state.params.id;
+    const res = await http.get(`/platform/api/cppcc/proposal/${proposalId}`);
+    if (res.code === 0) {
+      const data = res.data;
+      const proposal = new Proposal(data.proposal);
+      this.setState({ loadingProposal: false });
+      this.props.onFetchProposalInfo(proposal);
+      if (!this.state.loadingUndertakers && !this.state.loadingProposal) {
+        this.props.initialize(this.props.initialValues);
+      }
+    }
+  }
+
+  async _submit() {
+    const { id, title, content, proposalUnitId, comment, proc_string_reedit } = this.props.formValues;
     const filteredUndertakers = _.filter(this.props.undertakers, n => n.id === proposalUnitId);
     const selectedUndertaker = _.first(filteredUndertakers) || {};
     const proposalUnitName = selectedUndertaker.name || '';
 
-    const url = onlySave ? '/platform/cppcc/proposal/save' : '/platform/cppcc/proposal/saveAndSubmit';
+    const url = '/platform/cppcc/proposal/claimAndComplete';
 
     const res = await http.post(url, {
+      id,
       title,
       content,
       proposalUnitId,
       proposalUnitName,
+      comment,
+      proc_string_reedit,
+      needSaveEntity: true,
     });
 
     if (res.code === 0) {
@@ -112,6 +137,16 @@ class ProposalForm extends Component {
           />
         );
         break;
+      case 'comment':
+        label = '办理意见';
+        comp = (
+          <Input
+            {...input}
+            multiline
+            style={{ height: 100, textAlignVertical: 'top' }}
+          />
+        );
+        break;
       default:
         break;
     }
@@ -137,9 +172,34 @@ class ProposalForm extends Component {
     </View>
   );
 
+  renderOperation = ({ input: { onChange, value } }) => {
+    const selection = value || 'submit';
+    return (
+      <View style={{ marginTop: 10 }}>
+        <Label>选择操作</Label>
+        <ListItem>
+          <Left>
+            <Text>重新提交</Text>
+          </Left>
+          <Right>
+            <Radio selected={selection === 'submit'} onPress={() => onChange('submit')} />
+          </Right>
+        </ListItem>
+        <ListItem>
+          <Left>
+            <Text>撤销提案</Text>
+          </Left>
+          <Right>
+            <Radio selected={selection === 'cancel'} onPress={() => onChange('cancel')} />
+          </Right>
+        </ListItem>
+      </View>
+    );
+  };
+
   render() {
     let comp;
-    if (this.state.loading) {
+    if (this.state.loadingUndertakers || this.state.loadingProposal) {
       comp = (
         <Content padder>
           <Spinner />
@@ -156,19 +216,14 @@ class ProposalForm extends Component {
             mode="dropdown"
           />
           <Field name={'content'} component={this.renderInput} />
+          <Field name={'comment'} component={this.renderInput} />
+          <Field name={'proc_string_reedit'} component={this.renderOperation} />
           <Button
             block
-            style={{ marginTop: 20, backgroundColor: '#941001' }}
+            style={{ marginTop: 20, marginBottom: 20, backgroundColor: '#941001' }}
             onPress={() => this._submit(true)}
           >
-            <Text>保存</Text>
-          </Button>
-          <Button
-            block
-            style={{ marginTop: 20, backgroundColor: '#941001' }}
-            onPress={() => this._submit(false)}
-          >
-            <Text>保存并提交</Text>
+            <Text>提交</Text>
           </Button>
         </Content>
       );
@@ -183,31 +238,28 @@ class ProposalForm extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const formValues = (state && state.form && state.form.proposal && state.form.proposal.values) || {
+  const formValues = (state && state.form && state.form.reedit && state.form.reedit.values) || {
     title: '',
     proposalUnitId: '',
     content: '',
   };
   const undertakers = (state.undertaker && state.undertaker.undertakers) || [];
-  const undertaker = undertakers[0] || {};
 
-  const initialValues = {
-    proposalUnitId: undertaker.id || '',
-    proposalUnitName: undertaker.name || '',
-  };
-  return { ...formValues, undertakers, ...initialValues };
+  const initialValues = { ...state.reedit.proposal, proc_string_reedit: 'submit' };
+  return { formValues, undertakers, initialValues };
 };
 
 const mapDispatchToProps = dispatch => ({
   dispatch,
   onFetchUndertakers: (undertakers) => { dispatch(onFetchUndertakers(undertakers)); },
+  onFetchProposalInfo: (proposal) => { dispatch(onFetchProposalInfo(proposal)); },
 });
 
-const ProposalFormPage = reduxForm(
+const ReeditPage = reduxForm(
   {
-    form: 'proposal',
+    form: 'reedit',
     validate,
   },
-)(ProposalForm);
+)(ReeditForm);
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProposalFormPage);
+export default connect(mapStateToProps, mapDispatchToProps)(ReeditPage);
