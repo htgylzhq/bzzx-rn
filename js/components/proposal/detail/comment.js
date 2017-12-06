@@ -1,24 +1,26 @@
 import React, { Component } from 'react';
 import { Spinner, Container, Footer, Input, Left, Right, Button, Text, Content, Thumbnail, Form, List, ListItem, Body, H3, Card, CardItem } from 'native-base';
-import { Dimensions } from 'react-native';
 import { Field, reduxForm, reset } from 'redux-form';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { RefreshControl } from 'react-native';
 import http from '../../../commons/http';
-import Comment from '../../../models/Comment';
-import { onFetchComment } from '../../../actions/comment';
+import { onFetchComment, onLoadMoreComment } from '../../../actions/comment';
 
 class ProposalContentPage extends Component {
   static propTypes = {
     onFetchComment: PropTypes.func,
+    onLoadMoreComment: PropTypes.func,
     commentVal: PropTypes.string,
     resetForm: PropTypes.func,
+    comment: PropTypes.array,
   };
   constructor(props) {
     super(props);
     this.state = {
       loading: true,
       submitting: false,
+      refreshing: false,
     };
   }
   componentWillMount() {
@@ -27,50 +29,81 @@ class ProposalContentPage extends Component {
 
   async _fetchComment() {
     const { proposalId } = this.props;
-    const res = await http.get(`${proposalId}`);
+    const res = await http.get('/platform/cppcc/proposal/comment', {
+      id: proposalId,
+      pageNo: 1,
+      pageSize: 10,
+    });
     if (res.code === 0) {
       const data = res.data;
-      const comment = new Comment(data.proposal);
+      const comment = data.list;
+      this.props.onFetchComment(comment, data.pageNo, data.total);
       this.setState({ loading: false });
-      this.props.onFetchComment(comment);
     }
   }
   async _submit() {
     this.setState({ submitting: true });
-    const { commentVal } = this.props;
-    const res = await http.post('111', {
-      commentVal,
+    const { commentVal, proposalId } = this.props;
+    const res = await http.post('/platform/cppcc/proposal/comment', {
+      id: proposalId,
+      content: commentVal,
     });
     if (res.code === 0) {
-      const comment = res.data;
-      this.props.onFetchComment(comment);
       this.props.resetForm('comment');
+      this._fetchComment();
       this.setState({ loading: false });
+    }
+  }
+  async _loadMore() {
+    const { proposalId } = this.props;
+    const res = await http.get('/platform/cppcc/proposal/comment', {
+      id: proposalId,
+      pageNo: this.props.pageNo + 1,
+      pageSize: 10,
+    });
+    if (res.code === 0) {
+      const data = res.data;
+      const comment = data.list;
+      this.props.onLoadMoreComment(comment, data.pageNo, data.total);
+      this.setState({ refreshing: false });
     }
   }
   renderInput = ({ input }) => (
     <Input {...input} placeholderTextColor={'#c0c0c0'} placeholder={'发表评论'} style={{ backgroundColor: '#fff', flex: 1, alignItems: 'flex-end', height: 35, borderWidth: 1, borderColor: '#ddd', paddingTop: 1, paddingBottom: 1, paddingLeft: 5, paddingRight: 5, borderRadius: 3 }} />
   );
+  renderRow(item) {
+    return (
+      <ListItem avatar style={{ paddingTop: 5, paddingBottom: 5 }}>
+        <Left>
+          <Thumbnail source={{ uri: 'http://images2015.cnblogs.com/blog/533679/201606/533679-20160627094224718-806139364.png' }} />
+        </Left>
+        <Body>
+          <Text>{ item.creatorName }</Text>
+          <Text note>{ item.content }</Text>
+        </Body>
+        <Right>
+          <Text note>{ item.createTime }</Text>
+        </Right>
+      </ListItem>);
+  }
   render() {
     return (
-      <Container style={{ backgroundColor: '#ddd' }}>
+      <Container>
         <Content>
-          <Card style={{ flex: 1, height: Dimensions.get('window').height, marginTop: 0 }}>
+          { this.state.loading ? <Spinner /> : null }
+          <Card style={{ flex: 1, marginTop: 0 }}>
             <CardItem cardBody style={{ flex: 1, flexDirection: 'row', alignItems: 'flex-start' }}>
-              <List style={{ flex: 1 }}>
-                <ListItem avatar>
-                  <Left>
-                    <Thumbnail source={{ uri: 'http://images2015.cnblogs.com/blog/533679/201606/533679-20160627094224718-806139364.png' }} />
-                  </Left>
-                  <Body>
-                    <Text>Kumar Pratik</Text>
-                    <Text note>Doing what you like will always keep you happy . .</Text>
-                  </Body>
-                  <Right>
-                    <Text note>3:43 pm</Text>
-                  </Right>
-                </ListItem>
-              </List>
+              <List
+                style={{ flex: 1 }}
+                renderRow={item => this.renderRow(item)}
+                dataArray={this.props.comment}
+                onEndReachedThreshold={10}
+                onEndReached={() => { this._loadMore(); }}
+                refreshControl={<RefreshControl
+                  refreshing={this.state.refreshing}
+                  onRefresh={() => this._fetchComment()}
+                />}
+              />
             </CardItem>
           </Card>
         </Content>
@@ -89,13 +122,22 @@ class ProposalContentPage extends Component {
   }
 }
 
-const mapStateToProps = state => (state && state.form && state.form.comment && state.form.comment.values) || {
-  commentVal: '',
+const mapStateToProps = (state) => {
+  const formValue = (state && state.form && state.form.comment && state.form.comment.values) || {
+    commentVal: '',
+  };
+  const comment = (state && state.comment && state.comment.comment) || [];
+  const params = {
+    total: state.comment.total,
+    pageNo: state.comment.pageNo,
+  }
+  return { ...formValue, comment, ...params };
 };
 
 const mapDispatchToProps = dispatch => ({
-  onFetchComment: comment => dispatch(onFetchComment(comment)),
+  onFetchComment: (comment, pageNo, total) => dispatch(onFetchComment(comment, pageNo, total)),
   resetForm: formName => dispatch(reset(formName)),
+  onLoadMoreComment: (comment, pageNo, total) => dispatch(onLoadMoreComment(comment, pageNo, total)),
   dispatch,
 });
 

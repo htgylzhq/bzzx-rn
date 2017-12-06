@@ -16,6 +16,7 @@ import contacts from './contact';
 import nav from './router';
 import undertaker from './undertaker';
 import reedit from './reedit';
+import comment from './comment';
 
 export default combineReducers({
   form: formReducer,
@@ -34,5 +35,6 @@ export default combineReducers({
   nav,
   contacts,
   undertaker,
+  comment,
   reedit,
 });
