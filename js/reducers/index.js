@@ -19,6 +19,7 @@ import reedit from './reedit';
 import comment from './comment';
 import pubClues from './pubClues';
 import clueDetail from './clueDetail';
+import clueComments from './clueComments';
 
 export default combineReducers({
   form: formReducer,
@@ -41,4 +42,5 @@ export default combineReducers({
   reedit,
   pubClues,
   clueDetail,
+  clueComments,
 });

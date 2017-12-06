@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
-import { Container, Tab, Tabs, Text } from 'native-base';
+import { Container, Tab, Tabs } from 'native-base';
 import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation';
 import PropTypes from 'prop-types';
 import ClueInfoPage from './info';
+import ClueCommentsPage from './comments';
 
 const styles = StyleSheet.create({
   tabText: {
@@ -66,7 +67,7 @@ class ClueDetailIndex extends Component {
             tabStyle={styles.tab}
             activeTabStyle={styles.activeTab}
           >
-            <Text>评论</Text>
+            <ClueCommentsPage id={this.state.params.id} />
           </Tab>
         </Tabs>
       </Container>
