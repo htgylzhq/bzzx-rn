@@ -17,6 +17,7 @@ import ContactDetailPage from '../components/contact/detail';
 import YuShenPage from '../components/proposal/task/yu_shen';
 import LiAnPage from '../components/proposal/task/li_an';
 import ReeditPage from '../components/proposal/task/reedit';
+import ClueIndex from '../components/clue';
 import theme from '../themes/base-theme';
 
 export const AppNavigator = StackNavigator({
@@ -96,6 +97,16 @@ export const AppNavigator = StackNavigator({
     screen: ProposalIndex,
     navigationOptions: {
       title: '政协提案',
+      headerStyle: {
+        backgroundColor: theme.brandPrimary,
+      },
+      headerTintColor: theme.tabTextColor,
+    },
+  },
+  ClueIndex: {
+    screen: ClueIndex,
+    navigationOptions: {
+      title: '提案线索',
       headerStyle: {
         backgroundColor: theme.brandPrimary,
       },

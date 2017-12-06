@@ -40,6 +40,12 @@ class WorkScreen extends Component {
               <Text>我的已办</Text>
             </CardItem>
           </Card>
+          <Card>
+            <CardItem header button onPress={() => this.navigate('ClueIndex')}>
+              <Icon active name={'attach'} style={{ color: theme.brandPrimary, fontSize: 36 }} />
+              <H3> 提案线索</H3>
+            </CardItem>
+          </Card>
         </Content>
       </Container>
     );

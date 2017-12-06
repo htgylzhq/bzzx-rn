@@ -3,6 +3,7 @@ import Msg from '../models/Msg';
 import Comment from '../models/Comment';
 import Proposal from '../models/Proposal';
 import ProposalLog from '../models/ProposalLog';
+import { REFRESH_PUB_CLUES, LOAD_MORE_PUB_CLUES } from '../actions/pubClues';
 
 export type Action =
   { type: 'PUSH_NEW_ROUTE', route: string }
@@ -35,6 +36,10 @@ export type Action =
   | { type: 'ON_FETCH_PROPOSAL_LOGS', proposalLogs: ProposalLog[] }
   | { type: 'ON_FETCH_CONTACTS', contacts: Object }
   | { type: 'ON_FETCH_UNDERTAKERS', undertakers: Object[] }
+  | { type: REFRESH_PUB_CLUES, clues: Object[] }
+  | { type: LOAD_MORE_PUB_CLUES, clues: Object[] }
+  ;
+
 export type Dispatch = (action: Action | Array<Action>) => any;
 export type GetState = () => Object;
 export type PromiseAction = Promise<Action>;
