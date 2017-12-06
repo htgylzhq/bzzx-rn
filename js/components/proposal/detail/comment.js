@@ -32,7 +32,7 @@ class ProposalContentPage extends Component {
     const res = await http.get('/platform/cppcc/proposal/comment', {
       id: proposalId,
       pageNo: 1,
-      pageSize: 10,
+      pageSize: 15,
     });
     if (res.code === 0) {
       const data = res.data;
@@ -44,17 +44,20 @@ class ProposalContentPage extends Component {
   async _submit() {
     this.setState({ submitting: true });
     const { commentVal, proposalId } = this.props;
-    const res = await http.post('/platform/cppcc/proposal/comment', {
-      id: proposalId,
-      content: commentVal,
-    });
-    if (res.code === 0) {
-      this.props.resetForm('comment');
-      this._fetchComment();
-      this.setState({ loading: false });
+    if (_.trim(commentVal) !== '') {
+      const res = await http.post('/platform/cppcc/proposal/comment', {
+        id: proposalId,
+        content: commentVal,
+      });
+      if (res.code === 0) {
+        this.props.resetForm('comment');
+        this._fetchComment();
+        this.setState({ loading: false, submitting: false });
+      }
     }
   }
   async _loadMore() {
+    this.setState({ refreshing: true });
     const { proposalId } = this.props;
     const res = await http.get('/platform/cppcc/proposal/comment', {
       id: proposalId,
@@ -90,22 +93,26 @@ class ProposalContentPage extends Component {
     return (
       <Container>
         <Content>
-          { this.state.loading ? <Spinner /> : null }
-          <Card style={{ flex: 1, marginTop: 0 }}>
-            <CardItem cardBody style={{ flex: 1, flexDirection: 'row', alignItems: 'flex-start' }}>
-              <List
-                style={{ flex: 1 }}
-                renderRow={item => this.renderRow(item)}
-                dataArray={this.props.comment}
-                onEndReachedThreshold={10}
-                onEndReached={() => { this._loadMore(); }}
-                refreshControl={<RefreshControl
-                  refreshing={this.state.refreshing}
-                  onRefresh={() => this._fetchComment()}
-                />}
-              />
-            </CardItem>
-          </Card>
+          { this.state.loading
+            ?
+              <Spinner />
+            :
+              <Card style={{ flex: 1, marginTop: 0 }}>
+                <CardItem cardBody style={{ flex: 1, flexDirection: 'row', alignItems: 'flex-start' }}>
+                  <List
+                    style={{ flex: 1 }}
+                    renderRow={item => this.renderRow(item)}
+                    dataArray={this.props.comment}
+                    onEndReachedThreshold={20}
+                    onEndReached={() => { this._loadMore(); }}
+                    refreshControl={<RefreshControl
+                      refreshing={this.state.refreshing}
+                      onRefresh={() => this._fetchComment()}
+                    />}
+                  />
+                </CardItem>
+              </Card>
+          }
         </Content>
         <Footer style={{ backgroundColor: '#fdfdfd', borderTopWidth: 1, borderTopColor: '#ddd', paddingTop: 5, paddingBottom: 5, paddingLeft: 10, paddingRight: 10 }}>
           <Left style={{ flex: 1, flexDirection: 'row', justifyContent: 'center' }}>
