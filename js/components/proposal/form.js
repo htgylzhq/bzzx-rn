@@ -46,6 +46,7 @@ class ProposalForm extends Component {
     super(props);
     this.state = {
       loading: true,
+      requiring: false,
     };
   }
   async componentWillMount() {
@@ -83,6 +84,7 @@ class ProposalForm extends Component {
 
     if (res.code === 0) {
       Toaster.success('操作成功');
+      this.setState({ requiring: false });
       this.navigateBack();
     }
   }
@@ -159,7 +161,11 @@ class ProposalForm extends Component {
           <Button
             block
             style={{ marginTop: 20, backgroundColor: '#941001' }}
-            onPress={() => this._submit(true)}
+            onPress={() => {
+              this.setState({ requiring: true });
+              setTimeout(() => this._submit(true), 500);
+            }}
+            disabled={this.state.requiring}
           >
             <Text>保存</Text>
           </Button>
@@ -167,6 +173,7 @@ class ProposalForm extends Component {
             block
             style={{ marginTop: 20, backgroundColor: '#941001' }}
             onPress={() => this._submit(false)}
+            disabled={this.state.requiring}
           >
             <Text>保存并提交</Text>
           </Button>

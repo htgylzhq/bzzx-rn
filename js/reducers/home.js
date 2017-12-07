@@ -5,11 +5,13 @@ import { LOAD_HOME_DATA } from '../actions/home';
 export type State = {
   proposalsTodo: Proposal[],
   proposalsMy: Proposal[],
+  clue: [],
 };
 
 const initialState = {
   proposalsTodo: [],
   proposalsMy: [],
+  clue: [],
 };
 
 export default function (state: State = initialState, action: Action): State {
@@ -18,6 +20,7 @@ export default function (state: State = initialState, action: Action): State {
       ...state,
       proposalsTodo: action.proposalsTodo,
       proposalsMy: action.proposalsMy,
+      clue: action.clue,
     };
   }
 

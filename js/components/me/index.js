@@ -1,9 +1,22 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Container, Content, Text, Card, CardItem, Left, Thumbnail, Body, Icon } from 'native-base';
+import { Container, Content, Text, Card, CardItem, Left, View, Body, Icon } from 'native-base';
+import { StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation';
 import { logout } from '../../actions/auth';
+
+const styles = StyleSheet.create({
+  avatar: {
+    width: 60,
+    height: 60,
+    margin: 10,
+    borderRadius: 60,
+    backgroundColor: '#ccc',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
 
 class MeScreen extends Component {
 
@@ -32,7 +45,9 @@ class MeScreen extends Component {
           <Card>
             <CardItem button onPress={() => this.navigate('Profile')}>
               <Left>
-                <Thumbnail source={{ uri: 'http://images2015.cnblogs.com/blog/533679/201606/533679-20160627094224718-806139364.png' }} />
+                <View style={[styles.avatar, { backgroundColor: 'rgb(179,199,249)' }]}>
+                  <Text style={{ fontSize: 25, fontWeight: 'bold', color: '#fff' }}>{this.props.username.substring(0, 1)}</Text>
+                </View>
                 <Body>
                   <Text>{this.props.username}</Text>
                   <Text note>{this.props.unitName}</Text>

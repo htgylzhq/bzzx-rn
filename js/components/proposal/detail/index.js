@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Tabs, Tab, Fab, Icon } from 'native-base';
+import { Container, Tabs, Tab, Fab, Icon, ScrollableTab } from 'native-base';
 import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation';
 import PropTypes from 'prop-types';
@@ -66,7 +66,7 @@ class ProposalDetailIndex extends Component {
 
     return (
       <Container>
-        <Tabs locked tabBarUnderlineStyle={{ backgroundColor: '#941001' }}>
+        <Tabs tabBarUnderlineStyle={{ backgroundColor: '#941001' }} renderTabBar={() => <ScrollableTab />}>
           <Tab heading={'基础信息'} textStyle={{ color: '#000' }} activeTextStyle={{ color: '#941001' }} tabStyle={{ backgroundColor: '#fff', borderBottomColor: '#ddd', borderBottomWidth: 1 }} activeTabStyle={{ backgroundColor: '#fff' }}>
             <ProposalInfoPage proposalId={this.state.params.id} />
           </Tab>

@@ -1,11 +1,23 @@
 import React, { Component } from 'react';
-import { Spinner, Container, Footer, Input, Left, Right, Button, Text, Content, Thumbnail, Form, List, ListItem, Body, H3, Card, CardItem } from 'native-base';
+import { Spinner, Container, Footer, Input, Left, Right, Button, Text, Content, View, Form, List, ListItem, Body, H3, Card, CardItem } from 'native-base';
 import { Field, reduxForm, reset } from 'redux-form';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { RefreshControl } from 'react-native';
+import { RefreshControl, StyleSheet } from 'react-native';
 import http from '../../../commons/http';
 import { onFetchComment, onLoadMoreComment } from '../../../actions/comment';
+
+const styles = StyleSheet.create({
+  avatar: {
+    width: 50,
+    height: 50,
+    margin: 10,
+    borderRadius: 25,
+    backgroundColor: '#ccc',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
 
 class ProposalContentPage extends Component {
   static propTypes = {
@@ -78,7 +90,9 @@ class ProposalContentPage extends Component {
     return (
       <ListItem avatar style={{ paddingTop: 5, paddingBottom: 5 }}>
         <Left>
-          <Thumbnail source={{ uri: 'http://images2015.cnblogs.com/blog/533679/201606/533679-20160627094224718-806139364.png' }} />
+          <View style={[styles.avatar, { backgroundColor: 'rgb(179,199,249)' }]}>
+            <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#fff' }}>{item.creatorName.substring(0, 1)}</Text>
+          </View>
         </Left>
         <Body>
           <Text>{ item.creatorName }</Text>

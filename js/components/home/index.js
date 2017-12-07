@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Content, Card, CardItem, Left, Right, Icon, Spinner, List, H3, Button, Text } from 'native-base';
+import { Container, Content, Card, CardItem, Left, Right, Icon, Spinner, List, H3, Button, Text, ListItem, Body } from 'native-base';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation';
@@ -15,6 +15,7 @@ class HomeScreen extends Component {
   static propTypes = {
     proposalsTodo: PropTypes.arrayOf(PropTypes.shape(Proposal)),
     proposalsMy: PropTypes.arrayOf(PropTypes.shape(Proposal)),
+    clue: PropTypes.array,
     dispatch: PropTypes.func,
     onHomeDataLoaded: PropTypes.func,
   };
@@ -40,10 +41,12 @@ class HomeScreen extends Component {
 
   async _fetchData() {
     const res = await http.get('/platform/api/home');
+    const resClue = await http.get('/platform/api/cppcc/clue/pub');
     if (res.code === 0) {
       const proposalsTodo = res.data.proposalsTodo.map(obj => new Proposal(obj));
       const proposalsMy = res.data.proposalsMy.map(obj => new Proposal(obj));
-      this.props.onHomeDataLoaded(proposalsTodo, proposalsMy);
+      const clue = resClue.data.list;
+      this.props.onHomeDataLoaded(proposalsTodo, proposalsMy, clue);
       this.setState({ loading: false });
     }
   }
@@ -64,12 +67,33 @@ class HomeScreen extends Component {
 
     return comp;
   }
+  _onPressClue(clue:Object) {
+    this.navigate('ClueDetailPage', clue);
+  }
+  _renderClue(clue) {
+    return (
+      <ListItem style={{ paddingTop: 0, paddingBottom: 0 }} onPress={() => this._onPressClue(clue)}>
+        <Card transparent>
+          <CardItem header style={{ paddingTop: 0, paddingBottom: 5 }}>
+            <Body>
+              <Text numberOfLines={1}>{clue.title}</Text>
+            </Body>
+          </CardItem>
+          <CardItem style={{ paddingTop: 0, paddingBottom: 0 }}>
+            <Body>
+              <Text note numberOfLines={3}>{clue.content}</Text>
+            </Body>
+          </CardItem>
+        </Card>
+      </ListItem>
+    );
+  }
 
   render() {
     return (
       <Container>
         <Content contentContainerStyle={{ flex: 1 }}>
-          <Card>
+          <Card style={{ paddingBottom: 10 }}>
             <CardItem header button onPress={() => this.navigate('ProposalIndex', { tab: 'my' })} style={{ borderBottomWidth: 1, borderBottomColor: '#921001' }}>
               <Left>
                 <Icon name="paper" style={{ marginRight: 10, color: '#921001' }} />
@@ -142,6 +166,41 @@ class HomeScreen extends Component {
                 </CardItem>
             }
           </Card>
+          <Card>
+            <CardItem header button onPress={() => this.navigate('ClueIndex')} style={{ borderBottomWidth: 1, borderBottomColor: '#921001' }}>
+              <Left>
+                <Icon name="attach" style={{ marginRight: 10, color: '#921001' }} />
+                <H3>提案线索</H3>
+              </Left>
+              <Right>
+                <Icon name="arrow-forward" style={{ color: '#921001' }} />
+              </Right>
+            </CardItem>
+            {
+              this.state.loading
+                ?
+                  <CardItem style={{ flex: 1, alignItems: 'center', alignSelf: 'center' }}>
+                    <Spinner />
+                  </CardItem>
+                :
+                null
+            }
+            {
+              this.props.proposalsTodo.length === 0
+                ?
+                  <CardItem cardBody style={{ flex: 1, alignItems: 'center', alignSelf: 'center' }}>
+                    <Icon active name="happy" style={{ color: 'green', fontSize: 36 }} />
+                  </CardItem>
+                :
+                  <CardItem cardBody>
+                    <List
+                      button
+                      dataArray={this.props.clue}
+                      renderRow={item => this._renderClue(item)}
+                    />
+                  </CardItem>
+            }
+          </Card>
         </Content>
       </Container>
     );
@@ -151,11 +210,12 @@ class HomeScreen extends Component {
 const mapStateToProps = state => ({
   proposalsTodo: state.home.proposalsTodo,
   proposalsMy: state.home.proposalsMy,
+  clue: state.home.clue,
 });
 
 const mapDispatchToProps = dispatch => ({
-  onHomeDataLoaded: (proposalsTodo, proposalsMy) => {
-    dispatch(onHomeDataLoaded(proposalsTodo, proposalsMy));
+  onHomeDataLoaded: (proposalsTodo, proposalsMy, clue) => {
+    dispatch(onHomeDataLoaded(proposalsTodo, proposalsMy, clue));
   },
   dispatch,
 });

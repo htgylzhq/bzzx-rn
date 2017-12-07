@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unused-prop-types */
 import React, { Component } from 'react';
 import {
   Body,
@@ -15,17 +14,27 @@ import {
   Right,
   Spinner,
   Text,
-  Thumbnail
+  View,
 } from 'native-base';
 import { Field, reduxForm, reset } from 'redux-form';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { RefreshControl } from 'react-native';
+import { RefreshControl, StyleSheet } from 'react-native';
 import _ from 'lodash';
 import http from '../../commons/http';
 import { onFetchClueComments, onLoadMoreClueComments } from '../../actions/clueComments';
 
-const formName = 'clueComment';
+const styles = StyleSheet.create({
+  avatar: {
+    width: 50,
+    height: 50,
+    margin: 10,
+    borderRadius: 25,
+    backgroundColor: '#ccc',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
 
 class ClueCommentsPage extends Component {
   static propTypes = {
@@ -70,7 +79,7 @@ class ClueCommentsPage extends Component {
         content: commentVal,
       });
       if (res.code === 0) {
-        this.props.resetForm(formName);
+        this.props.resetForm('clueComment');
         this._fetchComments();
         this.setState({ loading: false, submitting: false });
       }
@@ -98,7 +107,9 @@ class ClueCommentsPage extends Component {
     return (
       <ListItem avatar style={{ paddingTop: 5, paddingBottom: 5 }}>
         <Left>
-          <Thumbnail source={{ uri: 'http://images2015.cnblogs.com/blog/533679/201606/533679-20160627094224718-806139364.png' }} />
+          <View style={[styles.avatar, { backgroundColor: 'rgb(179,199,249)' }]}>
+            <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#fff' }}>{item.creatorName.substring(0, 1)}</Text>
+          </View>
         </Left>
         <Body>
           <Text>{ item.creatorName }</Text>
@@ -150,7 +161,7 @@ class ClueCommentsPage extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const formValue = (state && state.form && state.form[clueComment] && state.form[clueComment].values) || {
+  const formValue = (state && state.form && state.form.clueComment && state.form.clueComment.values) || {
     commentVal: '',
   };
   const comment = (state && state.clueComments && state.clueComments.comments) || [];
@@ -169,7 +180,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const ClueCommentsPageWithForm = reduxForm({
-  form: formName,
+  form: 'clueComment',
 })(ClueCommentsPage);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ClueCommentsPageWithForm);
