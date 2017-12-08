@@ -23,6 +23,9 @@ export default {
     width: deviceWidth * 0.85,
     marginLeft: 'auto',
     marginRight: 'auto',
+    position: 'absolute',
+    left: (deviceWidth * 0.15) / 2,
+    top: -50,
   },
   bg: {
     width: deviceWidth * 0.8,

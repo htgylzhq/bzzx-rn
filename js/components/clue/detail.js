@@ -10,9 +10,11 @@ import ClueCommentsPage from './comments';
 const styles = StyleSheet.create({
   tabText: {
     color: '#000',
+    fontSize: 12,
   },
   tabActiveText: {
     color: '#941001',
+    fontSize: 12,
   },
   tab: {
     backgroundColor: '#fff',

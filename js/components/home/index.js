@@ -72,16 +72,16 @@ class HomeScreen extends Component {
   }
   _renderClue(clue) {
     return (
-      <ListItem style={{ paddingTop: 0, paddingBottom: 0 }} onPress={() => this._onPressClue(clue)}>
-        <Card transparent>
-          <CardItem header style={{ paddingTop: 0, paddingBottom: 5 }}>
+      <ListItem style={{ paddingTop: 0, paddingBottom: 0, paddingLeft: 0, marginLeft: 0 }} onPress={() => this._onPressClue(clue)}>
+        <Card transparent style={{ marginLeft: 0 }}>
+          <CardItem header style={{ paddingTop: 0, paddingBottom: 0 }}>
             <Body>
-              <Text numberOfLines={1}>{clue.title}</Text>
+              <Text numberOfLines={1} style={{ fontSize: 12 }}>{clue.title}</Text>
             </Body>
           </CardItem>
           <CardItem style={{ paddingTop: 0, paddingBottom: 0 }}>
             <Body>
-              <Text note numberOfLines={3}>{clue.content}</Text>
+              <Text note numberOfLines={3} style={{ fontSize: 10, justifyContent: 'center' }}>{clue.content}</Text>
             </Body>
           </CardItem>
         </Card>
@@ -94,10 +94,10 @@ class HomeScreen extends Component {
       <Container>
         <Content contentContainerStyle={{ flex: 1 }}>
           <Card style={{ paddingBottom: 10 }}>
-            <CardItem header button onPress={() => this.navigate('ProposalIndex', { tab: 'my' })} style={{ borderBottomWidth: 1, borderBottomColor: '#921001' }}>
+            <CardItem header button onPress={() => this.navigate('ProposalIndex', { tab: 'my' })} style={{ borderBottomWidth: 1, borderBottomColor: '#921001', paddingTop: 5, paddingBottom: 5 }}>
               <Left>
                 <Icon name="paper" style={{ marginRight: 10, color: '#921001' }} />
-                <H3>我创建的提案</H3>
+                <H3 style={{ fontSize: 15 }}>我创建的提案</H3>
               </Left>
               <Right>
                 <Icon name="arrow-forward" style={{ color: '#921001' }} />
@@ -126,16 +126,16 @@ class HomeScreen extends Component {
                     <List
                       button
                       dataArray={this.props.proposalsMy}
-                      renderRow={item => this._renderProposalItem(item, 'my')}
+                      renderRow={item => this._renderProposalItem(item, 'my')} style={{ marginLeft: 0 }}
                     />
                   </CardItem>
             }
           </Card>
           <Card>
-            <CardItem header button onPress={() => this.navigate('ProposalIndex', { tab: 'todo' })} style={{ borderBottomWidth: 1, borderBottomColor: '#921001' }}>
+            <CardItem header button onPress={() => this.navigate('ProposalIndex', { tab: 'todo' })} style={{ borderBottomWidth: 1, borderBottomColor: '#921001', paddingTop: 5, paddingBottom: 5 }}>
               <Left>
                 <Icon name="refresh" style={{ marginRight: 10, color: '#921001' }} />
-                <H3>我的待办提案</H3>
+                <H3 style={{ fontSize: 15 }}>我的待办提案</H3>
               </Left>
               <Right>
                 <Icon name="arrow-forward" style={{ color: '#921001' }} />
@@ -167,10 +167,10 @@ class HomeScreen extends Component {
             }
           </Card>
           <Card>
-            <CardItem header button onPress={() => this.navigate('ClueIndex')} style={{ borderBottomWidth: 1, borderBottomColor: '#921001' }}>
+            <CardItem header button onPress={() => this.navigate('ClueIndex')} style={{ borderBottomWidth: 1, borderBottomColor: '#921001', paddingTop: 5, paddingBottom: 5 }}>
               <Left>
                 <Icon name="attach" style={{ marginRight: 10, color: '#921001' }} />
-                <H3>提案线索</H3>
+                <H3 style={{ fontSize: 15 }}>提案线索</H3>
               </Left>
               <Right>
                 <Icon name="arrow-forward" style={{ color: '#921001' }} />
@@ -192,11 +192,12 @@ class HomeScreen extends Component {
                     <Icon active name="happy" style={{ color: 'green', fontSize: 36 }} />
                   </CardItem>
                 :
-                  <CardItem cardBody>
+                  <CardItem cardBody style={{ paddingLeft: 0 }}>
                     <List
                       button
                       dataArray={this.props.clue}
                       renderRow={item => this._renderClue(item)}
+                      style={{ paddingLeft: 0, marginLeft: 0 }}
                     />
                   </CardItem>
             }

@@ -11,7 +11,6 @@ const styles = StyleSheet.create({
   avatar: {
     width: 50,
     height: 50,
-    margin: 10,
     borderRadius: 25,
     backgroundColor: '#ccc',
     alignItems: 'center',
@@ -89,18 +88,18 @@ class ProposalContentPage extends Component {
   renderRow(item) {
     return (
       <ListItem avatar style={{ paddingTop: 5, paddingBottom: 5 }}>
-        <Left>
+        <Left style={{ flexDirection: 'column', justifyContent: 'flex-start', paddingTop: 0 }}>
           <View style={[styles.avatar, { backgroundColor: 'rgb(179,199,249)' }]}>
             <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#fff' }}>{item.creatorName.substring(0, 1)}</Text>
           </View>
         </Left>
-        <Body>
-          <Text>{ item.creatorName }</Text>
+        <Body style={{ paddingTop: 0 }}>
+          <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', paddingTop: 0, paddingLeft: 0, alignItems: 'center' }}>
+            <Text style={{ fontSize: 13, paddingTop: 0 }}>{ item.creatorName }</Text>
+            <Text note style={{ fontSize: 10 }}>{ item.createTime }</Text>
+          </View>
           <Text note>{ item.content }</Text>
         </Body>
-        <Right>
-          <Text note>{ item.createTime }</Text>
-        </Right>
       </ListItem>);
   }
   render() {

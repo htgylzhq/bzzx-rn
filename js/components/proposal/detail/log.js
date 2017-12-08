@@ -38,22 +38,22 @@ class ProposalLogPage extends Component {
 
   _renderProposalLog(proposalLog: ProposalLog) {
     return (
-      <ListItem style={{ paddingTop: 0, paddingBottom: 0 }}>
-        <Card transparent>
-          <CardItem header bordered style={{ paddingTop: 0, paddingBottom: 5 }}>
-            <H3>{proposalLog.taskName}</H3>
+      <ListItem style={{ paddingTop: 0, paddingBottom: 0, paddingLeft: 0, marginLeft: 0 }}>
+        <Card transparent style={{ marginLeft: 0, paddingLeft: 0 }}>
+          <CardItem header bordered style={{ paddingTop: 0, paddingBottom: 0 }}>
+            <H3 style={{ fontSize: 15 }}>{proposalLog.taskName}</H3>
           </CardItem>
-          <CardItem style={{ paddingTop: 0 }}>
+          <CardItem style={{ paddingTop: 0, paddingBottom: 0 }}>
             <Left>
-              <Text note>{proposalLog.createTime}</Text>
+              <Text note style={{ fontSize: 10 }}>{proposalLog.createTime}</Text>
             </Left>
             <Right>
-              <Text note>{proposalLog.userName}</Text>
+              <Text note style={{ fontSize: 12 }}>{proposalLog.userName}</Text>
             </Right>
           </CardItem>
-          <CardItem style={{ paddingTop: 0 }}>
+          <CardItem style={{ paddingTop: 0, paddingBottom: 0 }}>
             <Body>
-              <Text>{proposalLog.content}</Text>
+              <Text note style={{ fontSize: 12 }}>{proposalLog.content}</Text>
             </Body>
           </CardItem>
         </Card>

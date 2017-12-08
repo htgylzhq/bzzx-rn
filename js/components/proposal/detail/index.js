@@ -66,20 +66,20 @@ class ProposalDetailIndex extends Component {
 
     return (
       <Container>
-        <Tabs tabBarUnderlineStyle={{ backgroundColor: '#941001' }} renderTabBar={() => <ScrollableTab />}>
-          <Tab heading={'基础信息'} textStyle={{ color: '#000' }} activeTextStyle={{ color: '#941001' }} tabStyle={{ backgroundColor: '#fff', borderBottomColor: '#ddd', borderBottomWidth: 1 }} activeTabStyle={{ backgroundColor: '#fff' }}>
+        <Tabs tabBarUnderlineStyle={{ backgroundColor: '#941001' }}>
+          <Tab heading={'基础信息'} textStyle={{ color: '#000', fontSize: 10 }} activeTextStyle={{ color: '#941001', fontSize: 10 }} tabStyle={{ backgroundColor: '#fff', borderBottomColor: '#ddd', borderBottomWidth: 1 }} activeTabStyle={{ backgroundColor: '#fff' }}>
             <ProposalInfoPage proposalId={this.state.params.id} />
           </Tab>
-          <Tab heading="内容" textStyle={{ color: '#000' }} activeTextStyle={{ color: '#941001' }} tabStyle={{ backgroundColor: '#fff', borderBottomColor: '#ddd', borderBottomWidth: 1 }} activeTabStyle={{ backgroundColor: '#fff' }}>
+          <Tab heading="内容" textStyle={{ color: '#000', fontSize: 10 }} activeTextStyle={{ color: '#941001', fontSize: 10 }} tabStyle={{ backgroundColor: '#fff', borderBottomColor: '#ddd', borderBottomWidth: 1 }} activeTabStyle={{ backgroundColor: '#fff' }}>
             <ProposalContentPage proposalId={this.state.params.id} />
           </Tab>
-          <Tab heading={'流程图'} style={{ paddingLeft: 0, paddingRight: 0 }} textStyle={{ color: '#000' }} activeTextStyle={{ color: '#941001' }} tabStyle={{ backgroundColor: '#fff', borderBottomColor: '#ddd', borderBottomWidth: 1 }} activeTabStyle={{ backgroundColor: '#fff' }}>
+          <Tab heading={'流程图'} style={{ paddingLeft: 0, paddingRight: 0 }} textStyle={{ color: '#000', fontSize: 10 }} activeTextStyle={{ color: '#941001', fontSize: 10 }} tabStyle={{ backgroundColor: '#fff', borderBottomColor: '#ddd', borderBottomWidth: 1 }} activeTabStyle={{ backgroundColor: '#fff' }}>
             <ProposalDiagram proposalId={this.state.params.id} />
           </Tab>
-          <Tab heading={'办理历史'} textStyle={{ color: '#000' }} activeTextStyle={{ color: '#941001' }} tabStyle={{ backgroundColor: '#fff', borderBottomColor: '#ddd', borderBottomWidth: 1 }} activeTabStyle={{ backgroundColor: '#fff' }}>
+          <Tab heading={'办理历史'} textStyle={{ color: '#000', fontSize: 10 }} activeTextStyle={{ color: '#941001', fontSize: 10 }} tabStyle={{ backgroundColor: '#fff', borderBottomColor: '#ddd', borderBottomWidth: 1 }} activeTabStyle={{ backgroundColor: '#fff' }}>
             <ProposalLogPage proposalId={this.state.params.id} />
           </Tab>
-          <Tab heading={'评论'} textStyle={{ color: '#000' }} activeTextStyle={{ color: '#941001' }} tabStyle={{ backgroundColor: '#fff', borderBottomColor: '#ddd', borderBottomWidth: 1 }} activeTabStyle={{ backgroundColor: '#fff' }}>
+          <Tab heading={'评论'} textStyle={{ color: '#000', fontSize: 10 }} activeTextStyle={{ color: '#941001', fontSize: 10 }} tabStyle={{ backgroundColor: '#fff', borderBottomColor: '#ddd', borderBottomWidth: 1 }} activeTabStyle={{ backgroundColor: '#fff' }}>
             <ProposalCommentPage proposalId={this.state.params.id} />
           </Tab>
         </Tabs>

@@ -25,25 +25,25 @@ class WorkScreen extends Component {
           <Card>
             <CardItem header>
               <Icon active name={'paper'} style={{ color: theme.brandPrimary, fontSize: 36 }} />
-              <H3> 政协提案</H3>
+              <H3 style={{ fontSize: 15 }}> 政协提案</H3>
             </CardItem>
             <CardItem button bordered onPress={() => this.navigate('ProposalIndex', { tab: 'my' })}>
               <Icon active name={'folder'} style={{ color: theme.brandInfo }} />
-              <Text>我的提案</Text>
+              <Text style={{ fontSize: 13 }}>我的提案</Text>
             </CardItem>
             <CardItem button bordered onPress={() => this.navigate('ProposalIndex', { tab: 'todo' })}>
               <Icon active name={'radio-button-off'} style={{ color: theme.brandDanger }} />
-              <Text>我的待办</Text>
+              <Text style={{ fontSize: 13 }}>我的待办</Text>
             </CardItem>
             <CardItem button bordered onPress={() => this.navigate('ProposalIndex', { tab: 'done' })}>
               <Icon active name={'checkbox'} style={{ color: theme.brandSuccess }} />
-              <Text>我的已办</Text>
+              <Text style={{ fontSize: 13 }}>我的已办</Text>
             </CardItem>
           </Card>
           <Card>
             <CardItem header button onPress={() => this.navigate('ClueIndex')}>
               <Icon active name={'attach'} style={{ color: theme.brandPrimary, fontSize: 36 }} />
-              <H3> 提案线索</H3>
+              <H3 style={{ fontSize: 15 }}> 提案线索</H3>
             </CardItem>
           </Card>
         </Content>

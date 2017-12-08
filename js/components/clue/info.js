@@ -47,37 +47,37 @@ class ClueInfoPage extends Component {
         ?
           <Spinner />
         :
-          <Card>
+          <Card style={{ paddingLeft: 10, paddingRight: 10 }}>
             <CardItem header style={{ width: deviceWidth * 0.95, marginLeft: 'auto', marginRight: 'auto', borderBottomWidth: 2, borderBottomColor: '#921001', paddingTop: 0, paddingBottom: 0 }}>
-              <H3 style={{ fontWeight: '700', fontSize: 24, paddingTop: 17, paddingBottom: 17 }}>{this.props.clue.title}</H3>
+              <H3 style={{ fontWeight: '700', fontSize: 20, paddingTop: 17, paddingBottom: 17 }}>{this.props.clue.title}</H3>
             </CardItem>
             <CardItem bordered>
               <Left>
-                <Text>标题</Text>
+                <Text style={{ fontSize: 13 }}>标题</Text>
               </Left>
-              <Right>
-                <Text note>{this.props.clue.title}</Text>
+              <Right style={{ flex: 3 }}>
+                <Text note style={{ fontSize: 12 }}>{this.props.clue.title}</Text>
               </Right>
             </CardItem>
             <CardItem bordered>
               <Left>
-                <Text>创建时间</Text>
+                <Text style={{ fontSize: 13 }}>创建时间</Text>
               </Left>
-              <Right>
-                <Text note>{this.props.clue.createTime}</Text>
+              <Right style={{ flex: 3 }}>
+                <Text note style={{ fontSize: 12 }}>{this.props.clue.createTime}</Text>
               </Right>
             </CardItem>
             <CardItem bordered>
               <Left>
-                <Text>创建人</Text>
+                <Text style={{ fontSize: 13 }}>创建人</Text>
               </Left>
-              <Right>
-                <Text note>{this.props.clue.creatorName}</Text>
+              <Right style={{ flex: 3 }}>
+                <Text note style={{ fontSize: 12 }}>{this.props.clue.creatorName}</Text>
               </Right>
             </CardItem>
             <CardItem bordered>
               <Body>
-                <Text note>{`“\n${this.props.clue.content}\n”`}</Text>
+                <Text note style={{ fontSize: 12 }}>{`“\n${this.props.clue.content}\n”`}</Text>
               </Body>
             </CardItem>
           </Card>

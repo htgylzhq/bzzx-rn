@@ -51,13 +51,13 @@ class ProposalIndex extends Component {
     return (
       <Container>
         <Tabs locked initialPage={initialPage} tabBarUnderlineStyle={{ backgroundColor: '#941001' }}>
-          <Tab heading={'我的'} textStyle={{ color: '#000' }} activeTextStyle={{ color: '#941001' }} tabStyle={{ backgroundColor: '#fff', borderBottomWidth: 1, borderBottomColor: '#ddd' }} activeTabStyle={{ backgroundColor: '#fff' }}>
+          <Tab heading={'我的'} textStyle={{ color: '#000', fontSize: 12 }} activeTextStyle={{ color: '#941001', fontSize: 12 }} tabStyle={{ backgroundColor: '#fff', borderBottomWidth: 1, borderBottomColor: '#ddd' }} activeTabStyle={{ backgroundColor: '#fff' }}>
             <ProposalMyScreen />
           </Tab>
-          <Tab heading={'待办'} textStyle={{ color: '#000' }} activeTextStyle={{ color: '#941001' }} tabStyle={{ backgroundColor: '#fff', borderBottomWidth: 1, borderBottomColor: '#ddd' }} activeTabStyle={{ backgroundColor: '#fff' }}>
+          <Tab heading={'待办'} textStyle={{ color: '#000', fontSize: 12 }} activeTextStyle={{ color: '#941001', fontSize: 12 }} tabStyle={{ backgroundColor: '#fff', borderBottomWidth: 1, borderBottomColor: '#ddd' }} activeTabStyle={{ backgroundColor: '#fff' }}>
             <ProposalTodoScreen />
           </Tab>
-          <Tab heading={'已办'} textStyle={{ color: '#000' }} activeTextStyle={{ color: '#941001' }} tabStyle={{ backgroundColor: '#fff', borderBottomWidth: 1, borderBottomColor: '#ddd' }} activeTabStyle={{ backgroundColor: '#fff' }}>
+          <Tab heading={'已办'} textStyle={{ color: '#000', fontSize: 12 }} activeTextStyle={{ color: '#941001', fontSize: 12 }} tabStyle={{ backgroundColor: '#fff', borderBottomWidth: 1, borderBottomColor: '#ddd' }} activeTabStyle={{ backgroundColor: '#fff' }}>
             <ProposalDoneScreen />
           </Tab>
         </Tabs>

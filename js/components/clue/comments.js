@@ -101,23 +101,23 @@ class ClueCommentsPage extends Component {
     }
   }
   renderInput = ({ input }) => (
-    <Input {...input} placeholderTextColor={'#c0c0c0'} placeholder={'发表评论'} style={{ backgroundColor: '#fff', flex: 1, alignItems: 'flex-end', height: 35, borderWidth: 1, borderColor: '#ddd', paddingTop: 1, paddingBottom: 1, paddingLeft: 5, paddingRight: 5, borderRadius: 3 }} />
+    <Input {...input} placeholderTextColor={'#c0c0c0'} placeholder={'发送评论'} style={{ backgroundColor: '#fff', flex: 1, alignItems: 'flex-end', height: 35, borderWidth: 1, borderColor: '#ddd', paddingTop: 1, paddingBottom: 1, paddingLeft: 5, paddingRight: 5, borderRadius: 3, fontSize: 12 }} />
   );
   renderRow(item) {
     return (
       <ListItem avatar style={{ paddingTop: 5, paddingBottom: 5 }}>
-        <Left>
+        <Left style={{ flexDirection: 'column', justifyContent: 'flex-start', paddingTop: 0 }}>
           <View style={[styles.avatar, { backgroundColor: 'rgb(179,199,249)' }]}>
             <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#fff' }}>{item.creatorName.substring(0, 1)}</Text>
           </View>
         </Left>
-        <Body>
-          <Text>{ item.creatorName }</Text>
+        <Body style={{ paddingTop: 0 }}>
+          <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', paddingTop: 0, paddingLeft: 0, alignItems: 'center' }}>
+            <Text style={{ fontSize: 13, paddingTop: 0 }}>{ item.creatorName }</Text>
+            <Text note style={{ fontSize: 10 }}>{ item.createTime }</Text>
+          </View>
           <Text note>{ item.content }</Text>
         </Body>
-        <Right>
-          <Text note>{ item.createTime }</Text>
-        </Right>
       </ListItem>);
   }
   render() {
@@ -150,8 +150,14 @@ class ClueCommentsPage extends Component {
             <Field style={{ flex: 1 }} name="commentVal" component={this.renderInput} type="text" />
           </Left>
           <Right style={{ flex: 0, marginLeft: 10, marginRight: 10 }}>
-            <Button disabled={false} onPress={() => this._submit()} style={{ backgroundColor: '#fff', borderWidth: 1, borderColor: '#ddd', height: 35, borderRadius: 3 }}>
-              <Text style={{ color: '#c0c0c0' }}>发表</Text>
+            <Button disabled={this.state.submitting} onPress={() => this._submit()} style={{ backgroundColor: '#fff', borderWidth: 1, borderColor: '#ddd', height: 35, borderRadius: 3, alignItems: 'center', justifyContent: 'center' }}>
+              {
+                this.state.submitting
+                  ?
+                    <Spinner color={'#c0c0c0'} />
+                  :
+                    <Text style={{ color: '#c0c0c0', fontSize: 12, paddingTop: 0, paddingBottom: 4, marginTop: 0, marginBottom: 0, alignSelf: 'center', alignItems: 'center', justifyContent: 'center' }}>发送</Text>
+              }
             </Button>
           </Right>
         </Footer>

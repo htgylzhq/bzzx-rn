@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Image, ImageBackground } from 'react-native';
-import { Button, Container, Content, Icon, Input, Item, Text, View } from 'native-base';
+import { Button, Container, Content, Icon, Input, Item, Text, View, Spinner } from 'native-base';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import PropTypes from 'prop-types';
@@ -34,6 +34,7 @@ class Login extends Component {
     super(props);
     this.state = {
       name: '',
+      login: false,
     };
     this.renderInput = this.renderInput.bind(this);
   }
@@ -51,6 +52,7 @@ class Login extends Component {
       const user = new User(res.data.user);
       const sid = res.data.sid;
       this.props.onLogin(user, sid);
+      this.setState({ login: false });
     }
   }
 
@@ -89,9 +91,19 @@ class Login extends Component {
                 <Field name={'password'} component={this.renderInput} />
                 <Button
                   style={styles.btn}
-                  onPress={() => this._login()}
+                  disabled={this.state.login}
+                  onPress={() => {
+                    this.setState({ login: true });
+                    this._login();
+                  }}
                 >
-                  <Text style={{ marginLeft: 'auto', marginRight: 'auto' }}>登录</Text>
+                  {
+                    this.state.login
+                      ?
+                        <Spinner color={'#fff'} style={{ marginLeft: 'auto', marginRight: 'auto' }} />
+                      :
+                        <Text style={{ marginLeft: 'auto', marginRight: 'auto' }}>登录</Text>
+                  }
                 </Button>
               </View>
             </ImageBackground>

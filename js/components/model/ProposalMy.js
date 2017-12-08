@@ -38,19 +38,19 @@ export default class ProposalMy extends Component {
   render() {
     const { proposal } = this.props;
     return (
-      <ListItem style={{ paddingTop: 0, paddingBottom: 0 }} onPress={this._onPress}>
-        <Card transparent>
-          <CardItem header style={{ paddingTop: 0, paddingBottom: 5 }}>
+      <ListItem style={{ paddingTop: 0, paddingBottom: 0, marginLeft: 0 }} onPress={this._onPress}>
+        <Card transparent style={{ marginLeft: 0 }}>
+          <CardItem header style={{ paddingTop: 0, paddingBottom: 0 }}>
             <Left>
-              <Text numberOfLines={1}>{proposal.title}</Text>
+              <Text numberOfLines={1} style={{ fontSize: 12, marginLeft: 0 }}>{proposal.title}</Text>
             </Left>
           </CardItem>
           <CardItem style={{ paddingTop: 0, paddingBottom: 0 }}>
             <Left>
-              <Text note>{proposal.state}</Text>
+              <Text note style={{ fontSize: 10, marginLeft: 0 }}>{proposal.state}</Text>
             </Left>
             <Right>
-              <Text note>{proposal.createTime}</Text>
+              <Text note style={{ fontSize: 10 }}>{proposal.createTime}</Text>
             </Right>
           </CardItem>
         </Card>

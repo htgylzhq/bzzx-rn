@@ -14,64 +14,64 @@ export default class ProposalInfo extends Component {
   render() {
     const { proposal } = this.props;
     return (
-      <Card>
+      <Card style={{ paddingLeft: 10, paddingRight: 10, marginLeft: 0 }}>
         <CardItem header style={{ width: deviceWidth * 0.95, marginLeft: 'auto', marginRight: 'auto', borderBottomWidth: 2, borderBottomColor: '#921001', paddingTop: 0, paddingBottom: 0 }}>
-          <H3 style={{ fontWeight: '700', fontSize: 24, paddingTop: 17, paddingBottom: 17 }}>{proposal.title}</H3>
+          <H3 style={{ fontWeight: '700', fontSize: 20, paddingTop: 17, paddingBottom: 17 }}>{proposal.title}</H3>
         </CardItem>
         <CardItem bordered>
           <Left>
-            <Text>届次</Text>
+            <Text style={{ fontSize: 13 }}>届次</Text>
           </Left>
-          <Right>
-            <Text>{proposal.jieciName}</Text>
+          <Right style={{ flex: 3 }}>
+            <Text note style={{ fontSize: 12 }}>{proposal.jieciName}</Text>
           </Right>
         </CardItem>
         <CardItem bordered>
           <Left>
-            <Text>界别</Text>
+            <Text style={{ fontSize: 13 }}>界别</Text>
           </Left>
-          <Right>
-            <Text>{proposal.jiebieName}</Text>
+          <Right style={{ flex: 3 }}>
+            <Text note style={{ fontSize: 12 }}>{proposal.jiebieName}</Text>
           </Right>
         </CardItem>
         <CardItem bordered>
           <Left>
-            <Text>建议承办单位</Text>
+            <Text style={{ fontSize: 13 }}>建议承办单位</Text>
           </Left>
           <Right>
-            <Text>{proposal.proposalUnitName}</Text>
+            <Text note style={{ fontSize: 12 }}>{proposal.proposalUnitName}</Text>
           </Right>
         </CardItem>
         <CardItem bordered>
           <Left>
-            <Text>正式承办单位</Text>
+            <Text style={{ fontSize: 13 }}>正式承办单位</Text>
           </Left>
           <Right>
-            <Text>{proposal.formalUnitName}</Text>
+            <Text note style={{ fontSize: 12 }}>{proposal.formalUnitName}</Text>
           </Right>
         </CardItem>
         <CardItem bordered>
           <Left>
-            <Text>提案人</Text>
+            <Text style={{ fontSize: 13 }}>提案人</Text>
           </Left>
-          <Right>
-            <Text>{proposal.creatorName}</Text>
+          <Right style={{ flex: 3 }}>
+            <Text note style={{ fontSize: 12 }}>{proposal.creatorName}</Text>
           </Right>
         </CardItem>
         <CardItem bordered>
           <Left>
-            <Text>联系电话</Text>
+            <Text style={{ fontSize: 13 }}>联系电话</Text>
           </Left>
-          <Right>
-            <Text>{proposal.mobile}</Text>
+          <Right style={{ flex: 3 }}>
+            <Text note style={{ fontSize: 12 }}>{proposal.mobile}</Text>
           </Right>
         </CardItem>
         <CardItem bordered>
           <Left>
-            <Text>创建时间</Text>
+            <Text style={{ fontSize: 13 }}>创建时间</Text>
           </Left>
-          <Right>
-            <Text>{proposal.createTime}</Text>
+          <Right style={{ flex: 3 }}>
+            <Text note style={{ fontSize: 12 }}>{proposal.createTime}</Text>
           </Right>
         </CardItem>
       </Card>
