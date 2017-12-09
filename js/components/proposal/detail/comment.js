@@ -83,7 +83,7 @@ class ProposalContentPage extends Component {
     }
   }
   renderInput = ({ input }) => (
-    <Input {...input} placeholderTextColor={'#c0c0c0'} placeholder={'发表评论'} style={{ backgroundColor: '#fff', flex: 1, alignItems: 'flex-end', height: 35, borderWidth: 1, borderColor: '#ddd', paddingTop: 1, paddingBottom: 1, paddingLeft: 5, paddingRight: 5, borderRadius: 3 }} />
+    <Input {...input} placeholderTextColor={'#c0c0c0'} placeholder={'发表评论'} style={{ backgroundColor: '#fff', flex: 1, alignItems: 'flex-end', height: 35, borderWidth: 1, borderColor: '#ddd', paddingTop: 1, paddingBottom: 1, paddingLeft: 5, paddingRight: 5, borderRadius: 3, fontSize: 12 }} />
   );
   renderRow(item) {
     return (
@@ -132,8 +132,14 @@ class ProposalContentPage extends Component {
             <Field style={{ flex: 1 }} name="commentVal" component={this.renderInput} type="text" />
           </Left>
           <Right style={{ flex: 0, marginLeft: 10, marginRight: 10 }}>
-            <Button disabled={false} onPress={() => this._submit()} style={{ backgroundColor: '#fff', borderWidth: 1, borderColor: '#ddd', height: 35, borderRadius: 3 }}>
-              <Text style={{ color: '#c0c0c0' }}>发表</Text>
+            <Button disabled={this.state.submitting} onPress={() => this._submit()} style={{ backgroundColor: '#fff', borderWidth: 1, borderColor: '#ddd', height: 35, borderRadius: 3 }}>
+              {
+                this.state.submitting
+                  ?
+                    <Spinner color={'#c0c0c0'} />
+                  :
+                    <Text style={{ color: '#c0c0c0', fontSize: 12, paddingTop: 0, paddingBottom: 4, marginTop: 0, marginBottom: 0, alignSelf: 'center', alignItems: 'center', justifyContent: 'center' }}>发送</Text>
+              }
             </Button>
           </Right>
         </Footer>

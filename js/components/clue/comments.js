@@ -15,6 +15,7 @@ import {
   Spinner,
   Text,
   View,
+  Image,
 } from 'native-base';
 import { Field, reduxForm, reset } from 'redux-form';
 import { connect } from 'react-redux';
@@ -23,6 +24,7 @@ import { RefreshControl, StyleSheet } from 'react-native';
 import _ from 'lodash';
 import http from '../../commons/http';
 import { onFetchClueComments, onLoadMoreClueComments } from '../../actions/clueComments';
+import CommentContent from '../model/CommentContent';
 
 const styles = StyleSheet.create({
   avatar: {
@@ -35,7 +37,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
-
 class ClueCommentsPage extends Component {
   static propTypes = {
     onFetchClueComments: PropTypes.func,
@@ -116,7 +117,7 @@ class ClueCommentsPage extends Component {
             <Text style={{ fontSize: 13, paddingTop: 0 }}>{ item.creatorName }</Text>
             <Text note style={{ fontSize: 10 }}>{ item.createTime }</Text>
           </View>
-          <Text note>{ item.content }</Text>
+          <CommentContent content={item.content} />
         </Body>
       </ListItem>);
   }

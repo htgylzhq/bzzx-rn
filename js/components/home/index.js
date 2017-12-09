@@ -76,12 +76,12 @@ class HomeScreen extends Component {
         <Card transparent style={{ marginLeft: 0 }}>
           <CardItem header style={{ paddingTop: 0, paddingBottom: 0 }}>
             <Body>
-              <Text numberOfLines={1} style={{ fontSize: 12 }}>{clue.title}</Text>
+              <Text numberOfLines={1} style={{ fontSize: 12 }} ellipsizeMode={'tail'} >{clue.title}</Text>
             </Body>
           </CardItem>
           <CardItem style={{ paddingTop: 0, paddingBottom: 0 }}>
             <Body>
-              <Text note numberOfLines={3} style={{ fontSize: 10, justifyContent: 'center' }}>{clue.content}</Text>
+              <Text note numberOfLines={1} style={{ fontSize: 10, justifyContent: 'center' }} ellipsizeMode={'tail'} >{clue.content}</Text>
             </Body>
           </CardItem>
         </Card>
@@ -192,7 +192,7 @@ class HomeScreen extends Component {
                     <Icon active name="happy" style={{ color: 'green', fontSize: 36 }} />
                   </CardItem>
                 :
-                  <CardItem cardBody style={{ paddingLeft: 0 }}>
+                  <CardItem cardBody style={{ flex: 1, paddingLeft: 0 }}>
                     <List
                       button
                       dataArray={this.props.clue}

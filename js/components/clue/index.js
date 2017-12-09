@@ -64,16 +64,16 @@ class ClueIndexScreen extends Component {
 
   _renderClueItem(clue:Object) {
     return (
-      <ListItem style={{ paddingTop: 0, paddingBottom: 0 }} onPress={() => this._onPressClue(clue)}>
+      <ListItem style={{ paddingTop: 0, paddingBottom: 0, marginLeft: 0 }} onPress={() => this._onPressClue(clue)}>
         <Card transparent>
-          <CardItem header style={{ paddingTop: 0, paddingBottom: 5 }}>
+          <CardItem header style={{ paddingTop: 0, paddingBottom: 0 }}>
             <Body>
-              <Text numberOfLines={1}>{clue.title}</Text>
+              <Text numberOfLines={1} ellipsizeMode={'tail'} >{clue.title}</Text>
             </Body>
           </CardItem>
           <CardItem style={{ paddingTop: 0, paddingBottom: 0 }}>
             <Body>
-              <Text note numberOfLines={3}>{clue.content}</Text>
+              <Text ellipsizeMode={'tail'} style={{ fontSize: 12 }} note numberOfLines={3}>{clue.content}</Text>
             </Body>
           </CardItem>
         </Card>
@@ -98,7 +98,7 @@ class ClueIndexScreen extends Component {
               :
                 <CardItem cardBody style={{ flex: 1 }} >
                   <List
-                    button
+                    button style={{ marginLeft: 0 }}
                     dataArray={this.props.clues}
                     renderRow={item => this._renderClueItem(item)}
                     onEndReachedThreshold={20}
