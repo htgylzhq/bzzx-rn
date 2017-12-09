@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import { RefreshControl, StyleSheet } from 'react-native';
 import http from '../../../commons/http';
 import { onFetchComment, onLoadMoreComment } from '../../../actions/comment';
+import CommentContent from '../../model/CommentContent';
 
 const styles = StyleSheet.create({
   avatar: {
@@ -83,22 +84,22 @@ class ProposalContentPage extends Component {
     }
   }
   renderInput = ({ input }) => (
-    <Input {...input} placeholderTextColor={'#c0c0c0'} placeholder={'发表评论'} style={{ backgroundColor: '#fff', flex: 1, alignItems: 'flex-end', height: 35, borderWidth: 1, borderColor: '#ddd', paddingTop: 1, paddingBottom: 1, paddingLeft: 5, paddingRight: 5, borderRadius: 3, fontSize: 12 }} />
+    <Input {...input} placeholderTextColor={'#c0c0c0'} placeholder={'发表评论'} style={{ backgroundColor: '#fff', flex: 1, alignItems: 'flex-end', height: 35, lineHeight: 12, borderWidth: 1, borderColor: '#ddd', paddingTop: 1, paddingBottom: 1, paddingLeft: 5, paddingRight: 5, borderRadius: 3, fontSize: 12 }} />
   );
   renderRow(item) {
     return (
-      <ListItem avatar style={{ paddingTop: 5, paddingBottom: 5 }}>
-        <Left style={{ flexDirection: 'column', justifyContent: 'flex-start', paddingTop: 0 }}>
+      <ListItem avatar style={{ paddingTop: 0, paddingBottom: 5, marginLeft: 0 }}>
+        <Left style={{ flexDirection: 'column', justifyContent: 'flex-start', paddingTop: 0, width: 50 }}>
           <View style={[styles.avatar, { backgroundColor: 'rgb(179,199,249)' }]}>
             <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#fff' }}>{item.creatorName.substring(0, 1)}</Text>
           </View>
         </Left>
-        <Body style={{ paddingTop: 0 }}>
+        <Body style={{ paddingTop: 0, paddingLeft: 5 }}>
           <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', paddingTop: 0, paddingLeft: 0, alignItems: 'center' }}>
             <Text style={{ fontSize: 13, paddingTop: 0 }}>{ item.creatorName }</Text>
             <Text note style={{ fontSize: 10 }}>{ item.createTime }</Text>
           </View>
-          <Text note>{ item.content }</Text>
+          <CommentContent content={item.content} />
         </Body>
       </ListItem>);
   }

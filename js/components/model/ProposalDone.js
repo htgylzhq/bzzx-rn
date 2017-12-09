@@ -13,19 +13,19 @@ export default class ProposalDone extends Component {
   render() {
     const { proposal, onPress } = this.props;
     return (
-      <ListItem style={{ paddingTop: 0, paddingBottom: 0 }} onPress={onPress}>
-        <Card transparent>
+      <ListItem style={{ paddingTop: 0, paddingBottom: 0, marginLeft: 0 }} onPress={onPress}>
+        <Card transparent style={{ marginLeft: 0 }}>
           <CardItem header style={{ paddingTop: 0, paddingBottom: 5 }}>
             <Left>
-              <Text numberOfLines={1}>{proposal.title}</Text>
+              <Text numberOfLines={1} style={{ fontSize: 12, marginLeft: 0 }} ellipsizeMode={'tail'} >{proposal.title}</Text>
             </Left>
           </CardItem>
           <CardItem style={{ paddingTop: 0, paddingBottom: 0 }}>
             <Left>
-              <Text note>{proposal.creatorName}</Text>
+              <Text note style={{ fontSize: 10, marginLeft: 0 }}>{proposal.creatorName}</Text>
             </Left>
             <Right>
-              <Text note>{proposal.createTime}</Text>
+              <Text note style={{ fontSize: 10 }}>{proposal.createTime}</Text>
             </Right>
           </CardItem>
         </Card>

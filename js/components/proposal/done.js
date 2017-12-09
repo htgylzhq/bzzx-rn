@@ -76,7 +76,7 @@ class ProposalDoneScreen extends Component {
   render() {
     return (
       <Container>
-        <Card>
+        <Card style={{ marginLeft: 0 }}>
           {
             this.props.proposals.length === 0
               ?

@@ -41,7 +41,7 @@ export default class CommentContent extends Component {
   }
   contentType(item, index) {
     if (typeof item === 'object' && item.type && item.type !== '') {
-      return <Emoji type={item.type} imgNum={item.imgNum} />;
+      return <Emoji key={index} type={item.type} imgNum={item.imgNum} />;
     }
     return <Text note style={{ fontSize: 12 }} key={index}>{item}</Text>;
   }
