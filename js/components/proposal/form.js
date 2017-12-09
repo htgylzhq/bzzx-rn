@@ -12,6 +12,7 @@ import _ from 'lodash';
 import http from '../../commons/http';
 import { Toaster } from '../../commons/util';
 import { onFetchUndertakers } from '../../actions/undertaker';
+import { Dimensions } from 'react-native';
 
 const validate = (values) => {
   const error = {};
@@ -101,7 +102,7 @@ class ProposalForm extends Component {
       case 'title':
         label = '案由';
         comp = (
-          <Input {...input} />
+          <Input {...input} style={{ borderWidth: 1, borderColor: '#ddd', backgroundColor: '#fff', borderRadius: 5 }} />
         );
         break;
       case 'content':
@@ -109,8 +110,7 @@ class ProposalForm extends Component {
         comp = (
           <Input
             {...input}
-            multiline
-            style={{ height: 180, textAlignVertical: 'top' }}
+            style={{ height: 180, textAlignVertical: 'top', borderWidth: 1, borderColor: '#ddd', backgroundColor: '#fff', borderRadius: 5 }}
           />
         );
         break;
@@ -119,20 +119,22 @@ class ProposalForm extends Component {
     }
 
     return (
-      <Item error={hasError} stackedLabel>
-        <Label>{label}</Label>
+      <Item stackedLabel style={{ borderBottomWidth: 0 }}>
+        <Label style={{ flex: 1, borderBottomWidth: 2, borderBottomColor: '#921001', marginBottom: 10, fontSize: 15, color: '#000', width: Dimensions.get('window').width }}>{label}</Label>
         {comp}
+        <Text style={{ textAlign: 'right', color: '#921001', flex: 1, fontSize: 10, width: Dimensions.get('window').width - 50 }} error={hasError}>*{error}</Text>
       </Item>
     );
   };
 
   renderPicker = ({ input: { onChange, value }, ...pickerProps }) => (
     <View style={{ marginTop: 10 }}>
-      <Label>建议承办单位</Label>
+      <Label style={{ flex: 1, borderBottomWidth: 2, borderBottomColor: '#921001', marginBottom: 10, fontSize: 15, color: '#000' }}>建议承办单位</Label>
       <Picker
         selectedValue={value}
         onValueChange={val => onChange(val)}
         {...pickerProps}
+        style={{ borderWidth: 1, borderColor: '#ddd', backgroundColor: '#fff', borderRadius: 5 }}
       >
         {this.props.undertakers.map(i => <Picker.Item label={i.name} value={i.id} key={i.id} />)}
       </Picker>
@@ -158,25 +160,27 @@ class ProposalForm extends Component {
             mode="dropdown"
           />
           <Field name={'content'} component={this.renderInput} />
-          <Button
-            block
-            style={{ marginTop: 20, backgroundColor: '#941001' }}
-            onPress={() => {
-              this.setState({ requiring: true });
-              setTimeout(() => this._submit(true), 500);
-            }}
-            disabled={this.state.requiring}
-          >
-            <Text>保存</Text>
-          </Button>
-          <Button
-            block
-            style={{ marginTop: 20, backgroundColor: '#941001' }}
-            onPress={() => this._submit(false)}
-            disabled={this.state.requiring}
-          >
-            <Text>保存并提交</Text>
-          </Button>
+          <View style={{ flexDirection: 'row' }}>
+            <Button
+              block
+              style={{ marginTop: 20, marginRight: 5, backgroundColor: '#941001', flex: 1 }}
+              onPress={() => {
+                this.setState({ requiring: true });
+                setTimeout(() => this._submit(true), 500);
+              }}
+              disabled={this.state.requiring}
+            >
+              <Text>保存</Text>
+            </Button>
+            <Button
+              block
+              style={{ marginTop: 20, marginLeft: 5, backgroundColor: '#941001', flex: 1 }}
+              onPress={() => this._submit(false)}
+              disabled={this.state.requiring}
+            >
+              <Text>保存并提交</Text>
+            </Button>
+          </View>
         </Content>
       );
     }
