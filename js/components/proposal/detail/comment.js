@@ -15,6 +15,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     backgroundColor: '#ccc',
     alignItems: 'center',
+    margin: 10,
     justifyContent: 'center',
   },
 });
@@ -112,7 +113,7 @@ class ProposalContentPage extends Component {
               <Spinner />
             :
               <Card style={{ flex: 1, marginTop: 0 }}>
-                <CardItem cardBody style={{ flex: 1, flexDirection: 'row', alignItems: 'flex-start' }}>
+                <CardItem cardBody style={{ flex: 1, flexDirection: 'row' }}>
                   <List
                     style={{ flex: 1 }}
                     renderRow={item => this.renderRow(item)}
