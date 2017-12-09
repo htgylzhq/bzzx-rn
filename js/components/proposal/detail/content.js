@@ -41,7 +41,7 @@ class ProposalContentPage extends Component {
       <Container style={{ backgroundColor: '#ddd' }}>
         <Content>
           <Card style={{ flex: 1, height: Dimensions.get('window').height - 75, marginTop: 0 }}>
-            <CardItem cardBody style={{ flex: 1 }}>
+            <CardItem cardBody style={{ flex: 1, justifyContent: 'flex-start', alignSelf: 'center' }}>
               {
                 this.state.loading
               ?

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { reduxForm, Field } from 'redux-form';
 import { NavigationActions } from 'react-navigation';
+import { Dimensions } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Container, Content, Input, Item, Label, Button, Text, ListItem, Left, Right, Radio, View } from 'native-base';
@@ -64,7 +65,7 @@ class LiAnForm extends Component {
           <Input
             {...input}
             multiline
-            style={{ height: 200, textAlignVertical: 'top' }}
+            style={{ height: 200, textAlignVertical: 'top', borderWidth: 1, borderColor: '#ddd', backgroundColor: '#fff' }}
           />
         );
         break;
@@ -74,7 +75,7 @@ class LiAnForm extends Component {
 
     return (
       <Item error={hasError} stackedLabel>
-        <Label>{label}</Label>
+        <Label style={{ flex: 1, width: Dimensions.get('window').width, borderBottomWidth: 2, borderBottomColor: '#921001', marginBottom: 10, fontSize: 15, color: '#000' }}>{label}</Label>
         {comp}
       </Item>
     );
@@ -84,26 +85,26 @@ class LiAnForm extends Component {
     const selection = value || 'continue';
     return (
       <View style={{ marginTop: 10 }}>
-        <Label>办理结果</Label>
-        <ListItem>
+        <Label style={{ flex: 1, borderBottomWidth: 2, borderBottomColor: '#921001', fontSize: 15, color: '#000' }}>办理结果</Label>
+        <ListItem style={{ marginLeft: 0 }}>
           <Left>
-            <Text>立案通过</Text>
+            <Text style={{ fontSize: 12 }}>立案通过</Text>
           </Left>
           <Right>
             <Radio selected={selection === 'continue'} onPress={() => onChange('continue')} />
           </Right>
         </ListItem>
-        <ListItem>
+        <ListItem style={{ marginLeft: 0 }}>
           <Left>
-            <Text>不予立案</Text>
+            <Text style={{ fontSize: 12 }}>不予立案</Text>
           </Left>
           <Right>
             <Radio selected={selection === 'terminate'} onPress={() => onChange('terminate')} />
           </Right>
         </ListItem>
-        <ListItem>
+        <ListItem style={{ marginLeft: 0 }}>
           <Left>
-            <Text>立案退回</Text>
+            <Text style={{ fontSize: 12 }}>立案退回</Text>
           </Left>
           <Right>
             <Radio selected={selection === 'back'} onPress={() => onChange('back')} />

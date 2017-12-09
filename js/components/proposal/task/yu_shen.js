@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { reduxForm, Field } from 'redux-form';
 import { NavigationActions } from 'react-navigation';
+import { Dimensions } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Container, Content, Input, Item, Label, Button, Text, ListItem, Left, Right, Radio, View } from 'native-base';
@@ -64,7 +65,7 @@ class YuShenForm extends Component {
           <Input
             {...input}
             multiline
-            style={{ height: 200, textAlignVertical: 'top' }}
+            style={{ height: 200, textAlignVertical: 'top', borderWidth: 1, borderColor: '#ddd', backgroundColor: '#fff' }}
           />
         );
         break;
@@ -73,8 +74,8 @@ class YuShenForm extends Component {
     }
 
     return (
-      <Item error={hasError} stackedLabel>
-        <Label>{label}</Label>
+      <Item error={hasError} stackedLabel style={{ flex: 1 }}>
+        <Label style={{ flex: 1, width: Dimensions.get('window').width, borderBottomWidth: 2, borderBottomColor: '#921001', marginBottom: 10, fontSize: 15, color: '#000' }}>{label}</Label>
         {comp}
       </Item>
     );
@@ -84,26 +85,26 @@ class YuShenForm extends Component {
     const selection = value || 'continue';
     return (
       <View style={{ marginTop: 10 }}>
-        <Label>办理结果</Label>
-        <ListItem>
+        <Label style={{ flex: 1, borderBottomWidth: 2, borderBottomColor: '#921001', fontSize: 15, color: '#000' }}>办理结果</Label>
+        <ListItem style={{ marginLeft: 0 }}>
           <Left>
-            <Text>预审通过</Text>
+            <Text style={{ fontSize: 12 }}>预审通过</Text>
           </Left>
           <Right>
             <Radio selected={selection === 'continue'} onPress={() => onChange('continue')} />
           </Right>
         </ListItem>
-        <ListItem>
+        <ListItem style={{ marginLeft: 0 }}>
           <Left>
-            <Text>预审终止</Text>
+            <Text style={{ fontSize: 12 }}>预审终止</Text>
           </Left>
           <Right>
             <Radio selected={selection === 'terminate'} onPress={() => onChange('terminate')} />
           </Right>
         </ListItem>
-        <ListItem>
+        <ListItem style={{ marginLeft: 0 }}>
           <Left>
-            <Text>退回</Text>
+            <Text style={{ fontSize: 12 }}>退回</Text>
           </Left>
           <Right>
             <Radio selected={selection === 'back'} onPress={() => onChange('back')} />
@@ -121,7 +122,7 @@ class YuShenForm extends Component {
           <Field name={'proc_string_yu_shen'} component={this.renderOperation} />
           <Button
             block
-            style={{ marginTop: 20 }}
+            style={{ marginTop: 20, backgroundColor: '#921001' }}
             onPress={() => this._submit()}
           >
             <Text>提交</Text>
