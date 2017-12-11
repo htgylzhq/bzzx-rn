@@ -49,6 +49,7 @@ class ReeditForm extends Component {
     this.state = {
       loadingUndertakers: true,
       loadingProposal: true,
+      submitting: false,
     };
   }
 
@@ -105,7 +106,7 @@ class ReeditForm extends Component {
       proc_string_reedit,
       needSaveEntity: true,
     });
-
+    this.setState({ submitting: false });
     if (res.code === 0) {
       Toaster.success('操作成功');
       this.navigateBack();
@@ -221,9 +222,19 @@ class ReeditForm extends Component {
           <Button
             block
             style={{ marginTop: 20, marginBottom: 20, backgroundColor: '#941001' }}
-            onPress={() => this._submit(true)}
+            disabled={this.state.submitting}
+            onPress={() => {
+              this.setState({ submitting: true });
+              this._submit(true);
+            }}
           >
-            <Text>提交</Text>
+            {
+              this.state.submitting
+              ?
+                <Spinner />
+              :
+                <Text>提交</Text>
+            }
           </Button>
         </Content>
       );

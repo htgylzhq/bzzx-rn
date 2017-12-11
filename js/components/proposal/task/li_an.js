@@ -4,7 +4,7 @@ import { NavigationActions } from 'react-navigation';
 import { Dimensions } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Container, Content, Input, Item, Label, Button, Text, ListItem, Left, Right, Radio, View } from 'native-base';
+import { Container, Content, Input, Item, Label, Button, Text, ListItem, Left, Right, Radio, View, Spinner } from 'native-base';
 import { Toaster } from '../../../commons/util';
 import http from '../../../commons/http';
 
@@ -16,7 +16,12 @@ class LiAnForm extends Component {
     }),
     dispatch: PropTypes.func,
   };
-
+  constructor(props) {
+    super(props);
+    this.state = {
+      submitting: false,
+    };
+  }
   async componentWillMount() {
     this.props.initialize({
       id: this.props.navigation.state.params.id,
@@ -26,8 +31,8 @@ class LiAnForm extends Component {
   }
 
   navigate(routeName:string, params:Object) {
-    this.props.dispatch(NavigationActions.navigate({
-      routeName,
+    this.props.dispatch(NavigationActions.back({
+      key: routeName,
       params,
     }));
   }
@@ -43,7 +48,7 @@ class LiAnForm extends Component {
       comment,
       proc_string_li_an_shen_cha,
     });
-
+    this.setState({ submitting: false });
     if (res.code === 0) {
       Toaster.success('操作成功');
       this.navigate('ProposalIndex', { tab: 'done' });
@@ -123,9 +128,19 @@ class LiAnForm extends Component {
           <Button
             block
             style={{ marginTop: 20 }}
-            onPress={() => this._submit()}
+            disabled={this.state.submitting}
+            onPress={() => {
+              this.setState({ submitting: true });
+              this._submit();
+            }}
           >
-            <Text>提交</Text>
+            {
+              this.state.submitting
+              ?
+                <Spinner />
+              :
+                <Text>提交</Text>
+            }
           </Button>
         </Content>
       </Container>

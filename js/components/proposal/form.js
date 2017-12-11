@@ -1,6 +1,7 @@
 import React, {
   Component,
 } from 'react';
+import { Dimensions } from 'react-native';
 import {
   connect,
 } from 'react-redux';
@@ -12,7 +13,7 @@ import _ from 'lodash';
 import http from '../../commons/http';
 import { Toaster } from '../../commons/util';
 import { onFetchUndertakers } from '../../actions/undertaker';
-import { Dimensions } from 'react-native';
+
 
 const validate = (values) => {
   const error = {};
@@ -170,7 +171,13 @@ class ProposalForm extends Component {
               }}
               disabled={this.state.requiring}
             >
-              <Text>保存</Text>
+              {
+                this.state.requiring
+                  ?
+                    <Spinner />
+                  :
+                    <Text> 保存 </Text>
+              }
             </Button>
             <Button
               block
@@ -178,7 +185,13 @@ class ProposalForm extends Component {
               onPress={() => this._submit(false)}
               disabled={this.state.requiring}
             >
-              <Text>保存并提交</Text>
+              {
+                this.state.requiring
+                  ?
+                    <Spinner />
+                  :
+                    <Text> 保存并提交 </Text>
+              }
             </Button>
           </View>
         </Content>
