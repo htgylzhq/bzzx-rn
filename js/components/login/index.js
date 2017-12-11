@@ -36,9 +36,12 @@ class Login extends Component {
       name: '',
       login: false,
     };
+    this.isUnmounted = false;
     this.renderInput = this.renderInput.bind(this);
   }
-
+  componentWillUnmount() {
+    this.isUnmounted = true;
+  }
   async _login() {
     const loginname = this.props.loginname;
     const password = this.props.password;
@@ -48,11 +51,11 @@ class Login extends Component {
       password,
     };
     const res = await http.post('/platform/login/doLogin', params);
+    if (!this.isUnmounted) { this.setState({ login: false }); }
     if (res.code === 0) {
       const user = new User(res.data.user);
       const sid = res.data.sid;
       this.props.onLogin(user, sid);
-      this.setState({ login: false });
     }
   }
 
@@ -67,12 +70,13 @@ class Login extends Component {
         <Input
           placeholder={input.name === 'loginname' ? '登录名' : '密码'}
           secureTextEntry={input.name === 'password'}
+          style={{ fontSize: 12 }}
           {...input}
         />
         {hasError
           ? <Item style={{ borderColor: 'transparent' }}>
-            <Icon active style={{ color: 'red', marginTop: 5 }} name={'warning'} />
-            <Text style={{ fontSize: 15, color: 'red' }}>{error}</Text>
+            <Icon active style={{ color: 'red', marginTop: 5, fontSize: 12 }} name={'warning'} />
+            <Text style={{ fontSize: 12, color: 'red' }}>{error}</Text>
           </Item>
           : <Text />}
       </Item>
