@@ -70,7 +70,7 @@ class LiAnForm extends Component {
           <Input
             {...input}
             multiline
-            style={{ height: 200, textAlignVertical: 'top', borderWidth: 1, borderColor: '#ddd', backgroundColor: '#fff' }}
+            style={{ height: 200, textAlignVertical: 'top', borderWidth: 1, borderColor: '#ddd', backgroundColor: '#fff', fontSize: 12 }}
           />
         );
         break;

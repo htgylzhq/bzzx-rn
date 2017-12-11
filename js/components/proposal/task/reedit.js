@@ -5,6 +5,7 @@ import {
   connect,
 } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
+import { Dimensions } from 'react-native';
 import PropTypes from 'prop-types';
 import { Container, Content, Button, Text, Item, Label, Input, Picker, View, Spinner, ListItem, Left, Right, Radio } from 'native-base';
 import { NavigationActions } from 'react-navigation';
@@ -125,7 +126,7 @@ class ReeditForm extends Component {
       case 'title':
         label = '案由';
         comp = (
-          <Input {...input} />
+          <Input {...input} style={{ fontSize: 12, borderWidth: 1, borderColor: '#ddd', backgroundColor: '#fff' }} />
         );
         break;
       case 'content':
@@ -134,7 +135,7 @@ class ReeditForm extends Component {
           <Input
             {...input}
             multiline
-            style={{ height: 180, textAlignVertical: 'top' }}
+            style={{ height: 180, textAlignVertical: 'top', fontSize: 12, borderWidth: 1, borderColor: '#ddd', backgroundColor: '#fff' }}
           />
         );
         break;
@@ -144,7 +145,7 @@ class ReeditForm extends Component {
           <Input
             {...input}
             multiline
-            style={{ height: 100, textAlignVertical: 'top' }}
+            style={{ height: 100, textAlignVertical: 'top', fontSize: 12, borderWidth: 1, borderColor: '#ddd', backgroundColor: '#fff' }}
           />
         );
         break;
@@ -154,7 +155,7 @@ class ReeditForm extends Component {
 
     return (
       <Item error={hasError} stackedLabel>
-        <Label>{label}</Label>
+        <Label style={{ flex: 1, width: Dimensions.get('window').width, borderBottomWidth: 2, borderBottomColor: '#921001', fontSize: 15, color: '#000',marginBottom: 10 }}>{label}</Label>
         {comp}
       </Item>
     );
@@ -162,11 +163,12 @@ class ReeditForm extends Component {
 
   renderPicker = ({ input: { onChange, value }, ...pickerProps }) => (
     <View style={{ marginTop: 10 }}>
-      <Label>建议承办单位</Label>
+      <Label style={{ flex: 1, width: Dimensions.get('window').width, borderBottomWidth: 2, borderBottomColor: '#921001', marginBottom: 10, fontSize: 15, color: '#000' }}>建议承办单位</Label>
       <Picker
         selectedValue={value}
         onValueChange={val => onChange(val)}
         {...pickerProps}
+        style={{ borderWidth: 1, borderColor: '#ddd', backgroundColor: '#fff', borderRadius: 5 }}
       >
         {this.props.undertakers.map(i => <Picker.Item label={i.name} value={i.id} key={i.id} />)}
       </Picker>
@@ -177,18 +179,18 @@ class ReeditForm extends Component {
     const selection = value || 'submit';
     return (
       <View style={{ marginTop: 10 }}>
-        <Label>选择操作</Label>
-        <ListItem>
+        <Label style={{ flex: 1, borderBottomWidth: 2, borderBottomColor: '#921001', fontSize: 15, color: '#000' }}>选择操作</Label>
+        <ListItem style={{ marginLeft: 0 }}>
           <Left>
-            <Text>重新提交</Text>
+            <Text style={{ fontSize: 12 }}>重新提交</Text>
           </Left>
           <Right>
             <Radio selected={selection === 'submit'} onPress={() => onChange('submit')} />
           </Right>
         </ListItem>
-        <ListItem>
+        <ListItem style={{ marginLeft: 0 }}>
           <Left>
-            <Text>撤销提案</Text>
+            <Text style={{ fontSize: 12 }}>撤销提案</Text>
           </Left>
           <Right>
             <Radio selected={selection === 'cancel'} onPress={() => onChange('cancel')} />

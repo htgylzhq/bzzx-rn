@@ -103,7 +103,7 @@ class ProposalForm extends Component {
       case 'title':
         label = '案由';
         comp = (
-          <Input {...input} style={{ borderWidth: 1, borderColor: '#ddd', backgroundColor: '#fff', borderRadius: 5 }} />
+          <Input {...input} style={{ borderWidth: 1, borderColor: '#ddd', backgroundColor: '#fff', borderRadius: 5, fontSize: 12, lineHeight: 12 }} />
         );
         break;
       case 'content':
@@ -111,7 +111,8 @@ class ProposalForm extends Component {
         comp = (
           <Input
             {...input}
-            style={{ height: 180, textAlignVertical: 'top', borderWidth: 1, borderColor: '#ddd', backgroundColor: '#fff', borderRadius: 5 }}
+            multiline
+            style={{ height: 180, textAlignVertical: 'top', borderWidth: 1, borderColor: '#ddd', backgroundColor: '#fff', borderRadius: 5, fontSize: 12 }}
           />
         );
         break;
@@ -135,7 +136,6 @@ class ProposalForm extends Component {
         selectedValue={value}
         onValueChange={val => onChange(val)}
         {...pickerProps}
-        style={{ borderWidth: 1, borderColor: '#ddd', backgroundColor: '#fff', borderRadius: 5 }}
       >
         {this.props.undertakers.map(i => <Picker.Item label={i.name} value={i.id} key={i.id} />)}
       </Picker>
