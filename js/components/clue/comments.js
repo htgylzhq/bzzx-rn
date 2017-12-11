@@ -72,17 +72,17 @@ class ClueCommentsPage extends Component {
     }
   }
   async _submit() {
-    this.setState({ submitting: true });
     const { commentVal, id } = this.props;
     if (_.trim(commentVal) !== '') {
+      this.setState({ submitting: true });
       const res = await http.post('/platform/cppcc/clue/comment', {
         id,
         content: commentVal,
       });
+      this.setState({ loading: false, submitting: false });
       if (res.code === 0) {
         this.props.resetForm('clueComment');
         this._fetchComments();
-        this.setState({ loading: false, submitting: false });
       }
     }
   }
@@ -92,7 +92,7 @@ class ClueCommentsPage extends Component {
     const res = await http.get('/platform/cppcc/clue/comment', {
       id,
       pageNo: this.props.pageNo + 1,
-      pageSize: 10,
+      pageSize: 15,
     });
     if (res.code === 0) {
       const data = res.data;

@@ -75,7 +75,7 @@ class ProposalContentPage extends Component {
     const res = await http.get('/platform/cppcc/proposal/comment', {
       id: proposalId,
       pageNo: this.props.pageNo + 1,
-      pageSize: 10,
+      pageSize: 15,
     });
     if (res.code === 0) {
       const data = res.data;
